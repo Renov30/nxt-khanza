@@ -13,44 +13,41 @@ export async function loginAction(formData: FormData) {
   }
 
   try {
-    // 1. Check in 'user' table (joining with 'petugas' for the name)
+    // Check in 'user' table which is standard for staff in Khanza
     const [rows]: any = await db.execute(
-      `SELECT u.id_user, p.nama 
-       FROM user u 
-       INNER JOIN petugas p ON u.id_user = p.nip 
-       WHERE u.id_user = ? AND u.password = AES_ENCRYPT(?, ?)`,
+      `SELECT id_user, nama FROM user WHERE id_user = ? AND password = AES_ENCRYPT(?, ?)`,
       [id_user, password, SECRET_KEY]
     );
 
     if (rows.length > 0) {
-      return { 
-        success: true, 
-        user: { 
-          id: rows[0].id_user, 
-          nama: rows[0].nama 
-        } 
+      return {
+        success: true,
+        user: {
+          id: rows[0].id_user,
+          nama: rows[0].nama
+        }
       };
     }
 
-    // 2. Check in 'admin' table (using usere and passworde columns as seen in sik_ori.sql)
+    // fallback check in 'admin' table
     const [adminRows]: any = await db.execute(
-      `SELECT usere FROM admin WHERE usere = AES_ENCRYPT(?, ?) AND passworde = AES_ENCRYPT(?, ?)`,
-      [id_user, SECRET_KEY, password, SECRET_KEY]
+      `SELECT id_admin FROM admin WHERE id_admin = ? AND password = AES_ENCRYPT(?, ?)`,
+      [id_user, password, SECRET_KEY]
     );
 
     if (adminRows.length > 0) {
-      return { 
-        success: true, 
-        user: { 
-          id: id_user, 
-          nama: 'Admin System' 
-        } 
+      return {
+        success: true,
+        user: {
+          id: adminRows[0].id_admin,
+          nama: adminRows[0].id_admin // admin table usually only has ID
+        }
       };
     }
 
     return { success: false, message: "Invalid username or password" };
   } catch (error: any) {
     console.error("Login error:", error);
-    return { success: false, message: "Database connection error or Invalid Schema" };
+    return { success: false, message: "Database connection error" };
   }
 }
