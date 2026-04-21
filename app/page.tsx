@@ -26,9 +26,9 @@ export default function Home() {
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="bg-gradient-to-r from-emerald-700 via-emerald-600 to-emerald-800 text-white flex items-center justify-between px-2 py-1 shadow-md z-30 border-b border-emerald-500/50"
+        className="bg-gradient-to-r from-emerald-700 via-emerald-600 to-emerald-800 text-white flex overflow-x-auto whitespace-nowrap px-2 py-1 shadow-md z-30 border-b border-emerald-500/50 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
       >
-        <div className="flex flex-wrap items-center gap-1">
+        <div className="flex items-center gap-1 w-max">
           <TopMenuItem icon={<FaKey className="text-yellow-400" />} label="Program" />
           <TopMenuItem icon={<FaUserTie className="text-sky-300" />} label="Presensi Pegawai" />
           <TopMenuItem icon={<FaInfoCircle className="text-orange-400" />} label="Informasi" />
@@ -42,7 +42,7 @@ export default function Home() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.5 }}
-        className="bg-white/80 backdrop-blur-md border-b border-emerald-100 flex items-center px-4 py-2 shadow-sm z-20 gap-1 overflow-x-auto relative"
+        className="bg-white/80 backdrop-blur-md border-b border-emerald-100 flex items-center px-4 py-2 shadow-sm z-20 gap-1 overflow-x-auto relative [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
       >
         <SecondaryMenuItem icon={<FaHome className="text-slate-500 group-hover:text-emerald-600 transition-colors" />} label="Menu" />
         <div className="w-px h-10 bg-emerald-100 mx-2 self-center"></div>
@@ -79,26 +79,26 @@ export default function Home() {
           initial={{ x: -50, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.6, type: 'spring', stiffness: 100 }}
-          className="absolute bottom-8 left-8 z-10 flex items-center gap-5"
+          className="absolute bottom-16 left-4 sm:bottom-8 sm:left-8 z-10 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5"
         >
           {/* Logo 3D effect */}
           <motion.div
             whileHover={{ rotate: 10, scale: 1.05 }}
-            className="w-20 h-20 bg-white/90 backdrop-blur-xl rounded-2xl flex items-center justify-center p-3 shadow-2xl border border-white/50 relative overflow-hidden group"
+            className="w-14 h-14 sm:w-20 sm:h-20 bg-white/90 backdrop-blur-xl rounded-2xl flex items-center justify-center p-2 sm:p-3 shadow-2xl border border-white/50 relative overflow-hidden group shrink-0"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-transparent opacity-50 group-hover:opacity-100 transition-opacity"></div>
-            <FaLaptopMedical className="text-6xl text-sky-600 drop-shadow-md z-10" />
+            <FaLaptopMedical className="text-4xl sm:text-6xl text-sky-600 drop-shadow-md z-10" />
             <div className="absolute bottom-1 right-1">
-              <FaCubes className="text-xl text-emerald-500 opacity-80" />
+              <FaCubes className="text-sm sm:text-xl text-emerald-500 opacity-80" />
             </div>
           </motion.div>
 
-          <div className="flex flex-col drop-shadow-lg bg-white/40 backdrop-blur-sm px-4 py-2 rounded-xl border border-white/40">
-            <h1 className="text-4xl font-extrabold text-slate-800 tracking-tight italic flex items-center gap-2">
+          <div className="flex flex-col drop-shadow-lg bg-white/40 backdrop-blur-sm px-3 sm:px-4 py-2 rounded-xl border border-white/40">
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-800 tracking-tight italic flex items-center gap-2">
               <span className="text-emerald-700">RS</span> SIMRS KHANZA
             </h1>
-            <p className="text-sm font-semibold text-slate-600 mt-1 flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
+            <p className="text-xs sm:text-sm font-semibold text-slate-600 mt-1 flex items-center gap-1">
+              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
               GUWOSARI, Pajangan, Bantul
             </p>
           </div>
@@ -110,22 +110,22 @@ export default function Home() {
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.5 }}
-        className="bg-emerald-50/90 backdrop-blur-md border-t border-emerald-200 text-xs font-semibold text-slate-600 flex items-center h-8 z-20 shadow-[0_-2px_10px_rgba(0,0,0,0.02)]"
+        className="bg-emerald-50/90 backdrop-blur-md border-t border-emerald-200 text-xs font-semibold text-slate-600 flex items-center h-8 z-20 shadow-[0_-2px_10px_rgba(0,0,0,0.02)] w-full overflow-x-auto whitespace-nowrap [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
       >
-        <div className="px-5 py-1 border-r border-emerald-200/60 flex items-center min-w-[120px] h-full">
+        <div className="px-3 sm:px-5 py-1 border-r border-emerald-200/60 flex items-center min-w-max h-full">
           Status Admin :
         </div>
-        <div className="px-5 py-1 border-r border-emerald-200/60 flex items-center hover:bg-emerald-100 cursor-pointer transition-colors h-full">
+        <div className="px-3 sm:px-5 py-1 border-r border-emerald-200/60 flex items-center hover:bg-emerald-100 cursor-pointer transition-colors h-full min-w-max">
           Log Out
         </div>
-        <div className="px-5 py-1 border-r border-emerald-200/60 flex items-center h-full text-slate-500 font-mono">
+        <div className="hidden sm:flex px-5 py-1 border-r border-emerald-200/60 items-center h-full text-slate-500 font-mono">
           21/04/2026
         </div>
-        <div className="px-5 py-1 border-r border-emerald-200/60 flex items-center h-full text-slate-500 font-mono">
+        <div className="hidden sm:flex px-5 py-1 border-r border-emerald-200/60 items-center h-full text-slate-500 font-mono">
           192.168.2.230
         </div>
-        <div className="px-5 py-1 flex items-center flex-1 h-full text-[11px] justify-end sm:justify-start">
-          <span><span className="hidden sm:inline">Dikembangkan oleh </span><span className="text-emerald-700 font-bold">Novgeny R. Ermiawan</span></span>
+        <div className="px-3 sm:px-5 py-1 flex items-center min-w-max h-full text-[11px] flex-1">
+          <span><span className="hidden sm:inline">Dikembangkan oleh </span><span className="inline sm:hidden">Dev: </span><span className="text-emerald-700 font-bold">Novgeny R. Ermiawan</span></span>
         </div>
       </motion.footer>
 
