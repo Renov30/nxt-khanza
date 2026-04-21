@@ -1,25 +1,39 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   FaKey, FaUserTie, FaInfoCircle, FaDesktop, FaBook,
   FaHome, FaIdCard, FaAmbulance, FaFlask, FaRadiation,
   FaPills, FaBed, FaWheelchair, FaSignInAlt, FaTimes,
-  FaLaptopMedical, FaCubes
+  FaLaptopMedical, FaCubes, FaSync, FaCog, FaReact
 } from 'react-icons/fa';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
+  const [contextMenu, setContextMenu] = useState({ show: false, x: 0, y: 0 });
 
   useEffect(() => {
     setMounted(true);
+    const handleClick = () => setContextMenu(prev => ({ ...prev, show: false }));
+    window.addEventListener('click', handleClick);
+    return () => window.removeEventListener('click', handleClick);
   }, []);
+
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const x = e.pageX + 220 > window.innerWidth ? window.innerWidth - 230 : e.pageX;
+    const y = e.pageY + 200 > window.innerHeight ? window.innerHeight - 210 : e.pageY;
+    setContextMenu({ show: true, x, y });
+  };
 
   if (!mounted) return null;
 
   return (
-    <div className="flex flex-col h-screen w-full overflow-hidden bg-slate-50 font-sans">
+    <div 
+      className="flex flex-col h-screen w-full overflow-hidden bg-slate-50 font-sans"
+      onContextMenu={handleContextMenu}
+    >
 
       {/* Primary Top Bar (Dark Green Gradient) */}
       <motion.nav
@@ -129,6 +143,31 @@ export default function Home() {
         </div>
       </motion.footer>
 
+      {/* Context Menu */}
+      <AnimatePresence>
+        {contextMenu.show && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: -10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: -10 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
+            className="absolute z-50 bg-white/95 backdrop-blur-xl border border-emerald-100 shadow-2xl rounded-xl py-2 min-w-[220px] flex flex-col text-sm font-medium overflow-hidden"
+            style={{ top: contextMenu.y, left: contextMenu.x }}
+          >
+            <div className="px-4 py-1.5 mb-1 border-b border-emerald-50/50 flex items-center gap-2 bg-emerald-50/30">
+              <FaLaptopMedical className="text-emerald-600 text-lg" />
+              <span className="text-[10px] font-extrabold text-emerald-700 uppercase tracking-widest">Tindakan Cepat</span>
+            </div>
+            <ContextMenuItem icon={<FaReact className="text-sky-500" />} label="Tentang Aplikasi" />
+            <ContextMenuItem icon={<FaCog className="text-slate-500" />} label="Pengaturan" />
+            <div className="w-full h-px bg-slate-100 my-1"></div>
+            <ContextMenuItem icon={<FaSync className="text-emerald-500" />} label="Muat Ulang (Refresh)" onClick={() => window.location.reload()} />
+            <ContextMenuItem icon={<FaSignInAlt className="text-blue-500" />} label="Buka Halaman Login" />
+            <div className="w-full h-px bg-slate-100 my-1"></div>
+            <ContextMenuItem icon={<FaTimes className="text-red-500" />} label="Tutup Menu" isRed />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -159,5 +198,17 @@ function SecondaryMenuItem({ icon, label, isRed }: { icon: React.ReactNode, labe
       <span className={`text-[11px] font-bold z-10 ${isRed ? 'text-red-600' : 'text-slate-600 group-hover:text-emerald-700'}`}>{label}</span>
       <div className="absolute inset-0 bg-gradient-to-b from-white/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-0"></div>
     </motion.button >
+  );
+}
+
+function ContextMenuItem({ icon, label, onClick, isRed }: { icon: React.ReactNode, label: string, onClick?: () => void, isRed?: boolean }) {
+  return (
+    <button 
+      onClick={onClick}
+      className={`w-full text-left flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${isRed ? 'hover:bg-red-50 hover:text-red-600' : 'hover:bg-emerald-50 hover:text-emerald-700'} text-slate-700`}
+    >
+      <span className="text-base w-5 text-center flex justify-center drop-shadow-sm">{icon}</span>
+      <span className="font-semibold">{label}</span>
+    </button>
   );
 }
