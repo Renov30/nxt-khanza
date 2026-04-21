@@ -6,12 +6,20 @@ import {
   FaKey, FaUserTie, FaInfoCircle, FaDesktop, FaBook,
   FaHome, FaIdCard, FaAmbulance, FaFlask, FaRadiation,
   FaPills, FaBed, FaWheelchair, FaSignInAlt, FaTimes,
-  FaLaptopMedical, FaCubes, FaSync, FaCog, FaReact
+  FaLaptopMedical, FaCubes, FaSync, FaCog, FaReact,
+  FaUser, FaLock, FaTimesCircle
 } from 'react-icons/fa';
+import { loginAction } from '@/lib/actions/auth';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [contextMenu, setContextMenu] = useState({ show: false, x: 0, y: 0 });
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -30,7 +38,7 @@ export default function Home() {
   if (!mounted) return null;
 
   return (
-    <div 
+    <div
       className="flex flex-col h-screen w-full overflow-hidden bg-slate-50 font-sans"
       onContextMenu={handleContextMenu}
     >
@@ -70,7 +78,21 @@ export default function Home() {
 
         <div className="flex-1 min-w-[20px]"></div>
 
-        <SecondaryMenuItem icon={<FaSignInAlt className="text-slate-500 group-hover:text-emerald-600 transition-colors" />} label="Log In" />
+        <div className="flex-1 min-w-[20px]"></div>
+
+        {!isLoggedIn ? (
+          <SecondaryMenuItem icon={<FaSignInAlt className="text-slate-500 group-hover:text-emerald-600 transition-colors" />} label="Log In" onClick={() => setIsLoginModalOpen(true)} />
+        ) : (
+          <div className="flex items-center">
+            <div className="flex items-center gap-2 px-3 py-1 mr-2 border-r border-emerald-200">
+              <span className="text-[14px] font-semibold text-slate-700 max-w-[100px] truncate">{username || 'renov'}</span>
+              <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center border border-blue-200 shadow-sm cursor-pointer hover:bg-blue-200 transition-colors">
+                <FaUser className="text-blue-600 text-lg drop-shadow-sm" />
+              </div>
+            </div>
+            <SecondaryMenuItem icon={<FaKey className="text-slate-500 group-hover:text-yellow-600 transition-colors" />} label="Log Out" onClick={() => setIsLoggedIn(false)} />
+          </div>
+        )}
         <SecondaryMenuItem icon={<FaTimes className="text-red-500 group-hover:text-red-600 transition-colors" />} label="Keluar" isRed />
       </motion.nav>
 
@@ -143,6 +165,107 @@ export default function Home() {
         </div>
       </motion.footer>
 
+      {/* Login Modal */}
+      <AnimatePresence>
+        {isLoginModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="bg-white w-[380px] flex flex-col rounded-xl overflow-hidden shadow-2xl border border-white/50"
+            >
+              {/* Top spacer */}
+              <div className="h-6 bg-white w-full"></div>
+
+              {/* Form Area */}
+              <form action={async (formData) => {
+                setLoginError('');
+                setIsLoading(true);
+                const result = await loginAction(formData);
+                setIsLoading(false);
+                
+                if (result.success && result.user) {
+                  setIsLoggedIn(true);
+                  setUsername(result.user.nama);
+                  setIsLoginModalOpen(false);
+                  setPassword('');
+                } else {
+                  setLoginError(result.message || 'Login failed');
+                }
+              }}>
+                <div className="bg-[#cbdceb] px-6 py-6 flex flex-col gap-5 border-y border-slate-300 shadow-inner">
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-semibold text-slate-700 w-24">Username :</label>
+                    <input
+                      name="username"
+                      type="text"
+                      className="flex-1 bg-gradient-to-b from-slate-50 to-slate-200 border border-slate-400 rounded-full px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 shadow-inner text-slate-700 font-medium"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      autoFocus
+                      required
+                    />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-semibold text-slate-700 w-24">Password :</label>
+                    <input
+                      name="password"
+                      type="password"
+                      className="flex-1 bg-gradient-to-b from-slate-50 to-slate-200 border border-slate-400 rounded-full px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 shadow-inner text-slate-700 font-medium"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                  {loginError && (
+                    <motion.p 
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      className="text-[10px] text-red-600 font-bold text-center bg-red-50 py-1 rounded border border-red-200"
+                    >
+                      {loginError}
+                    </motion.p>
+                  )}
+                </div>
+
+                {/* Buttons Area */}
+                <div className="bg-white px-6 py-4 flex items-center justify-center gap-4">
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="flex-1 flex justify-center items-center gap-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-full py-2 px-4 transition-colors shadow-sm text-sm font-bold text-slate-700 active:scale-95 disabled:opacity-50"
+                  >
+                    <div className="w-5 h-5 flex items-center justify-center">
+                      <FaLock className={`text-yellow-500 text-lg drop-shadow-sm ${isLoading ? 'animate-pulse' : ''}`} />
+                    </div>
+                    {isLoading ? 'Loading...' : 'Log-in'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsLoginModalOpen(false);
+                      setLoginError('');
+                    }}
+                    className="flex-1 flex justify-center items-center gap-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-full py-2 px-4 transition-colors shadow-sm text-sm font-bold text-slate-700 active:scale-95"
+                  >
+                    <div className="w-5 h-5 flex items-center justify-center bg-red-500 rounded-md shadow-sm">
+                      <FaTimes className="text-white text-[10px]" />
+                    </div>
+                    Batal
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Context Menu */}
       <AnimatePresence>
         {contextMenu.show && (
@@ -162,7 +285,7 @@ export default function Home() {
             <ContextMenuItem icon={<FaCog className="text-slate-500" />} label="Pengaturan" />
             <div className="w-full h-px bg-slate-100 my-1"></div>
             <ContextMenuItem icon={<FaSync className="text-emerald-500" />} label="Muat Ulang (Refresh)" onClick={() => window.location.reload()} />
-            <ContextMenuItem icon={<FaSignInAlt className="text-blue-500" />} label="Buka Halaman Login" />
+            {!isLoggedIn && <ContextMenuItem icon={<FaSignInAlt className="text-blue-500" />} label="Buka Halaman Login" onClick={() => setIsLoginModalOpen(true)} />}
             <div className="w-full h-px bg-slate-100 my-1"></div>
             <ContextMenuItem icon={<FaTimes className="text-red-500" />} label="Tutup Menu" isRed />
           </motion.div>
@@ -187,9 +310,10 @@ function TopMenuItem({ icon, label }: { icon: React.ReactNode, label: string }) 
   );
 }
 
-function SecondaryMenuItem({ icon, label, isRed }: { icon: React.ReactNode, label: string, isRed?: boolean }) {
+function SecondaryMenuItem({ icon, label, isRed, onClick }: { icon: React.ReactNode, label: string, isRed?: boolean, onClick?: () => void }) {
   return (
     <motion.button
+      onClick={onClick}
       whileHover={{ y: -3, scale: 1.02, backgroundColor: isRed ? "rgba(254,226,226,0.5)" : "rgba(209,250,229,0.3)" }}
       whileTap={{ scale: 0.95 }}
       className="group flex flex-col items-center justify-center gap-1 min-w-[76px] p-2 rounded-xl transition-all border border-transparent hover:border-emerald-100 hover:shadow-sm bg-transparent relative overflow-hidden"
@@ -203,7 +327,7 @@ function SecondaryMenuItem({ icon, label, isRed }: { icon: React.ReactNode, labe
 
 function ContextMenuItem({ icon, label, onClick, isRed }: { icon: React.ReactNode, label: string, onClick?: () => void, isRed?: boolean }) {
   return (
-    <button 
+    <button
       onClick={onClick}
       className={`w-full text-left flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${isRed ? 'hover:bg-red-50 hover:text-red-600' : 'hover:bg-emerald-50 hover:text-emerald-700'} text-slate-700`}
     >
