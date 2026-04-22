@@ -7,6 +7,7 @@ import {
   FaSearch, FaCheck, FaPrint, FaExchangeAlt, FaSignOutAlt,
   FaFolderOpen, FaTimes, FaBed
 } from 'react-icons/fa';
+import BottomActionPanel, { ActionButton } from '@/components/BottomActionPanel';
 
 export default function RawatInap() {
   const [mounted, setMounted] = useState(false);
@@ -105,78 +106,41 @@ export default function RawatInap() {
         </table>
       </div>
 
-      {/* Bottom Actions Panel - Cleaned Up */}
-      <div className="bg-white px-4 py-3 border-t border-slate-200 text-xs shadow-md z-20 flex flex-col gap-3">
-        {/* Filters Group */}
-        <div className="flex items-center gap-6 flex-wrap">
-          <div className="flex items-center gap-3 bg-slate-50 p-1.5 rounded-lg border border-slate-100">
-            <label className="flex items-center gap-2 cursor-pointer font-medium hover:text-emerald-700 text-slate-600 transition-colors px-2">
-              <input type="radio" name="filter_tgl" className="accent-emerald-600 w-3.5 h-3.5" defaultChecked />
-              Belum Pulang
-            </label>
-            <div className="w-px h-4 bg-slate-300"></div>
-            <label className="flex items-center gap-2 cursor-pointer font-medium hover:text-emerald-700 text-slate-600 transition-colors px-2">
-              <input type="radio" name="filter_tgl" className="accent-emerald-600 w-3.5 h-3.5" />
-              Tgl. Masuk
-            </label>
-            <div className="flex items-center gap-2">
-              <input type="date" className="border border-slate-200 rounded text-slate-600 px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-white shadow-sm" defaultValue="2026-04-22" />
-              <span className="text-slate-400 font-medium">s.d</span>
-              <input type="date" className="border border-slate-200 rounded text-slate-600 px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-white shadow-sm" defaultValue="2026-04-22" />
+      {/* Actions and Filters Panel */}
+      <BottomActionPanel 
+        recordCount={2}
+        hideStandardButtons
+        customButtons={
+          <>
+            <ActionButton icon={<FaFolderOpen className="text-emerald-600 drop-shadow-sm" />} label="Masuk" />
+            <ActionButton icon={<FaSignOutAlt className="text-amber-600 drop-shadow-sm" />} label="Pulang" />
+            <ActionButton icon={<FaExchangeAlt className="text-blue-600 drop-shadow-sm" />} label="Pindah" />
+            <ActionButton icon={<FaPrint className="text-indigo-600 drop-shadow-sm" />} label="Cetak" />
+          </>
+        }
+        extraFilters={
+          <div className="flex items-center gap-6 flex-wrap">
+            <div className="flex items-center gap-3 bg-slate-50 p-1.5 rounded-lg border border-slate-100">
+              <label className="flex items-center gap-2 cursor-pointer font-medium hover:text-emerald-700 text-slate-600 transition-colors px-2">
+                <input type="radio" name="filter_tgl" className="accent-emerald-600 w-3.5 h-3.5" defaultChecked />
+                Belum Pulang
+              </label>
+              <div className="w-px h-4 bg-slate-300"></div>
+              <label className="flex items-center gap-2 cursor-pointer font-medium hover:text-emerald-700 text-slate-600 transition-colors px-2">
+                <input type="radio" name="filter_tgl" className="accent-emerald-600 w-3.5 h-3.5" />
+                Tgl. Masuk
+              </label>
             </div>
-          </div>
 
-          <div className="flex items-center gap-3">
-            <div className="flex items-center bg-white border border-slate-200 rounded-lg px-2 py-1 w-[200px] focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 shadow-sm overflow-hidden transition-all">
-              <span className="text-slate-400 font-medium pr-2 border-r border-slate-200">Kamar</span>
-              <input type="text" placeholder="Cari kamar..." className="w-full bg-transparent outline-none pl-2 text-slate-700 placeholder-slate-400" />
-            </div>
-
-            <div className="flex items-center bg-white border border-slate-200 rounded-lg pl-3 pr-1 py-1 w-[300px] focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 shadow-sm overflow-hidden transition-all">
-              <input type="text" placeholder="Keyword pencarian..." className="w-full bg-transparent outline-none pr-2 text-slate-700 placeholder-slate-400" />
-              <div className="flex items-center gap-1">
-                <button className="text-emerald-500 hover:bg-emerald-50 p-1.5 rounded-md transition-colors"><FaCheck className="text-[10px]" /></button>
-                <button className="text-white bg-emerald-600 hover:bg-emerald-700 p-1.5 rounded-md shadow-sm transition-colors"><FaSearch className="text-[10px]" /></button>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center bg-white border border-slate-200 rounded-lg px-2 py-1 w-[200px] focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 shadow-sm overflow-hidden transition-all">
+                <span className="text-slate-400 font-medium pr-2 border-r border-slate-200">Kamar</span>
+                <input type="text" placeholder="Cari kamar..." className="w-full bg-transparent outline-none pl-2 text-slate-700 placeholder-slate-400" />
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Action Buttons Row */}
-        <div className="flex items-center justify-between mt-1 pt-3 border-t border-slate-100">
-          <div className="flex gap-2">
-            <ActionButton icon={<FaFolderOpen className="text-emerald-600" />} label="Masuk" />
-            <ActionButton icon={<FaSignOutAlt className="text-amber-600" />} label="Pulang" />
-            <ActionButton icon={<FaExchangeAlt className="text-blue-600" />} label="Pindah" />
-            <ActionButton icon={<FaPrint className="text-indigo-600" />} label="Cetak" />
-          </div>
-
-          <div className="flex items-center gap-3">
-            <div className="flex items-center px-4 py-1.5 bg-slate-100 border border-slate-200 rounded-lg text-slate-500 font-semibold text-xs shadow-inner">
-              Total Data : <span className="text-slate-800 ml-1.5 bg-white px-2 py-0.5 rounded shadow-sm">2</span>
-            </div>
-            <ActionButton
-              icon={<FaTimes className="text-red-500" />}
-              label="Keluar"
-              isRed
-              onClick={() => router.push('/')}
-            />
-          </div>
-        </div>
-      </div>
+        }
+      />
     </div>
-  );
-}
-
-// Button Component
-function ActionButton({ icon, label, isRed, className = "", onClick }: { icon: React.ReactNode, label: string, isRed?: boolean, className?: string, onClick?: () => void }) {
-  return (
-    <button
-      onClick={onClick}
-      className={`flex items-center gap-2 px-4 py-1.5 bg-white border ${isRed ? 'border-red-200 hover:border-red-400 hover:bg-red-50 text-red-700' : 'border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 text-slate-700'} rounded-lg shadow-sm hover:shadow hover:-translate-y-0.5 active:translate-y-0 active:shadow-sm transition-all text-xs font-bold ${className}`}
-    >
-      <span className="text-[14px]">{icon}</span>
-      <span>{label}</span>
-    </button>
   );
 }

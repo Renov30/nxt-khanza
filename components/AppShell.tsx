@@ -43,7 +43,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   if (!mounted) return null;
 
   return (
-    <div 
+    <div
       className="flex flex-col h-screen w-full overflow-hidden bg-slate-50 font-sans relative"
       onContextMenu={handleContextMenu}
     >
@@ -89,10 +89,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <div className="flex-1 min-w-[20px]"></div>
 
         {!isLoggedIn ? (
-          <SecondaryMenuItem 
-            icon={<FaSignInAlt className="text-slate-500 group-hover:text-emerald-600 transition-colors" />} 
-            label="Log In" 
-            onClick={() => setIsLoginModalOpen(true)} 
+          <SecondaryMenuItem
+            icon={<FaSignInAlt className="text-slate-500 group-hover:text-emerald-600 transition-colors" />}
+            label="Log In"
+            onClick={() => setIsLoginModalOpen(true)}
           />
         ) : (
           <div className="flex items-center">
@@ -102,10 +102,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 <FaUser className="text-blue-600 text-lg drop-shadow-sm" />
               </div>
             </div>
-            <SecondaryMenuItem 
-              icon={<FaKey className="text-slate-500 group-hover:text-yellow-600 transition-colors" />} 
-              label="Log Out" 
-              onClick={() => setIsLoggedIn(false)} 
+            <SecondaryMenuItem
+              icon={<FaKey className="text-slate-500 group-hover:text-yellow-600 transition-colors" />}
+              label="Log Out"
+              onClick={() => setIsLoggedIn(false)}
             />
           </div>
         )}
@@ -285,7 +285,7 @@ function TopMenuItem({ icon, label }: { icon: React.ReactNode, label: string }) 
     <motion.button
       whileHover={{ y: -1, backgroundColor: "rgba(255,255,255,0.15)" }}
       whileTap={{ scale: 0.96 }}
-      className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors hover:shadow-sm"
+      className="flex items-center gap-2 px-3 py-1 rounded-lg text-xs font-medium transition-colors hover:shadow-sm"
     >
       <span className="text-base drop-shadow-md">{icon}</span>
       <span className="drop-shadow-sm">{label}</span>
@@ -310,7 +310,7 @@ function SecondaryMenuItem({ icon, label, isRed, active, onClick }: { icon: Reac
 
 function ContextMenuItem({ icon, label, onClick, isRed }: { icon: React.ReactNode, label: string, onClick?: () => void, isRed?: boolean }) {
   return (
-    <button 
+    <button
       onClick={onClick}
       className={`w-full text-left flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${isRed ? 'hover:bg-red-50 hover:text-red-600' : 'hover:bg-emerald-50 hover:text-emerald-700'} text-slate-700`}
     >

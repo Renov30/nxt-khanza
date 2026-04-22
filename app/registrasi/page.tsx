@@ -7,6 +7,7 @@ import {
   FaSearch, FaCheck, FaPrint, FaTimes, FaIdCard,
   FaSave, FaFileAlt, FaEdit, FaTrash, FaList
 } from 'react-icons/fa';
+import BottomActionPanel from '@/components/BottomActionPanel';
 
 export default function Registrasi() {
   const [mounted, setMounted] = useState(false);
@@ -30,7 +31,7 @@ export default function Registrasi() {
   ];
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0 }}
@@ -39,14 +40,11 @@ export default function Registrasi() {
       className="flex flex-col w-full h-full overflow-hidden bg-slate-50 text-slate-800 rounded-tl-xl shadow-inner border-t border-l border-white"
     >
       {/* Elegant Page Header */}
-      <div className="bg-gradient-to-r from-emerald-100 to-slate-50 px-4 py-2 border-b border-emerald-100 flex items-center justify-between shadow-sm z-10 shrink-0">
+      <div className="bg-gradient-to-r from-emerald-100 to-slate-50 px-4 py-1 border-b border-emerald-100 flex items-center justify-between shadow-sm z-10 shrink-0">
         <h2 className="text-emerald-800 font-bold text-sm flex items-center gap-2 tracking-wide">
           <FaIdCard className="text-emerald-600" />
           Registrasi Periksa Hari Ini
         </h2>
-        <div className="text-[10px] text-emerald-600 font-semibold bg-emerald-100/50 px-2 py-1 rounded-full border border-emerald-200">
-          Input Data
-        </div>
       </div>
 
       {/* Top Form/Filters Area - Improved UI Layout */}
@@ -60,7 +58,7 @@ export default function Registrasi() {
                 <input type="text" className="w-[60px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50 transition-all font-semibold" defaultValue="001" />
               </div>
             </div>
-            
+
             <div className="flex items-center gap-2">
               <span className="font-semibold text-slate-600 w-20 text-right">No. Rawat :</span>
               <div className="flex flex-1">
@@ -180,11 +178,11 @@ export default function Registrasi() {
           </thead>
           <tbody>
             {mockData.map((row, i) => (
-              <motion.tr 
+              <motion.tr
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05, duration: 0.2 }}
-                key={i} 
+                key={i}
                 className={`border-b border-slate-100 cursor-pointer transition-all duration-200
                   ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/80'} 
                   hover:bg-emerald-50 hover:shadow-[inset_3px_0_0_0_#10b981]`}
@@ -215,11 +213,11 @@ export default function Registrasi() {
         </table>
       </div>
 
-      {/* Bottom Actions Panel - Filter & Buttons */}
-      <div className="bg-white px-4 py-3 border-t border-slate-200 text-xs shadow-[0_-4px_10px_rgba(0,0,0,0.03)] z-20 shrink-0 flex flex-col gap-2">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-y-2">
-          {/* Filters Top */}
-          <div className="flex items-center gap-4 flex-wrap">
+      {/* Actions and Filters Panel */}
+      <BottomActionPanel
+        recordCount={16}
+        extraFilters={
+          <div className="flex items-center gap-4 flex-wrap w-full">
             <div className="flex items-center gap-1.5">
               <span className="font-semibold text-slate-600 w-12 text-right">Dokter :</span>
               <div className="flex bg-slate-50 border border-slate-200 rounded-md shadow-sm overflow-hidden focus-within:ring-1 focus-within:ring-emerald-500 w-[220px]">
@@ -235,64 +233,10 @@ export default function Registrasi() {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Filters Bottom & Actions */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between mt-1 pt-2 border-t border-slate-100 gap-y-3">
-          <div className="flex items-center gap-3 bg-slate-50 p-1.5 rounded-lg border border-slate-100 flex-wrap">
-            <span className="font-semibold text-slate-600 ml-1">Periode :</span>
-            <div className="flex items-center gap-1.5">
-              <input type="date" className="border border-slate-200 rounded text-slate-600 px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-white shadow-sm" defaultValue="2026-04-22" />
-              <span className="text-slate-400 font-bold">s.d.</span>
-              <input type="date" className="border border-slate-200 rounded text-slate-600 px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-white shadow-sm" defaultValue="2026-04-22" />
-            </div>
-
-            <div className="w-px h-5 bg-slate-200 mx-1"></div>
-
-            <span className="font-semibold text-slate-600">Key Word :</span>
-            <div className="flex bg-white border border-slate-200 rounded-md shadow-sm overflow-hidden focus-within:ring-1 focus-within:ring-emerald-500 w-[200px]">
-              <input type="text" className="w-full bg-transparent outline-none px-2 py-1 text-slate-700" />
-              <div className="flex border-l border-slate-200">
-                <button className="px-1.5 text-emerald-500 hover:bg-emerald-50 transition-colors"><FaCheck className="text-[10px]" /></button>
-                <button className="px-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 transition-colors"><FaSearch className="text-[10px]" /></button>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-1.5 flex-wrap">
-            <ActionButton icon={<FaSave className="text-emerald-600" />} label="Simpan" />
-            <ActionButton icon={<FaFileAlt className="text-blue-600" />} label="Baru" />
-            <ActionButton icon={<FaEdit className="text-orange-500" />} label="Ganti" />
-            <ActionButton icon={<FaTrash className="text-red-500" />} label="Hapus" />
-            <ActionButton icon={<FaPrint className="text-indigo-600" />} label="Cetak" />
-            <ActionButton icon={<FaList className="text-slate-600" />} label="Semua" />
-            
-            <div className="flex items-center px-3 py-1.5 bg-slate-100 border border-slate-200 rounded-md text-slate-500 font-semibold text-[10px] shadow-inner mx-1">
-              Record : <span className="text-slate-800 ml-1 bg-white px-1.5 py-0.5 rounded border border-slate-200">16</span>
-            </div>
-
-            <ActionButton 
-              icon={<FaTimes className="text-red-500" />} 
-              label="Keluar" 
-              isRed 
-              onClick={() => router.push('/')}
-            />
-          </div>
-        </div>
-      </div>
+        }
+      />
     </motion.div>
   );
 }
 
-// Button Component
-function ActionButton({ icon, label, isRed, className = "", onClick }: { icon: React.ReactNode, label: string, isRed?: boolean, className?: string, onClick?: () => void }) {
-  return (
-    <button 
-      onClick={onClick}
-      className={`flex items-center gap-1.5 px-3 py-1.5 bg-white border ${isRed ? 'border-red-200 hover:border-red-400 hover:bg-red-50 text-red-700' : 'border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 text-slate-700'} rounded shadow-sm hover:shadow active:scale-95 transition-all text-[11px] font-bold ${className}`}
-    >
-      <span className="text-sm drop-shadow-sm">{icon}</span>
-      <span>{label}</span>
-    </button>
-  );
-}
+
