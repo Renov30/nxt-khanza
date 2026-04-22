@@ -27,14 +27,11 @@ export default function RawatInap() {
   return (
     <div className="flex flex-col w-full h-full overflow-hidden bg-slate-50 text-slate-800 rounded-tl-xl shadow-inner border-t border-l border-white">
       {/* Elegant Page Header */}
-      <div className="bg-gradient-to-r from-emerald-100 to-slate-50 px-4 py-2 border-b border-emerald-100 flex items-center justify-between shadow-sm z-10">
+      <div className="bg-gradient-to-r from-emerald-100 to-slate-50 px-4 py-1 border-b border-emerald-100 flex items-center justify-between shadow-sm z-10">
         <h2 className="text-emerald-800 font-bold text-sm flex items-center gap-2 tracking-wide">
           <FaBed className="text-emerald-600" />
           Daftar Pasien Rawat Inap
         </h2>
-        <div className="text-[10px] text-emerald-600 font-semibold bg-emerald-100/50 px-2 py-1 rounded-full border border-emerald-200">
-          Modul Rawat Inap
-        </div>
       </div>
 
       {/* Top Filters - Improved UI */}
@@ -80,11 +77,11 @@ export default function RawatInap() {
           </thead>
           <tbody>
             {mockData.map((row, i) => (
-              <motion.tr 
+              <motion.tr
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1, duration: 0.3 }}
-                key={i} 
+                key={i}
                 className={`border-b border-slate-100 cursor-pointer transition-all duration-200
                   ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/80'} 
                   hover:bg-emerald-50 hover:shadow-[inset_4px_0_0_0_#10b981]`}
@@ -134,7 +131,7 @@ export default function RawatInap() {
               <span className="text-slate-400 font-medium pr-2 border-r border-slate-200">Kamar</span>
               <input type="text" placeholder="Cari kamar..." className="w-full bg-transparent outline-none pl-2 text-slate-700 placeholder-slate-400" />
             </div>
-            
+
             <div className="flex items-center bg-white border border-slate-200 rounded-lg pl-3 pr-1 py-1 w-[300px] focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500 shadow-sm overflow-hidden transition-all">
               <input type="text" placeholder="Keyword pencarian..." className="w-full bg-transparent outline-none pr-2 text-slate-700 placeholder-slate-400" />
               <div className="flex items-center gap-1">
@@ -153,15 +150,15 @@ export default function RawatInap() {
             <ActionButton icon={<FaExchangeAlt className="text-blue-600" />} label="Pindah" />
             <ActionButton icon={<FaPrint className="text-indigo-600" />} label="Cetak" />
           </div>
-          
+
           <div className="flex items-center gap-3">
             <div className="flex items-center px-4 py-1.5 bg-slate-100 border border-slate-200 rounded-lg text-slate-500 font-semibold text-xs shadow-inner">
               Total Data : <span className="text-slate-800 ml-1.5 bg-white px-2 py-0.5 rounded shadow-sm">2</span>
             </div>
-            <ActionButton 
-              icon={<FaTimes className="text-red-500" />} 
-              label="Keluar" 
-              isRed 
+            <ActionButton
+              icon={<FaTimes className="text-red-500" />}
+              label="Keluar"
+              isRed
               onClick={() => router.push('/')}
             />
           </div>
@@ -174,7 +171,7 @@ export default function RawatInap() {
 // Button Component
 function ActionButton({ icon, label, isRed, className = "", onClick }: { icon: React.ReactNode, label: string, isRed?: boolean, className?: string, onClick?: () => void }) {
   return (
-    <button 
+    <button
       onClick={onClick}
       className={`flex items-center gap-2 px-4 py-1.5 bg-white border ${isRed ? 'border-red-200 hover:border-red-400 hover:bg-red-50 text-red-700' : 'border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 text-slate-700'} rounded-lg shadow-sm hover:shadow hover:-translate-y-0.5 active:translate-y-0 active:shadow-sm transition-all text-xs font-bold ${className}`}
     >

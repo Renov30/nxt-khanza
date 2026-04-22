@@ -8,13 +8,23 @@ import {
   FaKey, FaUserTie, FaInfoCircle, FaDesktop, FaBook,
   FaHome, FaIdCard, FaAmbulance, FaFlask, FaRadiation,
   FaPills, FaBed, FaWheelchair, FaSignInAlt, FaTimes,
-  FaLaptopMedical, FaCubes, FaSync, FaCog, FaReact
+  FaLaptopMedical, FaCubes, FaSync, FaCog, FaReact,
+  FaUser, FaLock
 } from 'react-icons/fa';
+import { loginAction } from '@/lib/actions/auth';
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
   const [contextMenu, setContextMenu] = useState({ show: false, x: 0, y: 0 });
   const pathname = usePathname();
+
+  // Auth States
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -34,7 +44,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div 
-      className="flex flex-col h-screen w-full overflow-hidden bg-slate-50 font-sans"
+      className="flex flex-col h-screen w-full overflow-hidden bg-slate-50 font-sans relative"
       onContextMenu={handleContextMenu}
     >
       {/* Primary Top Bar (Dark Green Gradient) */}
@@ -61,40 +71,50 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         className="bg-white/80 backdrop-blur-md border-b border-emerald-100 flex items-center px-4 py-2 shadow-sm z-20 gap-1 overflow-x-auto relative [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
       >
         <Link href="/">
-          <SecondaryMenuItem icon={<FaHome className="text-slate-500 group-hover:text-emerald-600 transition-colors" />} label="Menu" active={pathname === '/'} />
+          <SecondaryMenuItem icon={<FaHome className="text-slate-500 hover:text-emerald-600 transition-colors" />} label="Menu" active={pathname === '/'} />
         </Link>
         <div className="w-px h-10 bg-emerald-100 mx-2 self-center"></div>
-        <SecondaryMenuItem icon={<FaIdCard className="text-slate-500 group-hover:text-emerald-600 transition-colors" />} label="Registrasi" />
-        <SecondaryMenuItem icon={<FaAmbulance className="text-slate-500 group-hover:text-red-500 transition-colors" />} label="IGD/UGD" />
-        <SecondaryMenuItem icon={<FaFlask className="text-slate-500 group-hover:text-purple-500 transition-colors" />} label="Laborat" />
-        <SecondaryMenuItem icon={<FaRadiation className="text-slate-500 group-hover:text-yellow-500 transition-colors" />} label="Radiologi" />
-        <SecondaryMenuItem icon={<FaPills className="text-slate-500 group-hover:text-pink-500 transition-colors" />} label="Farmasi" />
+        <SecondaryMenuItem icon={<FaIdCard className="text-slate-500 hover:text-emerald-600 transition-colors" />} label="Registrasi" />
+        <SecondaryMenuItem icon={<FaAmbulance className="text-slate-500 hover:text-red-500 transition-colors" />} label="IGD/UGD" />
+        <SecondaryMenuItem icon={<FaFlask className="text-slate-500 hover:text-purple-500 transition-colors" />} label="Laborat" />
+        <SecondaryMenuItem icon={<FaRadiation className="text-slate-500 hover:text-yellow-500 transition-colors" />} label="Radiologi" />
+        <SecondaryMenuItem icon={<FaPills className="text-slate-500 hover:text-pink-500 transition-colors" />} label="Farmasi" />
         <Link href="/rawat-inap">
-          <SecondaryMenuItem icon={<FaBed className="text-slate-500 group-hover:text-blue-500 transition-colors" />} label="Rawat Inap" active={pathname === '/rawat-inap'} />
+          <SecondaryMenuItem icon={<FaBed className="text-slate-500 hover:text-blue-500 transition-colors" />} label="Rawat Inap" active={pathname === '/rawat-inap'} />
         </Link>
-        <SecondaryMenuItem icon={<FaWheelchair className="text-slate-500 group-hover:text-teal-500 transition-colors" />} label="Rawat Jalan" />
+        <SecondaryMenuItem icon={<FaWheelchair className="text-slate-500 hover:text-teal-500 transition-colors" />} label="Rawat Jalan" />
 
         <div className="flex-1 min-w-[20px]"></div>
 
-        <SecondaryMenuItem icon={<FaSignInAlt className="text-slate-500 group-hover:text-emerald-600 transition-colors" />} label="Log In" />
-        <SecondaryMenuItem icon={<FaTimes className="text-red-500 group-hover:text-red-600 transition-colors" />} label="Keluar" isRed />
+        {!isLoggedIn ? (
+          <SecondaryMenuItem 
+            icon={<FaSignInAlt className="text-slate-500 group-hover:text-emerald-600 transition-colors" />} 
+            label="Log In" 
+            onClick={() => setIsLoginModalOpen(true)} 
+          />
+        ) : (
+          <div className="flex items-center">
+            <div className="flex items-center gap-2 px-3 py-1 mr-2 border-r border-emerald-200">
+              <span className="text-[14px] font-semibold text-slate-700 max-w-[100px] truncate">{username || 'renov'}</span>
+              <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center border border-blue-200 shadow-sm cursor-pointer hover:bg-blue-200 transition-colors">
+                <FaUser className="text-blue-600 text-lg drop-shadow-sm" />
+              </div>
+            </div>
+            <SecondaryMenuItem 
+              icon={<FaKey className="text-slate-500 group-hover:text-yellow-600 transition-colors" />} 
+              label="Log Out" 
+              onClick={() => setIsLoggedIn(false)} 
+            />
+          </div>
+        )}
+        <SecondaryMenuItem icon={<FaTimes className="text-red-500 hover:text-red-600 transition-colors" />} label="Keluar" isRed />
       </motion.nav>
 
       {/* Main Content Area */}
       <main className="flex-1 relative w-full h-full overflow-hidden bg-emerald-50/30">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={pathname}
-            initial={pathname === '/rawat-inap' ? { opacity: 0, scale: 0 } : { opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={pathname === '/' ? { opacity: 0, scale: 0 } : { opacity: 0, scale: 0.95 }}
-            transition={pathname === '/rawat-inap' ? { type: "spring", stiffness: 200, damping: 20 } : { duration: 0.2 }}
-            className="absolute inset-0 w-full h-full"
-            style={{ transformOrigin: "52% 0%" }}
-          >
-            {children}
-          </motion.div>
-        </AnimatePresence>
+        <div className="absolute inset-0 w-full h-full">
+          {children}
+        </div>
       </main>
 
       {/* Bottom Status Bar */}
@@ -108,7 +128,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           Status Admin :
         </div>
         <div className="px-3 sm:px-5 py-1 border-r border-emerald-200/60 flex items-center hover:bg-emerald-100 cursor-pointer transition-colors h-full min-w-max">
-          Admin Utama
+          {isLoggedIn ? username || 'Admin Utama' : 'Belum Login'}
         </div>
         <div className="hidden sm:flex px-5 py-1 border-r border-emerald-200/60 items-center h-full text-slate-500 font-mono">
           22/04/2026
@@ -140,14 +160,118 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             <ContextMenuItem icon={<FaCog className="text-slate-500" />} label="Pengaturan" />
             <div className="w-full h-px bg-slate-100 my-1"></div>
             <ContextMenuItem icon={<FaSync className="text-emerald-500" />} label="Muat Ulang (Refresh)" onClick={() => window.location.reload()} />
-            <Link href="/login" className="w-full text-left">
-              <ContextMenuItem icon={<FaSignInAlt className="text-blue-500" />} label="Buka Halaman Login" />
-            </Link>
+            {!isLoggedIn ? (
+              <ContextMenuItem icon={<FaSignInAlt className="text-blue-500" />} label="Buka Halaman Login" onClick={() => setIsLoginModalOpen(true)} />
+            ) : (
+              <ContextMenuItem icon={<FaKey className="text-yellow-600" />} label="Log Out" onClick={() => setIsLoggedIn(false)} />
+            )}
             <div className="w-full h-px bg-slate-100 my-1"></div>
             <ContextMenuItem icon={<FaTimes className="text-red-500" />} label="Tutup Menu" isRed />
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Login Modal */}
+      <AnimatePresence>
+        {isLoginModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="bg-white w-[380px] flex flex-col rounded-xl overflow-hidden shadow-2xl border border-white/50"
+            >
+              {/* Top spacer */}
+              <div className="h-6 bg-white w-full"></div>
+
+              {/* Form Area */}
+              <form action={async (formData) => {
+                setLoginError('');
+                setIsLoading(true);
+                const result = await loginAction(formData);
+                setIsLoading(false);
+
+                if (result.success && result.user) {
+                  setIsLoggedIn(true);
+                  setUsername(result.user.nama || username);
+                  setIsLoginModalOpen(false);
+                  setPassword('');
+                } else {
+                  setLoginError(result.message || 'Login failed');
+                }
+              }}>
+                <div className="bg-[#cbdceb] px-6 py-6 flex flex-col gap-5 border-y border-slate-300 shadow-inner">
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-semibold text-slate-700 w-24">Username :</label>
+                    <input
+                      name="username"
+                      type="text"
+                      className="flex-1 bg-gradient-to-b from-slate-50 to-slate-200 border border-slate-400 rounded-full px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 shadow-inner text-slate-700 font-medium"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      autoFocus
+                      required
+                    />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-semibold text-slate-700 w-24">Password :</label>
+                    <input
+                      name="password"
+                      type="password"
+                      className="flex-1 bg-gradient-to-b from-slate-50 to-slate-200 border border-slate-400 rounded-full px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 shadow-inner text-slate-700 font-medium"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                  {loginError && (
+                    <motion.p
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      className="text-[10px] text-red-600 font-bold text-center bg-red-50 py-1 rounded border border-red-200"
+                    >
+                      {loginError}
+                    </motion.p>
+                  )}
+                </div>
+
+                {/* Buttons Area */}
+                <div className="bg-white px-6 py-4 flex items-center justify-center gap-4">
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="flex-1 flex justify-center items-center gap-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-full py-2 px-4 transition-colors shadow-sm text-sm font-bold text-slate-700 active:scale-95 disabled:opacity-50"
+                  >
+                    <div className="w-5 h-5 flex items-center justify-center">
+                      <FaLock className={`text-yellow-500 text-lg drop-shadow-sm ${isLoading ? 'animate-pulse' : ''}`} />
+                    </div>
+                    {isLoading ? 'Loading...' : 'Log-in'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsLoginModalOpen(false);
+                      setLoginError('');
+                    }}
+                    className="flex-1 flex justify-center items-center gap-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-full py-2 px-4 transition-colors shadow-sm text-sm font-bold text-slate-700 active:scale-95"
+                  >
+                    <div className="w-5 h-5 flex items-center justify-center bg-red-500 rounded-md shadow-sm">
+                      <FaTimes className="text-white text-[10px]" />
+                    </div>
+                    Batal
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </div>
   );
 }
@@ -167,9 +291,10 @@ function TopMenuItem({ icon, label }: { icon: React.ReactNode, label: string }) 
   );
 }
 
-function SecondaryMenuItem({ icon, label, isRed, active }: { icon: React.ReactNode, label: string, isRed?: boolean, active?: boolean }) {
+function SecondaryMenuItem({ icon, label, isRed, active, onClick }: { icon: React.ReactNode, label: string, isRed?: boolean, active?: boolean, onClick?: () => void }) {
   return (
     <motion.button
+      onClick={onClick}
       whileHover={{ y: -3, scale: 1.02, backgroundColor: isRed ? "rgba(254,226,226,0.5)" : "rgba(209,250,229,0.3)" }}
       whileTap={{ scale: 0.95 }}
       className={`group flex flex-col items-center justify-center gap-1 min-w-[76px] p-2 rounded-xl transition-all border ${active ? 'border-emerald-200 bg-emerald-50/60 shadow-sm' : 'border-transparent'} hover:border-emerald-100 hover:shadow-sm relative overflow-hidden`}
