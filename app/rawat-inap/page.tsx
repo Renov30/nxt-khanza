@@ -26,7 +26,14 @@ export default function RawatInap() {
   ];
 
   return (
-    <div className="flex flex-col w-full h-full overflow-hidden bg-slate-50 text-slate-800 rounded-tl-xl shadow-inner border-t border-l border-white">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95, y: -20 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95, y: -20 }}
+      transition={{ type: "spring", stiffness: 250, damping: 25 }}
+      style={{ transformOrigin: "60% 0%" }}
+      className="flex flex-col w-full h-full overflow-hidden bg-slate-50 text-slate-800 rounded-tl-xl shadow-inner border-t border-l border-white relative"
+    >
       {/* Elegant Page Header */}
       <div className="bg-gradient-to-r from-emerald-100 to-slate-50 px-4 py-1 border-b border-emerald-100 flex items-center justify-between shadow-sm z-10">
         <h2 className="text-emerald-800 font-bold text-sm flex items-center gap-2 tracking-wide">

@@ -65,7 +65,14 @@ export default function DaftarMenuPage() {
   });
 
   return (
-    <div className="flex h-full w-full bg-slate-50/50 overflow-hidden relative">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95, y: -20 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95, y: -20 }}
+      transition={{ type: "spring", stiffness: 250, damping: 25 }}
+      style={{ transformOrigin: "8% 0%" }}
+      className="flex h-full w-full bg-slate-50/50 overflow-hidden relative rounded-tl-xl shadow-inner border-t border-l border-white"
+    >
 
       {/* Sidebar Control / Animation */}
       <AnimatePresence initial={false}>
@@ -150,10 +157,7 @@ export default function DaftarMenuPage() {
             <div className="flex flex-wrap justify-center gap-6 sm:gap-10 max-w-[1400px] mx-auto">
               {filteredItems.map((item, idx) => (
                 <Link href={item.link} key={item.id}>
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8, y: 10 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    transition={{ delay: idx * 0.02, duration: 0.2 }}
+                  <div
                     className="flex flex-col items-center justify-start p-4 rounded-xl hover:bg-white border border-transparent hover:border-slate-200 hover:shadow-lg transition-all cursor-pointer group text-center gap-4 w-36 h-40"
                   >
                     <div className={`w-20 h-20 shrink-0 flex items-center justify-center rounded-2xl bg-white group-hover:bg-emerald-50 border border-slate-100 group-hover:border-emerald-200 shadow-sm transition-colors ${item.color}`}>
@@ -162,7 +166,7 @@ export default function DaftarMenuPage() {
                     <span className="text-[11px] font-semibold text-slate-600 group-hover:text-emerald-800 transition-colors leading-tight px-1">
                       {item.label}
                     </span>
-                  </motion.div>
+                  </div>
                 </Link>
               ))}
             </div>
@@ -175,6 +179,6 @@ export default function DaftarMenuPage() {
         </div>
 
       </div>
-    </div>
+    </motion.div>
   );
 }

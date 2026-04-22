@@ -175,10 +175,7 @@ export default function Registrasi() {
             body: (
               <>
                 {mockData.map((row, i) => (
-                  <motion.tr
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.05, duration: 0.2 }}
+                  <tr
                     key={i}
                     className={`border-b border-slate-100 cursor-pointer transition-all duration-200
                       ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/80'} 
@@ -204,7 +201,7 @@ export default function Registrasi() {
                     <td className="py-1.5 px-2 text-right text-slate-700">{row.biaya}</td>
                     <td className="py-1.5 px-2 text-slate-600">{row.sts}</td>
                     <td className="py-1.5 px-2 text-emerald-600 tabular-nums">{row.telp}</td>
-                  </motion.tr>
+                  </tr>
                 ))}
               </>
             )
