@@ -2,16 +2,15 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useRouter } from 'next/navigation';
 import {
   FaSearch, FaCheck, FaPrint, FaTimes, FaIdCard,
   FaSave, FaFileAlt, FaEdit, FaTrash, FaList
 } from 'react-icons/fa';
 import BottomActionPanel from '@/components/BottomActionPanel';
+import TopFormContainer from '@/components/TopFormContainer';
 
 export default function Registrasi() {
   const [mounted, setMounted] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     setMounted(true);
@@ -47,8 +46,7 @@ export default function Registrasi() {
         </h2>
       </div>
 
-      {/* Top Form/Filters Area - Improved UI Layout */}
-      <div className="p-3 bg-white border-b border-slate-200 shadow-sm z-0 shrink-0">
+      <TopFormContainer title="Input Data">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-xs">
           {/* Left Column */}
           <div className="flex flex-col gap-2">
@@ -143,7 +141,7 @@ export default function Registrasi() {
             </div>
           </div>
         </div>
-      </div>
+      </TopFormContainer>
 
       {/* Tabs */}
       <div className="flex gap-1 px-4 mt-2 mb-0 shrink-0">
