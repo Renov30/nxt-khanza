@@ -57,9 +57,9 @@ export default function RawatInap() {
       </div>
 
       {/* Table Area - Modernized */}
-      <div className="flex-1 overflow-auto bg-slate-50/50 relative">
-        <table className="w-full text-left border-collapse text-[11px] whitespace-nowrap">
-          <thead className="sticky top-0 z-10 text-slate-600 shadow-sm backdrop-blur-md bg-white/90">
+      <div className="flex-1 overflow-auto bg-slate-50/50 border-t border-slate-300 relative">
+        <table className="w-full text-left border-collapse text-xs whitespace-nowrap">
+          <thead className="sticky top-0 z-10 text-slate-600 shadow-sm backdrop-blur-md bg-white/95 border-b-2 border-emerald-500">
             <tr className="border-b-2 border-emerald-500">
               <th className="py-2.5 px-3 font-bold hover:bg-slate-100 cursor-pointer transition-colors">No.Rawat</th>
               <th className="py-2.5 px-3 font-bold hover:bg-slate-100 cursor-pointer transition-colors">Nomor RM</th>
