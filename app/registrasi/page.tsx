@@ -8,6 +8,7 @@ import {
 } from 'react-icons/fa';
 import BottomActionPanel from '@/components/BottomActionPanel';
 import TopFormContainer from '@/components/TopFormContainer';
+import TabbedTable from '@/components/TabbedTable';
 
 export default function Registrasi() {
   const [mounted, setMounted] = useState(false);
@@ -143,73 +144,91 @@ export default function Registrasi() {
         </div>
       </TopFormContainer>
 
-      {/* Tabs */}
-      <div className="flex gap-1 px-4 mt-2 mb-0 shrink-0">
-        <button className="px-4 py-1.5 text-xs font-bold border border-b-0 border-slate-300 rounded-t-lg bg-white text-emerald-700 pb-2 z-10 -mb-[1px]">Registrasi Awal</button>
-        <button className="px-4 py-1.5 text-xs font-semibold border-b border-transparent text-slate-500 hover:text-emerald-600 transition-colors">Rujukan Internal Poli</button>
-      </div>
-
-      {/* Table Area - Modernized */}
-      <div className="flex-1 overflow-auto bg-slate-50/50 border-t border-slate-300 relative">
-        <table className="w-full text-left border-collapse text-[10px] whitespace-nowrap">
-          <thead className="sticky top-0 z-10 text-slate-600 shadow-sm backdrop-blur-md bg-white/95 border-b-2 border-emerald-500">
-            <tr>
-              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer text-center">P</th>
-              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">No.Rawat</th>
-              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer text-center">Tanggal</th>
-              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer text-center">Jam</th>
-              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Kode Dokter</th>
-              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Dokter Dituju</th>
-              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Nomor RM</th>
-              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Pasien</th>
-              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer text-center">J.K.</th>
-              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Umur</th>
-              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Poliklinik</th>
-              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Jenis Bayar</th>
-              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Penanggung Jawab</th>
-              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Alamat P.J.</th>
-              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Hubungan P.J.</th>
-              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer text-right">Biaya Registrasi</th>
-              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Status</th>
-              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">No. Telp</th>
-            </tr>
-          </thead>
-          <tbody>
-            {mockData.map((row, i) => (
-              <motion.tr
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.05, duration: 0.2 }}
-                key={i}
-                className={`border-b border-slate-100 cursor-pointer transition-all duration-200
-                  ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/80'} 
-                  hover:bg-emerald-50 hover:shadow-[inset_3px_0_0_0_#10b981]`}
-              >
-                <td className="py-1.5 px-2 text-center">
-                  <input type="checkbox" className="accent-emerald-600 rounded" defaultChecked={row.p} />
-                </td>
-                <td className="py-1.5 px-2 text-slate-700 font-medium">{row.no}</td>
-                <td className="py-1.5 px-2 text-center text-slate-600">{row.tgl}</td>
-                <td className="py-1.5 px-2 text-center text-slate-600">{row.jam}</td>
-                <td className="py-1.5 px-2 text-slate-500 text-[9px]">{row.kd_dok}</td>
-                <td className="py-1.5 px-2 font-semibold text-emerald-800">{row.nm_dok}</td>
-                <td className="py-1.5 px-2 font-bold text-slate-700">{row.rm}</td>
-                <td className="py-1.5 px-2 font-bold text-slate-800">{row.nama}</td>
-                <td className="py-1.5 px-2 text-center text-slate-600">{row.jk}</td>
-                <td className="py-1.5 px-2 text-slate-600">{row.umur}</td>
-                <td className="py-1.5 px-2 text-slate-700 font-medium">{row.poli}</td>
-                <td className="py-1.5 px-2"><span className="bg-sky-100 text-sky-700 px-1.5 py-[2px] rounded-sm text-[8px] font-bold">{row.jnsB}</span></td>
-                <td className="py-1.5 px-2 text-slate-600">{row.pj}</td>
-                <td className="py-1.5 px-2 truncate max-w-[120px]" title={row.alamatPj}>{row.alamatPj}</td>
-                <td className="py-1.5 px-2 text-slate-600">{row.hubPj}</td>
-                <td className="py-1.5 px-2 text-right text-slate-700">{row.biaya}</td>
-                <td className="py-1.5 px-2 text-slate-600">{row.sts}</td>
-                <td className="py-1.5 px-2 text-emerald-600 tabular-nums">{row.telp}</td>
-              </motion.tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      {/* Table Area (Tabbed) */}
+      <TabbedTable 
+        tabs={[
+          {
+            id: 'registrasi_awal',
+            label: 'Registrasi Awal',
+            header: (
+              <tr>
+                <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer text-center">P</th>
+                <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">No.Rawat</th>
+                <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer text-center">Tanggal</th>
+                <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer text-center">Jam</th>
+                <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Kode Dokter</th>
+                <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Dokter Dituju</th>
+                <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Nomor RM</th>
+                <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Pasien</th>
+                <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer text-center">J.K.</th>
+                <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Umur</th>
+                <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Poliklinik</th>
+                <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Jenis Bayar</th>
+                <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Penanggung Jawab</th>
+                <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Alamat P.J.</th>
+                <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Hubungan P.J.</th>
+                <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer text-right">Biaya Registrasi</th>
+                <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Status</th>
+                <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">No. Telp</th>
+              </tr>
+            ),
+            body: (
+              <>
+                {mockData.map((row, i) => (
+                  <motion.tr
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.05, duration: 0.2 }}
+                    key={i}
+                    className={`border-b border-slate-100 cursor-pointer transition-all duration-200
+                      ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/80'} 
+                      hover:bg-emerald-50 hover:shadow-[inset_3px_0_0_0_#10b981]`}
+                  >
+                    <td className="py-1.5 px-2 text-center">
+                      <input type="checkbox" className="accent-emerald-600 rounded" defaultChecked={row.p} />
+                    </td>
+                    <td className="py-1.5 px-2 text-slate-700 font-medium">{row.no}</td>
+                    <td className="py-1.5 px-2 text-center text-slate-600">{row.tgl}</td>
+                    <td className="py-1.5 px-2 text-center text-slate-600">{row.jam}</td>
+                    <td className="py-1.5 px-2 text-slate-500 text-[9px]">{row.kd_dok}</td>
+                    <td className="py-1.5 px-2 font-semibold text-emerald-800">{row.nm_dok}</td>
+                    <td className="py-1.5 px-2 font-bold text-slate-700">{row.rm}</td>
+                    <td className="py-1.5 px-2 font-bold text-slate-800">{row.nama}</td>
+                    <td className="py-1.5 px-2 text-center text-slate-600">{row.jk}</td>
+                    <td className="py-1.5 px-2 text-slate-600">{row.umur}</td>
+                    <td className="py-1.5 px-2 text-slate-700 font-medium">{row.poli}</td>
+                    <td className="py-1.5 px-2"><span className="bg-sky-100 text-sky-700 px-1.5 py-[2px] rounded-sm text-[8px] font-bold">{row.jnsB}</span></td>
+                    <td className="py-1.5 px-2 text-slate-600">{row.pj}</td>
+                    <td className="py-1.5 px-2 truncate max-w-[120px]" title={row.alamatPj}>{row.alamatPj}</td>
+                    <td className="py-1.5 px-2 text-slate-600">{row.hubPj}</td>
+                    <td className="py-1.5 px-2 text-right text-slate-700">{row.biaya}</td>
+                    <td className="py-1.5 px-2 text-slate-600">{row.sts}</td>
+                    <td className="py-1.5 px-2 text-emerald-600 tabular-nums">{row.telp}</td>
+                  </motion.tr>
+                ))}
+              </>
+            )
+          },
+          {
+            id: 'rujukan_internal',
+            label: 'Rujukan Internal Poli',
+            header: (
+              <tr>
+                <th className="py-2.5 px-2 font-bold">No. Rujukan</th>
+                <th className="py-2.5 px-2 font-bold">Poli Asal</th>
+                <th className="py-2.5 px-2 font-bold">Poli Tujuan</th>
+                <th className="py-2.5 px-2 font-bold">Dokter Perujuk</th>
+                <th className="py-2.5 px-2 font-bold">Keterangan</th>
+              </tr>
+            ),
+            body: (
+              <tr>
+                <td colSpan={5} className="py-8 text-center text-slate-400 italic font-medium">Belum ada data rujukan internal poli.</td>
+              </tr>
+            )
+          }
+        ]}
+      />
 
       {/* Actions and Filters Panel */}
       <BottomActionPanel
