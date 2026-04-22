@@ -74,7 +74,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           <SecondaryMenuItem icon={<FaHome className="text-slate-500 hover:text-emerald-600 transition-colors" />} label="Menu" active={pathname === '/'} />
         </Link>
         <div className="w-px h-10 bg-emerald-100 mx-2 self-center"></div>
-        <SecondaryMenuItem icon={<FaIdCard className="text-slate-500 hover:text-emerald-600 transition-colors" />} label="Registrasi" />
+        <Link href="/registrasi">
+          <SecondaryMenuItem icon={<FaIdCard className="text-slate-500 hover:text-emerald-600 transition-colors" />} label="Registrasi" active={pathname === '/registrasi'} />
+        </Link>
         <SecondaryMenuItem icon={<FaAmbulance className="text-slate-500 hover:text-red-500 transition-colors" />} label="IGD/UGD" />
         <SecondaryMenuItem icon={<FaFlask className="text-slate-500 hover:text-purple-500 transition-colors" />} label="Laborat" />
         <SecondaryMenuItem icon={<FaRadiation className="text-slate-500 hover:text-yellow-500 transition-colors" />} label="Radiologi" />

@@ -1,0 +1,298 @@
+"use client";
+
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
+import {
+  FaSearch, FaCheck, FaPrint, FaTimes, FaIdCard,
+  FaSave, FaFileAlt, FaEdit, FaTrash, FaList
+} from 'react-icons/fa';
+
+export default function Registrasi() {
+  const [mounted, setMounted] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  /* Mock Data for Table */
+  const mockData = [
+    { p: false, no: "2026/02/23/000001", tgl: "2026-02-23", jam: "08:07:55", kd_dok: "D0000004", nm_dok: "dr. Hilyatul Nadia", rm: "000005", nama: "Sakha Hamizan Aqila", jk: "L", umur: "8 Th", poli: "Poliklinik Penyakit Dalam", jnsB: "-", pj: "WINDIHARTO", alamatPj: "PAJANGAN BANTUL, -, -", hubPj: "AYAH", biaya: "10,000", sts: "Lama", telp: "0896267503923" },
+    { p: false, no: "2026/02/25/000005", tgl: "2026-02-25", jam: "20:22:37", kd_dok: "D0000005", nm_dok: "dr. Sri Rahma", rm: "000051", nama: "ADI KAZAMA", jk: "L", umur: "41 Th", poli: "Poliklinik Jantung", jnsB: "UMUM", pj: "-", alamatPj: ", CAMPURJO, BOJONEGO...", hubPj: "DIRI SENDIRI", biaya: "10,000", sts: "Lama", telp: "-" },
+    { p: false, no: "2026/02/25/000003", tgl: "2026-02-25", jam: "14:35:37", kd_dok: "D0000004", nm_dok: "dr. Hilyatul Nadia", rm: "000048", nama: "LIYA RAHMA", jk: "P", umur: "39 Th", poli: "Poliklinik Penyakit Dalam", jnsB: "UMUM", pj: "-", alamatPj: "TES, JOYOTAKAN, SEREN...", hubPj: "DIRI SENDIRI", biaya: "10,000", sts: "Lama", telp: "08965786" },
+    { p: false, no: "2026/02/25/000002", tgl: "2026-02-25", jam: "11:55:49", kd_dok: "D0000004", nm_dok: "dr. Hilyatul Nadia", rm: "000009", nama: "WAHYUDI KURNIAWAN", jk: "L", umur: "36 Th", poli: "Poliklinik Penyakit Dalam", jnsB: "-", pj: "-", alamatPj: "PEKALONGAN, -, -, -", hubPj: "SAUDARA", biaya: "10,000", sts: "Lama", telp: "083875000083" },
+    { p: true, no: "2026/02/25/000001", tgl: "2026-02-25", jam: "10:07:55", kd_dok: "D0000004", nm_dok: "dr. Hilyatul Nadia", rm: "000022", nama: "RUDI SANTOSO", jk: "L", umur: "68 Th", poli: "Poliklinik Penyakit Dalam", jnsB: "BPJS", pj: "-", alamatPj: "TES, KEDUNGWARLU, PRE...", hubPj: "SAUDARA", biaya: "10,000", sts: "Lama", telp: "123123213" },
+    { p: false, no: "2026/03/03/000001", tgl: "2026-03-03", jam: "18:01:10", kd_dok: "D0000001", nm_dok: "dr. Hilyatul Nadia", rm: "000005", nama: "Sakha Hamizan Aqila", jk: "L", umur: "9 Th", poli: "Poliklinik Penyakit Dalam", jnsB: "-", pj: "WINDIHARTO", alamatPj: "PAJANGAN BANTUL, -, -", hubPj: "AYAH", biaya: "10,000", sts: "Lama", telp: "0896267503923" },
+    { p: false, no: "2026/03/10/000001", tgl: "2026-03-10", jam: "11:46:36", kd_dok: "D0000004", nm_dok: "dr. Hilyatul Nadia", rm: "000047", nama: "RIDWAN HALIM", jk: "L", umur: "37 Th", poli: "Poliklinik Penyakit Dalam", jnsB: "PT KERETA API", pj: "-", alamatPj: "GAS, KARANG TIMUR, KA...", hubPj: "DIRI SENDIRI", biaya: "10,000", sts: "Lama", telp: "-" },
+  ];
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0 }}
+      transition={{ type: "spring", stiffness: 220, damping: 25 }}
+      style={{ transformOrigin: "12% 0%" }}
+      className="flex flex-col w-full h-full overflow-hidden bg-slate-50 text-slate-800 rounded-tl-xl shadow-inner border-t border-l border-white"
+    >
+      {/* Elegant Page Header */}
+      <div className="bg-gradient-to-r from-emerald-100 to-slate-50 px-4 py-2 border-b border-emerald-100 flex items-center justify-between shadow-sm z-10 shrink-0">
+        <h2 className="text-emerald-800 font-bold text-sm flex items-center gap-2 tracking-wide">
+          <FaIdCard className="text-emerald-600" />
+          Registrasi Periksa Hari Ini
+        </h2>
+        <div className="text-[10px] text-emerald-600 font-semibold bg-emerald-100/50 px-2 py-1 rounded-full border border-emerald-200">
+          Input Data
+        </div>
+      </div>
+
+      {/* Top Form/Filters Area - Improved UI Layout */}
+      <div className="p-3 bg-white border-b border-slate-200 shadow-sm z-0 shrink-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-xs">
+          {/* Left Column */}
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-slate-600 w-20 text-right">No. Reg :</span>
+              <div className="flex gap-1 flex-1">
+                <input type="text" className="w-[60px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50 transition-all font-semibold" defaultValue="001" />
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-slate-600 w-20 text-right">No. Rawat :</span>
+              <div className="flex flex-1">
+                <input type="text" className="w-[180px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50 transition-all" defaultValue="2026/04/22/000001" />
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-slate-600 w-20 text-right">Tgl. Reg :</span>
+              <div className="flex items-center gap-1.5 flex-1 flex-wrap">
+                <input type="date" className="border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-white" defaultValue="2026-04-22" />
+                <span className="font-medium text-slate-500 pl-1">Jam :</span>
+                <select className="border border-slate-200 rounded-md py-1 px-1 text-center min-w-[45px] bg-white"><option>09</option><option>10</option></select>
+                <select className="border border-slate-200 rounded-md py-1 px-1 text-center min-w-[45px] bg-white"><option>24</option><option>25</option></select>
+                <select className="border border-slate-200 rounded-md py-1 px-1 text-center min-w-[45px] bg-white"><option>19</option><option>20</option></select>
+                <input type="checkbox" className="accent-emerald-600 ml-1 w-3.5 h-3.5 rounded" defaultChecked />
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-slate-600 w-20 text-right">Dr Dituju :</span>
+              <div className="flex items-center gap-1 flex-1">
+                <input type="text" className="w-[80px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
+                <input type="text" className="flex-1 min-w-[120px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
+                <button className="bg-emerald-50 border border-emerald-200 p-1.5 rounded-md hover:bg-emerald-100 text-emerald-600 transition-colors shadow-sm"><FaSearch className="text-[10px]" /></button>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-slate-600 w-20 text-right">Unit :</span>
+              <div className="flex items-center gap-1 flex-1">
+                <input type="text" className="w-[80px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
+                <input type="text" className="flex-1 min-w-[120px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
+                <button className="bg-emerald-50 border border-emerald-200 p-1.5 rounded-md hover:bg-emerald-100 text-emerald-600 transition-colors shadow-sm"><FaSearch className="text-[10px]" /></button>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column */}
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-slate-600 w-[110px] text-right">No. Rekam Medik :</span>
+              <div className="flex items-center gap-1 flex-1">
+                <input type="text" className="w-[80px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
+                <input type="text" className="flex-1 min-w-[140px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
+                <button className="bg-emerald-50 border border-emerald-200 p-1.5 rounded-md hover:bg-emerald-100 text-emerald-600 transition-colors shadow-sm"><FaSearch className="text-[10px]" /></button>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-slate-600 w-[110px] text-right">Penanggung Jawab :</span>
+              <div className="flex items-center gap-1 flex-1">
+                <input type="text" className="flex-1 min-w-[100px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
+                <span className="font-medium text-slate-500 text-right ml-1">Hubungan :</span>
+                <input type="text" className="w-[100px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-slate-600 w-[110px] text-right">Alamat P. J. :</span>
+              <div className="flex items-center gap-1 flex-1">
+                <input type="text" className="flex-1 min-w-[100px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
+                <span className="font-medium text-slate-500 w-[60px] text-right ml-1 mr-1">Status :</span>
+                <input type="text" className="w-[100px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-slate-600 w-[110px] text-right">Jenis Bayar :</span>
+              <div className="flex items-center gap-1 flex-1">
+                <input type="text" className="flex-1 min-w-[100px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
+                <span className="font-medium text-slate-500 w-[60px] text-right ml-1 mr-1">No. KA :</span>
+                <input type="text" className="w-[100px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-slate-600 w-[110px] text-right">Asal Rujukan :</span>
+              <div className="flex items-center gap-1 flex-1">
+                <input type="text" className="flex-1 border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div className="flex gap-1 px-4 mt-2 mb-0 shrink-0">
+        <button className="px-4 py-1.5 text-xs font-bold border border-b-0 border-slate-300 rounded-t-lg bg-white text-emerald-700 pb-2 z-10 -mb-[1px]">Registrasi Awal</button>
+        <button className="px-4 py-1.5 text-xs font-semibold border-b border-transparent text-slate-500 hover:text-emerald-600 transition-colors">Rujukan Internal Poli</button>
+      </div>
+
+      {/* Table Area - Modernized */}
+      <div className="flex-1 overflow-auto bg-slate-50/50 border-t border-slate-300 relative">
+        <table className="w-full text-left border-collapse text-[10px] whitespace-nowrap">
+          <thead className="sticky top-0 z-10 text-slate-600 shadow-sm backdrop-blur-md bg-white/95 border-b-2 border-emerald-500">
+            <tr>
+              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer text-center">P</th>
+              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">No.Rawat</th>
+              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer text-center">Tanggal</th>
+              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer text-center">Jam</th>
+              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Kode Dokter</th>
+              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Dokter Dituju</th>
+              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Nomor RM</th>
+              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Pasien</th>
+              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer text-center">J.K.</th>
+              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Umur</th>
+              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Poliklinik</th>
+              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Jenis Bayar</th>
+              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Penanggung Jawab</th>
+              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Alamat P.J.</th>
+              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Hubungan P.J.</th>
+              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer text-right">Biaya Registrasi</th>
+              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">Status</th>
+              <th className="py-2.5 px-2 font-bold hover:bg-slate-100 cursor-pointer">No. Telp</th>
+            </tr>
+          </thead>
+          <tbody>
+            {mockData.map((row, i) => (
+              <motion.tr 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.05, duration: 0.2 }}
+                key={i} 
+                className={`border-b border-slate-100 cursor-pointer transition-all duration-200
+                  ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/80'} 
+                  hover:bg-emerald-50 hover:shadow-[inset_3px_0_0_0_#10b981]`}
+              >
+                <td className="py-1.5 px-2 text-center">
+                  <input type="checkbox" className="accent-emerald-600 rounded" defaultChecked={row.p} />
+                </td>
+                <td className="py-1.5 px-2 text-slate-700 font-medium">{row.no}</td>
+                <td className="py-1.5 px-2 text-center text-slate-600">{row.tgl}</td>
+                <td className="py-1.5 px-2 text-center text-slate-600">{row.jam}</td>
+                <td className="py-1.5 px-2 text-slate-500 text-[9px]">{row.kd_dok}</td>
+                <td className="py-1.5 px-2 font-semibold text-emerald-800">{row.nm_dok}</td>
+                <td className="py-1.5 px-2 font-bold text-slate-700">{row.rm}</td>
+                <td className="py-1.5 px-2 font-bold text-slate-800">{row.nama}</td>
+                <td className="py-1.5 px-2 text-center text-slate-600">{row.jk}</td>
+                <td className="py-1.5 px-2 text-slate-600">{row.umur}</td>
+                <td className="py-1.5 px-2 text-slate-700 font-medium">{row.poli}</td>
+                <td className="py-1.5 px-2"><span className="bg-sky-100 text-sky-700 px-1.5 py-[2px] rounded-sm text-[8px] font-bold">{row.jnsB}</span></td>
+                <td className="py-1.5 px-2 text-slate-600">{row.pj}</td>
+                <td className="py-1.5 px-2 truncate max-w-[120px]" title={row.alamatPj}>{row.alamatPj}</td>
+                <td className="py-1.5 px-2 text-slate-600">{row.hubPj}</td>
+                <td className="py-1.5 px-2 text-right text-slate-700">{row.biaya}</td>
+                <td className="py-1.5 px-2 text-slate-600">{row.sts}</td>
+                <td className="py-1.5 px-2 text-emerald-600 tabular-nums">{row.telp}</td>
+              </motion.tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Bottom Actions Panel - Filter & Buttons */}
+      <div className="bg-white px-4 py-3 border-t border-slate-200 text-xs shadow-[0_-4px_10px_rgba(0,0,0,0.03)] z-20 shrink-0 flex flex-col gap-2">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-y-2">
+          {/* Filters Top */}
+          <div className="flex items-center gap-4 flex-wrap">
+            <div className="flex items-center gap-1.5">
+              <span className="font-semibold text-slate-600 w-12 text-right">Dokter :</span>
+              <div className="flex bg-slate-50 border border-slate-200 rounded-md shadow-sm overflow-hidden focus-within:ring-1 focus-within:ring-emerald-500 w-[220px]">
+                <input type="text" className="w-full bg-transparent outline-none px-2 py-1 text-slate-700" />
+                <button className="px-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 border-l border-slate-200"><FaSearch className="text-[10px]" /></button>
+              </div>
+            </div>
+            <div className="flex items-center gap-1.5 ml-2">
+              <span className="font-semibold text-slate-600 w-10 text-right">Unit :</span>
+              <div className="flex bg-slate-50 border border-slate-200 rounded-md shadow-sm overflow-hidden focus-within:ring-1 focus-within:ring-emerald-500 w-[220px]">
+                <input type="text" className="w-full bg-transparent outline-none px-2 py-1 text-slate-700" />
+                <button className="px-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 border-l border-slate-200"><FaSearch className="text-[10px]" /></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Filters Bottom & Actions */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between mt-1 pt-2 border-t border-slate-100 gap-y-3">
+          <div className="flex items-center gap-3 bg-slate-50 p-1.5 rounded-lg border border-slate-100 flex-wrap">
+            <span className="font-semibold text-slate-600 ml-1">Periode :</span>
+            <div className="flex items-center gap-1.5">
+              <input type="date" className="border border-slate-200 rounded text-slate-600 px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-white shadow-sm" defaultValue="2026-04-22" />
+              <span className="text-slate-400 font-bold">s.d.</span>
+              <input type="date" className="border border-slate-200 rounded text-slate-600 px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-white shadow-sm" defaultValue="2026-04-22" />
+            </div>
+
+            <div className="w-px h-5 bg-slate-200 mx-1"></div>
+
+            <span className="font-semibold text-slate-600">Key Word :</span>
+            <div className="flex bg-white border border-slate-200 rounded-md shadow-sm overflow-hidden focus-within:ring-1 focus-within:ring-emerald-500 w-[200px]">
+              <input type="text" className="w-full bg-transparent outline-none px-2 py-1 text-slate-700" />
+              <div className="flex border-l border-slate-200">
+                <button className="px-1.5 text-emerald-500 hover:bg-emerald-50 transition-colors"><FaCheck className="text-[10px]" /></button>
+                <button className="px-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 transition-colors"><FaSearch className="text-[10px]" /></button>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <ActionButton icon={<FaSave className="text-emerald-600" />} label="Simpan" />
+            <ActionButton icon={<FaFileAlt className="text-blue-600" />} label="Baru" />
+            <ActionButton icon={<FaEdit className="text-orange-500" />} label="Ganti" />
+            <ActionButton icon={<FaTrash className="text-red-500" />} label="Hapus" />
+            <ActionButton icon={<FaPrint className="text-indigo-600" />} label="Cetak" />
+            <ActionButton icon={<FaList className="text-slate-600" />} label="Semua" />
+            
+            <div className="flex items-center px-3 py-1.5 bg-slate-100 border border-slate-200 rounded-md text-slate-500 font-semibold text-[10px] shadow-inner mx-1">
+              Record : <span className="text-slate-800 ml-1 bg-white px-1.5 py-0.5 rounded border border-slate-200">16</span>
+            </div>
+
+            <ActionButton 
+              icon={<FaTimes className="text-red-500" />} 
+              label="Keluar" 
+              isRed 
+              onClick={() => router.push('/')}
+            />
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+// Button Component
+function ActionButton({ icon, label, isRed, className = "", onClick }: { icon: React.ReactNode, label: string, isRed?: boolean, className?: string, onClick?: () => void }) {
+  return (
+    <button 
+      onClick={onClick}
+      className={`flex items-center gap-1.5 px-3 py-1.5 bg-white border ${isRed ? 'border-red-200 hover:border-red-400 hover:bg-red-50 text-red-700' : 'border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 text-slate-700'} rounded shadow-sm hover:shadow active:scale-95 transition-all text-[11px] font-bold ${className}`}
+    >
+      <span className="text-sm drop-shadow-sm">{icon}</span>
+      <span>{label}</span>
+    </button>
+  );
+}
