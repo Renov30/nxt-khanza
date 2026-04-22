@@ -12,24 +12,13 @@ interface TopFormContainerProps {
 
 export default function TopFormContainer({
   title = "Input Data",
-  defaultOpen = true,
+  defaultOpen = false,
   children
 }: TopFormContainerProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <div className="bg-white border-b border-slate-200 shadow-sm z-0 shrink-0 flex flex-col">
-      {/* Toggle Button / Header */}
-      <button 
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-emerald-800 hover:bg-emerald-50 transition-colors w-full border-b border-slate-100/50"
-      >
-        <div className="w-4 h-4 rounded bg-emerald-100 flex items-center justify-center text-[10px] text-emerald-600 border border-emerald-200 shadow-sm">
-          {isOpen ? <FaChevronDown /> : <FaChevronRight />}
-        </div>
-        <span className="tracking-wide">:: {title}</span>
-      </button>
-
+    <div className="bg-white shadow-sm z-0 shrink-0 flex flex-col">
       {/* Collapsible Content */}
       <AnimatePresence initial={false}>
         {isOpen && (
@@ -38,7 +27,7 @@ export default function TopFormContainer({
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="overflow-hidden"
+            className="overflow-hidden border-b border-slate-200"
           >
             <div className="p-3">
               {children}
@@ -46,6 +35,17 @@ export default function TopFormContainer({
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Toggle Button / Header now placed at the bottom */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-1.5 px-4 py-1 text-xs font-bold text-emerald-800 hover:bg-emerald-50 transition-colors bg-gradient-to-r from-emerald-50 to-white self-start w-full border-b border-slate-200 shadow-[0_1px_2px_rgba(0,0,0,0.02)]"
+      >
+        <div className="w-4 h-4 rounded bg-emerald-100 flex items-center justify-center text-[10px] text-emerald-700 border border-emerald-200 shadow-sm">
+          {isOpen ? <FaChevronDown /> : <FaChevronRight />}
+        </div>
+        <span className="tracking-wide">{title}</span>
+      </button>
     </div>
   );
 }

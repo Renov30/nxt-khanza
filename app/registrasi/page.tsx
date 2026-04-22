@@ -43,7 +43,7 @@ export default function Registrasi() {
       <div className="bg-gradient-to-r from-emerald-100 to-slate-50 px-4 py-1 border-b border-emerald-100 flex items-center justify-between shadow-sm z-10 shrink-0">
         <h2 className="text-emerald-800 font-bold text-sm flex items-center gap-2 tracking-wide">
           <FaIdCard className="text-emerald-600" />
-          Registrasi Periksa Hari Ini
+          Daftar Registrasi Pasien
         </h2>
       </div>
 
@@ -145,7 +145,7 @@ export default function Registrasi() {
       </TopFormContainer>
 
       {/* Table Area (Tabbed) */}
-      <TabbedTable 
+      <TabbedTable
         tabs={[
           {
             id: 'registrasi_awal',
