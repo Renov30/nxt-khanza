@@ -30,7 +30,7 @@ export default function RawatInap() {
       initial={{ opacity: 0, scale: 0.95, y: -20 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95, y: -20 }}
-      transition={{ type: "spring", stiffness: 250, damping: 25 }}
+      transition={{ type: "spring", stiffness: 400, damping: 30 }}
       style={{ transformOrigin: "60% 0%" }}
       className="flex flex-col w-full h-full overflow-hidden bg-slate-50 text-slate-800 rounded-tl-xl shadow-inner border-t border-l border-white relative"
     >
@@ -85,10 +85,7 @@ export default function RawatInap() {
           </thead>
           <tbody>
             {mockData.map((row, i) => (
-              <motion.tr
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1, duration: 0.3 }}
+              <tr
                 key={i}
                 className={`border-b border-slate-100 cursor-pointer transition-all duration-200
                   ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/80'} 
@@ -107,7 +104,7 @@ export default function RawatInap() {
                 <td className="py-2 px-3 text-center text-slate-600">{row.jam}</td>
                 <td className="py-2 px-3 text-center text-slate-600">{row.lama}</td>
                 <td className="py-2 px-3 text-slate-700">{row.dokter}</td>
-              </motion.tr>
+              </tr>
             ))}
           </tbody>
         </table>
@@ -148,6 +145,6 @@ export default function RawatInap() {
           </div>
         }
       />
-    </div>
+    </motion.div>
   );
 }

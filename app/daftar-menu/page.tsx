@@ -69,7 +69,7 @@ export default function DaftarMenuPage() {
       initial={{ opacity: 0, scale: 0.95, y: -20 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95, y: -20 }}
-      transition={{ type: "spring", stiffness: 250, damping: 25 }}
+      transition={{ type: "spring", stiffness: 400, damping: 30 }}
       style={{ transformOrigin: "8% 0%" }}
       className="flex h-full w-full bg-slate-50/50 overflow-hidden relative rounded-tl-xl shadow-inner border-t border-l border-white"
     >
