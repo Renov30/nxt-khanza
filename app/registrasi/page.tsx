@@ -32,10 +32,10 @@ export default function Registrasi() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95, y: -20 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.95, y: -20 }}
-      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0 }}
+      transition={{ type: "spring", stiffness: 220, damping: 25 }}
       style={{ transformOrigin: "12% 0%" }}
       className="flex flex-col w-full h-full overflow-hidden bg-slate-50 text-slate-800 rounded-tl-xl shadow-inner border-t border-l border-white"
     >

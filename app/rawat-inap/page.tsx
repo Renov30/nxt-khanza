@@ -26,16 +26,16 @@ export default function RawatInap() {
   ];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95, y: -20 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.95, y: -20 }}
-      transition={{ type: "spring", stiffness: 400, damping: 30 }}
-      style={{ transformOrigin: "60% 0%" }}
-      className="flex flex-col w-full h-full overflow-hidden bg-slate-50 text-slate-800 rounded-tl-xl shadow-inner border-t border-l border-white relative"
+    <motion.div 
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0 }}
+      transition={{ type: "spring", stiffness: 220, damping: 25 }}
+      style={{ transformOrigin: "45% 0%" }}
+      className="flex flex-col w-full h-full overflow-hidden bg-slate-50 text-slate-800 rounded-tl-xl shadow-inner border-t border-l border-white"
     >
       {/* Elegant Page Header */}
-      <div className="bg-gradient-to-r from-emerald-100 to-slate-50 px-4 py-1 border-b border-emerald-100 flex items-center justify-between shadow-sm z-10">
+      <div className="bg-gradient-to-r from-emerald-100 to-slate-50 px-4 py-1 border-b border-emerald-100 flex items-center justify-between shadow-sm z-10 shrink-0">
         <h2 className="text-emerald-800 font-bold text-sm flex items-center gap-2 tracking-wide">
           <FaBed className="text-emerald-600" />
           Daftar Pasien Rawat Inap
@@ -85,7 +85,10 @@ export default function RawatInap() {
           </thead>
           <tbody>
             {mockData.map((row, i) => (
-              <tr
+              <motion.tr
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1, duration: 0.3 }}
                 key={i}
                 className={`border-b border-slate-100 cursor-pointer transition-all duration-200
                   ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/80'} 
@@ -104,7 +107,7 @@ export default function RawatInap() {
                 <td className="py-2 px-3 text-center text-slate-600">{row.jam}</td>
                 <td className="py-2 px-3 text-center text-slate-600">{row.lama}</td>
                 <td className="py-2 px-3 text-slate-700">{row.dokter}</td>
-              </tr>
+              </motion.tr>
             ))}
           </tbody>
         </table>
