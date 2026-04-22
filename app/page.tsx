@@ -2,7 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FaLaptopMedical, FaCubes } from 'react-icons/fa';
+import {
+  FaKey, FaUserTie, FaInfoCircle, FaDesktop, FaBook,
+  FaHome, FaIdCard, FaAmbulance, FaFlask, FaRadiation,
+  FaPills, FaBed, FaWheelchair, FaSignInAlt, FaTimes,
+  FaLaptopMedical, FaCubes
+} from 'react-icons/fa';
+import { loginAction } from '@/lib/actions/auth';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -14,48 +20,261 @@ export default function Home() {
   if (!mounted) return null;
 
   return (
-    <div className="flex-1 relative w-full h-full overflow-hidden bg-emerald-50/30">
-      {/* Background Image with slight animation */}
-      <motion.div
-        initial={{ scale: 1.05, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1.2, ease: "easeOut" }}
-        className="absolute inset-0 z-0 bg-no-repeat bg-cover bg-center"
-        style={{ backgroundImage: "url('/img/background.png')" }}
-      />
+    <div className="flex flex-col h-screen w-full overflow-hidden bg-slate-50 font-sans">
 
-      {/* Content Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-transparent to-transparent z-0"></div>
-
-      {/* Bottom Left Logo Area */}
-      <motion.div
-        initial={{ x: -50, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ delay: 0.6, type: 'spring', stiffness: 100 }}
-        className="absolute bottom-16 left-4 sm:bottom-8 sm:left-8 z-10 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5"
+      {/* Primary Top Bar (Dark Green Gradient) */}
+      <motion.nav
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="bg-gradient-to-r from-emerald-700 via-emerald-600 to-emerald-800 text-white flex overflow-x-auto whitespace-nowrap px-2 py-1 shadow-md z-30 border-b border-emerald-500/50 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
       >
-        {/* Logo 3D effect */}
+        <div className="flex items-center gap-1 w-max">
+          <TopMenuItem icon={<FaKey className="text-yellow-400" />} label="Program" />
+          <TopMenuItem icon={<FaUserTie className="text-sky-300" />} label="Presensi Pegawai" />
+          <TopMenuItem icon={<FaInfoCircle className="text-orange-400" />} label="Informasi" />
+          <TopMenuItem icon={<FaDesktop className="text-green-300" />} label="Anjungan & Antrian" />
+          <TopMenuItem icon={<FaBook className="text-blue-200" />} label="Tentang Program" />
+        </div>
+      </motion.nav>
+
+      {/* Secondary Toolbar (Light Glassmorphic Style) */}
+      <motion.nav
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, duration: 0.5 }}
+        className="bg-white/80 backdrop-blur-md border-b border-emerald-100 flex items-center px-4 py-2 shadow-sm z-20 gap-1 overflow-x-auto relative [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+      >
+        <SecondaryMenuItem icon={<FaHome className="text-slate-500 group-hover:text-emerald-600 transition-colors" />} label="Menu" />
+        <div className="w-px h-10 bg-emerald-100 mx-2 self-center"></div>
+        <SecondaryMenuItem icon={<FaIdCard className="text-slate-500 group-hover:text-emerald-600 transition-colors" />} label="Registrasi" />
+        <SecondaryMenuItem icon={<FaAmbulance className="text-slate-500 group-hover:text-red-500 transition-colors" />} label="IGD/UGD" />
+        <SecondaryMenuItem icon={<FaFlask className="text-slate-500 group-hover:text-purple-500 transition-colors" />} label="Laborat" />
+        <SecondaryMenuItem icon={<FaRadiation className="text-slate-500 group-hover:text-yellow-500 transition-colors" />} label="Radiologi" />
+        <SecondaryMenuItem icon={<FaPills className="text-slate-500 group-hover:text-pink-500 transition-colors" />} label="Farmasi" />
+        <SecondaryMenuItem icon={<FaBed className="text-slate-500 group-hover:text-blue-500 transition-colors" />} label="Rawat Inap" />
+        <SecondaryMenuItem icon={<FaWheelchair className="text-slate-500 group-hover:text-teal-500 transition-colors" />} label="Rawat Jalan" />
+
+        <div className="flex-1 min-w-[20px]"></div>
+
+        <div className="flex-1 min-w-[20px]"></div>
+
+        {!isLoggedIn ? (
+          <SecondaryMenuItem icon={<FaSignInAlt className="text-slate-500 group-hover:text-emerald-600 transition-colors" />} label="Log In" onClick={() => setIsLoginModalOpen(true)} />
+        ) : (
+          <div className="flex items-center">
+            <div className="flex items-center gap-2 px-3 py-1 mr-2 border-r border-emerald-200">
+              <span className="text-[14px] font-semibold text-slate-700 max-w-[100px] truncate">{username || 'renov'}</span>
+              <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center border border-blue-200 shadow-sm cursor-pointer hover:bg-blue-200 transition-colors">
+                <FaUser className="text-blue-600 text-lg drop-shadow-sm" />
+              </div>
+            </div>
+            <SecondaryMenuItem icon={<FaKey className="text-slate-500 group-hover:text-yellow-600 transition-colors" />} label="Log Out" onClick={() => setIsLoggedIn(false)} />
+          </div>
+        )}
+        <SecondaryMenuItem icon={<FaTimes className="text-red-500 group-hover:text-red-600 transition-colors" />} label="Keluar" isRed />
+      </motion.nav>
+
+      {/* Main Content Area */}
+      <main className="flex-1 relative w-full h-full overflow-hidden bg-emerald-50/30">
+        {/* Background Image with slight animation */}
         <motion.div
-          whileHover={{ rotate: 10, scale: 1.05 }}
-          className="w-14 h-14 sm:w-20 sm:h-20 bg-white/90 backdrop-blur-xl rounded-2xl flex items-center justify-center p-2 sm:p-3 shadow-2xl border border-white/50 relative overflow-hidden group shrink-0"
+          initial={{ scale: 1.05, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          className="absolute inset-0 z-0 bg-no-repeat bg-cover bg-center"
+          style={{ backgroundImage: "url('/img/background.png')" }}
+        />
+
+        {/* Content Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-transparent to-transparent z-0"></div>
+
+        {/* Bottom Left Logo Area */}
+        <motion.div
+          initial={{ x: -50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.6, type: 'spring', stiffness: 100 }}
+          className="absolute bottom-16 left-4 sm:bottom-8 sm:left-8 z-10 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-transparent opacity-50 group-hover:opacity-100 transition-opacity"></div>
-          <FaLaptopMedical className="text-4xl sm:text-6xl text-sky-600 drop-shadow-md z-10" />
-          <div className="absolute bottom-1 right-1">
-            <FaCubes className="text-sm sm:text-xl text-emerald-500 opacity-80" />
+          {/* Logo 3D effect */}
+          <motion.div
+            whileHover={{ rotate: 10, scale: 1.05 }}
+            className="w-14 h-14 sm:w-20 sm:h-20 bg-white/90 backdrop-blur-xl rounded-2xl flex items-center justify-center p-2 sm:p-3 shadow-2xl border border-white/50 relative overflow-hidden group shrink-0"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-transparent opacity-50 group-hover:opacity-100 transition-opacity"></div>
+            <FaLaptopMedical className="text-4xl sm:text-6xl text-sky-600 drop-shadow-md z-10" />
+            <div className="absolute bottom-1 right-1">
+              <FaCubes className="text-sm sm:text-xl text-emerald-500 opacity-80" />
+            </div>
+          </motion.div>
+
+          <div className="flex flex-col drop-shadow-lg bg-white/40 backdrop-blur-sm px-3 sm:px-4 py-2 rounded-xl border border-white/40">
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-800 tracking-tight italic flex items-center gap-2">
+              <span className="text-emerald-700">RS</span> SIMRS KHANZA
+            </h1>
+            <p className="text-xs sm:text-sm font-semibold text-slate-600 mt-1 flex items-center gap-1">
+              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
+              GUWOSARI, Pajangan, Bantul
+            </p>
           </div>
         </motion.div>
+      </main>
 
-        <div className="flex flex-col drop-shadow-lg bg-white/40 backdrop-blur-sm px-3 sm:px-4 py-2 rounded-xl border border-white/40">
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-800 tracking-tight italic flex items-center gap-2">
-            <span className="text-emerald-700">RS</span> SIMRS KHANZA
-          </h1>
-          <p className="text-xs sm:text-sm font-semibold text-slate-600 mt-1 flex items-center gap-1">
-            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
-            GUWOSARI, Pajangan, Bantul
-          </p>
+      {/* Bottom Status Bar */}
+      <motion.footer
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.4, duration: 0.5 }}
+        className="bg-emerald-50/90 backdrop-blur-md border-t border-emerald-200 text-xs font-semibold text-slate-600 flex items-center h-8 z-20 shadow-[0_-2px_10px_rgba(0,0,0,0.02)] w-full overflow-x-auto whitespace-nowrap [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+      >
+        <div className="px-3 sm:px-5 py-1 border-r border-emerald-200/60 flex items-center min-w-max h-full">
+          Status Admin :
         </div>
-      </motion.div>
+        <div className="px-3 sm:px-5 py-1 border-r border-emerald-200/60 flex items-center hover:bg-emerald-100 cursor-pointer transition-colors h-full min-w-max">
+          Log Out
+        </div>
+        <div className="hidden sm:flex px-5 py-1 border-r border-emerald-200/60 items-center h-full text-slate-500 font-mono">
+          21/04/2026
+        </div>
+        <div className="hidden sm:flex px-5 py-1 border-r border-emerald-200/60 items-center h-full text-slate-500 font-mono">
+          192.168.2.230
+        </div>
+        <div className="px-3 sm:px-5 py-1 flex items-center min-w-max h-full text-[11px] flex-1">
+          <span><span className="hidden sm:inline">Dikembangkan oleh </span><span className="inline sm:hidden">Dev: </span><span className="text-emerald-700 font-bold">Novgeny R. Ermiawan</span></span>
+        </div>
+      </motion.footer>
+
+      {/* Login Modal */}
+      <AnimatePresence>
+        {isLoginModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="bg-white w-[380px] flex flex-col rounded-xl overflow-hidden shadow-2xl border border-white/50"
+            >
+              {/* Top spacer */}
+              <div className="h-6 bg-white w-full"></div>
+
+              {/* Form Area */}
+              <form action={async (formData) => {
+                setLoginError('');
+                setIsLoading(true);
+                const result = await loginAction(formData);
+                setIsLoading(false);
+
+                if (result.success && result.user) {
+                  setIsLoggedIn(true);
+                  setUsername(result.user.nama);
+                  setIsLoginModalOpen(false);
+                  setPassword('');
+                } else {
+                  setLoginError(result.message || 'Login failed');
+                }
+              }}>
+                <div className="bg-[#cbdceb] px-6 py-6 flex flex-col gap-5 border-y border-slate-300 shadow-inner">
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-semibold text-slate-700 w-24">Username :</label>
+                    <input
+                      name="username"
+                      type="text"
+                      className="flex-1 bg-gradient-to-b from-slate-50 to-slate-200 border border-slate-400 rounded-full px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 shadow-inner text-slate-700 font-medium"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      autoFocus
+                      required
+                    />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-semibold text-slate-700 w-24">Password :</label>
+                    <input
+                      name="password"
+                      type="password"
+                      className="flex-1 bg-gradient-to-b from-slate-50 to-slate-200 border border-slate-400 rounded-full px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 shadow-inner text-slate-700 font-medium"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                  {loginError && (
+                    <motion.p
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      className="text-[10px] text-red-600 font-bold text-center bg-red-50 py-1 rounded border border-red-200"
+                    >
+                      {loginError}
+                    </motion.p>
+                  )}
+                </div>
+
+                {/* Buttons Area */}
+                <div className="bg-white px-6 py-4 flex items-center justify-center gap-4">
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="flex-1 flex justify-center items-center gap-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-full py-2 px-4 transition-colors shadow-sm text-sm font-bold text-slate-700 active:scale-95 disabled:opacity-50"
+                  >
+                    <div className="w-5 h-5 flex items-center justify-center">
+                      <FaLock className={`text-yellow-500 text-lg drop-shadow-sm ${isLoading ? 'animate-pulse' : ''}`} />
+                    </div>
+                    {isLoading ? 'Loading...' : 'Log-in'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsLoginModalOpen(false);
+                      setLoginError('');
+                    }}
+                    className="flex-1 flex justify-center items-center gap-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-full py-2 px-4 transition-colors shadow-sm text-sm font-bold text-slate-700 active:scale-95"
+                  >
+                    <div className="w-5 h-5 flex items-center justify-center bg-red-500 rounded-md shadow-sm">
+                      <FaTimes className="text-white text-[10px]" />
+                    </div>
+                    Batal
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </div>
+  );
+}
+
+// Components
+
+function TopMenuItem({ icon, label }: { icon: React.ReactNode, label: string }) {
+  return (
+    <motion.button
+      whileHover={{ y: -1, backgroundColor: "rgba(255,255,255,0.15)" }}
+      whileTap={{ scale: 0.96 }}
+      className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors hover:shadow-sm"
+    >
+      <span className="text-base drop-shadow-md">{icon}</span>
+      <span className="drop-shadow-sm">{label}</span>
+    </motion.button>
+  );
+}
+
+function SecondaryMenuItem({ icon, label, isRed, onClick }: { icon: React.ReactNode, label: string, isRed?: boolean, onClick?: () => void }) {
+  return (
+    <motion.button
+      onClick={onClick}
+      whileHover={{ y: -3, scale: 1.02, backgroundColor: isRed ? "rgba(254,226,226,0.5)" : "rgba(209,250,229,0.3)" }}
+      whileTap={{ scale: 0.95 }}
+      className="group flex flex-col items-center justify-center gap-1 min-w-[76px] p-2 rounded-xl transition-all border border-transparent hover:border-emerald-100 hover:shadow-sm bg-transparent relative overflow-hidden"
+    >
+      <span className="text-2xl drop-shadow-sm z-10">{icon}</span>
+      <span className={`text-[11px] font-bold z-10 ${isRed ? 'text-red-600' : 'text-slate-600 group-hover:text-emerald-700'}`}>{label}</span>
+      <div className="absolute inset-0 bg-gradient-to-b from-white/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-0"></div>
+    </motion.button >
   );
 }
