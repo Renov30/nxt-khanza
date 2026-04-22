@@ -9,7 +9,7 @@ import {
   FaHome, FaIdCard, FaAmbulance, FaFlask, FaRadiation,
   FaPills, FaBed, FaWheelchair, FaSignInAlt, FaTimes,
   FaLaptopMedical, FaCubes, FaSync, FaCog, FaReact,
-  FaUser, FaLock
+  FaUser, FaLock, FaThLarge
 } from 'react-icons/fa';
 import { loginAction } from '@/lib/actions/auth';
 
@@ -70,8 +70,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         transition={{ delay: 0.2, duration: 0.5 }}
         className="bg-white/80 backdrop-blur-md border-b border-emerald-100 flex items-center px-4 py-2 shadow-sm z-20 gap-1 overflow-x-auto relative [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
       >
-        <Link href="/">
-          <SecondaryMenuItem icon={<FaHome className="text-slate-500 hover:text-emerald-600 transition-colors" />} label="Menu" active={pathname === '/'} />
+        <Link href="/daftar-menu">
+          <SecondaryMenuItem icon={<FaHome className="text-slate-500 hover:text-emerald-600 transition-colors" />} label="Menu" active={pathname === '/daftar-menu'} />
         </Link>
         <div className="w-px h-10 bg-emerald-100 mx-2 self-center"></div>
         <Link href="/registrasi">
