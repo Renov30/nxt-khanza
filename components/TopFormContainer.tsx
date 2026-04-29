@@ -39,9 +39,9 @@ export default function TopFormContainer({
       {/* Toggle Button / Header now placed at the bottom */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1.5 px-4 py-1 text-xs font-bold text-emerald-800 hover:bg-emerald-50 transition-colors bg-gradient-to-r from-emerald-50 to-white self-start w-full border-b border-slate-200 shadow-[0_1px_2px_rgba(0,0,0,0.02)]"
+        className="flex items-center gap-1.5 px-4 py-1 text-xs font-bold text-brand-800 hover:bg-brand-50 transition-colors bg-gradient-to-r from-brand-50 to-white self-start w-full border-b border-slate-200 shadow-[0_1px_2px_rgba(0,0,0,0.02)]"
       >
-        <div className="w-4 h-4 rounded bg-emerald-100 flex items-center justify-center text-[10px] text-emerald-700 border border-emerald-200 shadow-sm">
+        <div className="w-4 h-4 rounded bg-brand-100 flex items-center justify-center text-[10px] text-brand-700 border border-brand-200 shadow-sm">
           {isOpen ? <FaChevronDown /> : <FaChevronRight />}
         </div>
         <span className="tracking-wide">{title}</span>

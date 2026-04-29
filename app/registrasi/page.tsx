@@ -40,9 +40,9 @@ export default function Registrasi() {
       className="flex flex-col w-full h-full overflow-hidden bg-slate-50 text-slate-800 rounded-tl-xl shadow-inner border-t border-l border-white"
     >
       {/* Elegant Page Header */}
-      <div className="bg-gradient-to-r from-emerald-100 to-slate-50 px-4 py-1 border-b border-emerald-100 flex items-center justify-between shadow-sm z-10 shrink-0">
-        <h2 className="text-emerald-800 font-bold text-sm flex items-center gap-2 tracking-wide">
-          <FaIdCard className="text-emerald-600" />
+      <div className="bg-gradient-to-r from-brand-100 to-slate-50 px-4 py-1 border-b border-brand-100 flex items-center justify-between shadow-sm z-10 shrink-0">
+        <h2 className="text-brand-800 font-bold text-sm flex items-center gap-2 tracking-wide">
+          <FaIdCard className="text-brand-600" />
           Daftar Registrasi Pasien
         </h2>
       </div>
@@ -54,44 +54,44 @@ export default function Registrasi() {
             <div className="flex items-center gap-2">
               <span className="font-semibold text-slate-600 w-20 text-right">No. Reg :</span>
               <div className="flex gap-1 flex-1">
-                <input type="text" className="w-[60px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50 transition-all font-semibold" defaultValue="001" />
+                <input type="text" className="w-[60px] border border-slate-200 rounded-md px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-slate-50 transition-all font-semibold" defaultValue="001" />
               </div>
             </div>
 
             <div className="flex items-center gap-2">
               <span className="font-semibold text-slate-600 w-20 text-right">No. Rawat :</span>
               <div className="flex flex-1">
-                <input type="text" className="w-[180px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50 transition-all" defaultValue="2026/04/22/000001" />
+                <input type="text" className="w-[180px] border border-slate-200 rounded-md px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-slate-50 transition-all" defaultValue="2026/04/22/000001" />
               </div>
             </div>
 
             <div className="flex items-center gap-2">
               <span className="font-semibold text-slate-600 w-20 text-right">Tgl. Reg :</span>
               <div className="flex items-center gap-1.5 flex-1 flex-wrap">
-                <input type="date" className="border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-white" defaultValue="2026-04-22" />
+                <input type="date" className="border border-slate-200 rounded-md px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-white" defaultValue="2026-04-22" />
                 <span className="font-medium text-slate-500 pl-1">Jam :</span>
                 <select className="border border-slate-200 rounded-md py-1 px-1 text-center min-w-[45px] bg-white"><option>09</option><option>10</option></select>
                 <select className="border border-slate-200 rounded-md py-1 px-1 text-center min-w-[45px] bg-white"><option>24</option><option>25</option></select>
                 <select className="border border-slate-200 rounded-md py-1 px-1 text-center min-w-[45px] bg-white"><option>19</option><option>20</option></select>
-                <input type="checkbox" className="accent-emerald-600 ml-1 w-3.5 h-3.5 rounded" defaultChecked />
+                <input type="checkbox" className="accent-brand-600 ml-1 w-3.5 h-3.5 rounded" defaultChecked />
               </div>
             </div>
 
             <div className="flex items-center gap-2">
               <span className="font-semibold text-slate-600 w-20 text-right">Dr Dituju :</span>
               <div className="flex items-center gap-1 flex-1">
-                <input type="text" className="w-[80px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
-                <input type="text" className="flex-1 min-w-[120px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
-                <button className="bg-emerald-50 border border-emerald-200 p-1.5 rounded-md hover:bg-emerald-100 text-emerald-600 transition-colors shadow-sm"><FaSearch className="text-[10px]" /></button>
+                <input type="text" className="w-[80px] border border-slate-200 rounded-md px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-slate-50" />
+                <input type="text" className="flex-1 min-w-[120px] border border-slate-200 rounded-md px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-slate-50" />
+                <button className="bg-brand-50 border border-brand-200 p-1.5 rounded-md hover:bg-brand-100 text-brand-600 transition-colors shadow-sm"><FaSearch className="text-[10px]" /></button>
               </div>
             </div>
 
             <div className="flex items-center gap-2">
               <span className="font-semibold text-slate-600 w-20 text-right">Unit :</span>
               <div className="flex items-center gap-1 flex-1">
-                <input type="text" className="w-[80px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
-                <input type="text" className="flex-1 min-w-[120px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
-                <button className="bg-emerald-50 border border-emerald-200 p-1.5 rounded-md hover:bg-emerald-100 text-emerald-600 transition-colors shadow-sm"><FaSearch className="text-[10px]" /></button>
+                <input type="text" className="w-[80px] border border-slate-200 rounded-md px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-slate-50" />
+                <input type="text" className="flex-1 min-w-[120px] border border-slate-200 rounded-md px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-slate-50" />
+                <button className="bg-brand-50 border border-brand-200 p-1.5 rounded-md hover:bg-brand-100 text-brand-600 transition-colors shadow-sm"><FaSearch className="text-[10px]" /></button>
               </div>
             </div>
           </div>
@@ -101,43 +101,43 @@ export default function Registrasi() {
             <div className="flex items-center gap-2">
               <span className="font-semibold text-slate-600 w-[110px] text-right">No. Rekam Medik :</span>
               <div className="flex items-center gap-1 flex-1">
-                <input type="text" className="w-[80px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
-                <input type="text" className="flex-1 min-w-[140px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
-                <button className="bg-emerald-50 border border-emerald-200 p-1.5 rounded-md hover:bg-emerald-100 text-emerald-600 transition-colors shadow-sm"><FaSearch className="text-[10px]" /></button>
+                <input type="text" className="w-[80px] border border-slate-200 rounded-md px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-slate-50" />
+                <input type="text" className="flex-1 min-w-[140px] border border-slate-200 rounded-md px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-slate-50" />
+                <button className="bg-brand-50 border border-brand-200 p-1.5 rounded-md hover:bg-brand-100 text-brand-600 transition-colors shadow-sm"><FaSearch className="text-[10px]" /></button>
               </div>
             </div>
 
             <div className="flex items-center gap-2">
               <span className="font-semibold text-slate-600 w-[110px] text-right">Penanggung Jawab :</span>
               <div className="flex items-center gap-1 flex-1">
-                <input type="text" className="flex-1 min-w-[100px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
+                <input type="text" className="flex-1 min-w-[100px] border border-slate-200 rounded-md px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-slate-50" />
                 <span className="font-medium text-slate-500 text-right ml-1">Hubungan :</span>
-                <input type="text" className="w-[100px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
+                <input type="text" className="w-[100px] border border-slate-200 rounded-md px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-slate-50" />
               </div>
             </div>
 
             <div className="flex items-center gap-2">
               <span className="font-semibold text-slate-600 w-[110px] text-right">Alamat P. J. :</span>
               <div className="flex items-center gap-1 flex-1">
-                <input type="text" className="flex-1 min-w-[100px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
+                <input type="text" className="flex-1 min-w-[100px] border border-slate-200 rounded-md px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-slate-50" />
                 <span className="font-medium text-slate-500 w-[60px] text-right ml-1 mr-1">Status :</span>
-                <input type="text" className="w-[100px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
+                <input type="text" className="w-[100px] border border-slate-200 rounded-md px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-slate-50" />
               </div>
             </div>
 
             <div className="flex items-center gap-2">
               <span className="font-semibold text-slate-600 w-[110px] text-right">Jenis Bayar :</span>
               <div className="flex items-center gap-1 flex-1">
-                <input type="text" className="flex-1 min-w-[100px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
+                <input type="text" className="flex-1 min-w-[100px] border border-slate-200 rounded-md px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-slate-50" />
                 <span className="font-medium text-slate-500 w-[60px] text-right ml-1 mr-1">No. KA :</span>
-                <input type="text" className="w-[100px] border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
+                <input type="text" className="w-[100px] border border-slate-200 rounded-md px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-slate-50" />
               </div>
             </div>
 
             <div className="flex items-center gap-2">
               <span className="font-semibold text-slate-600 w-[110px] text-right">Asal Rujukan :</span>
               <div className="flex items-center gap-1 flex-1">
-                <input type="text" className="flex-1 border border-slate-200 rounded-md px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-slate-50" />
+                <input type="text" className="flex-1 border border-slate-200 rounded-md px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-slate-50" />
               </div>
             </div>
           </div>
@@ -179,16 +179,16 @@ export default function Registrasi() {
                     key={i}
                     className={`border-b border-slate-100 cursor-pointer transition-all duration-200
                       ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/80'} 
-                      hover:bg-emerald-50 hover:shadow-[inset_3px_0_0_0_#10b981]`}
+                      hover:bg-brand-50 hover:shadow-[inset_3px_0_0_0_var(--color-brand-500)]`}
                   >
                     <td className="py-1.5 px-2 text-center">
-                      <input type="checkbox" className="accent-emerald-600 rounded" defaultChecked={row.p} />
+                      <input type="checkbox" className="accent-brand-600 rounded" defaultChecked={row.p} />
                     </td>
                     <td className="py-1.5 px-2 text-slate-700 font-medium">{row.no}</td>
                     <td className="py-1.5 px-2 text-center text-slate-600">{row.tgl}</td>
                     <td className="py-1.5 px-2 text-center text-slate-600">{row.jam}</td>
                     <td className="py-1.5 px-2 text-slate-500 text-[9px]">{row.kd_dok}</td>
-                    <td className="py-1.5 px-2 font-semibold text-emerald-800">{row.nm_dok}</td>
+                    <td className="py-1.5 px-2 font-semibold text-brand-800">{row.nm_dok}</td>
                     <td className="py-1.5 px-2 font-bold text-slate-700">{row.rm}</td>
                     <td className="py-1.5 px-2 font-bold text-slate-800">{row.nama}</td>
                     <td className="py-1.5 px-2 text-center text-slate-600">{row.jk}</td>
@@ -200,7 +200,7 @@ export default function Registrasi() {
                     <td className="py-1.5 px-2 text-slate-600">{row.hubPj}</td>
                     <td className="py-1.5 px-2 text-right text-slate-700">{row.biaya}</td>
                     <td className="py-1.5 px-2 text-slate-600">{row.sts}</td>
-                    <td className="py-1.5 px-2 text-emerald-600 tabular-nums">{row.telp}</td>
+                    <td className="py-1.5 px-2 text-brand-600 tabular-nums">{row.telp}</td>
                   </tr>
                 ))}
               </>
@@ -234,16 +234,16 @@ export default function Registrasi() {
           <div className="flex items-center gap-4 flex-wrap w-full">
             <div className="flex items-center gap-1.5">
               <span className="font-semibold text-slate-600 w-12 text-right">Dokter :</span>
-              <div className="flex bg-slate-50 border border-slate-200 rounded-md shadow-sm overflow-hidden focus-within:ring-1 focus-within:ring-emerald-500 w-[220px]">
+              <div className="flex bg-slate-50 border border-slate-200 rounded-md shadow-sm overflow-hidden focus-within:ring-1 focus-within:ring-brand-500 w-[220px]">
                 <input type="text" className="w-full bg-transparent outline-none px-2 py-1 text-slate-700" />
-                <button className="px-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 border-l border-slate-200"><FaSearch className="text-[10px]" /></button>
+                <button className="px-2 text-slate-400 hover:text-brand-600 hover:bg-brand-50 border-l border-slate-200"><FaSearch className="text-[10px]" /></button>
               </div>
             </div>
             <div className="flex items-center gap-1.5 ml-2">
               <span className="font-semibold text-slate-600 w-10 text-right">Unit :</span>
-              <div className="flex bg-slate-50 border border-slate-200 rounded-md shadow-sm overflow-hidden focus-within:ring-1 focus-within:ring-emerald-500 w-[220px]">
+              <div className="flex bg-slate-50 border border-slate-200 rounded-md shadow-sm overflow-hidden focus-within:ring-1 focus-within:ring-brand-500 w-[220px]">
                 <input type="text" className="w-full bg-transparent outline-none px-2 py-1 text-slate-700" />
-                <button className="px-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 border-l border-slate-200"><FaSearch className="text-[10px]" /></button>
+                <button className="px-2 text-slate-400 hover:text-brand-600 hover:bg-brand-50 border-l border-slate-200"><FaSearch className="text-[10px]" /></button>
               </div>
             </div>
           </div>

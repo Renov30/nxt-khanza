@@ -14,7 +14,7 @@ export default function Home() {
   if (!mounted) return null;
 
   return (
-    <div className="flex-1 relative w-full h-full overflow-hidden bg-emerald-50/30">
+    <div className="flex-1 relative w-full h-full overflow-hidden bg-brand-50/30">
       {/* Background Image with slight animation */}
       <motion.div
         initial={{ scale: 1.05, opacity: 0 }}
@@ -42,16 +42,16 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-transparent opacity-50 group-hover:opacity-100 transition-opacity"></div>
           <FaLaptopMedical className="text-4xl sm:text-6xl text-sky-600 drop-shadow-md z-10" />
           <div className="absolute bottom-1 right-1">
-            <FaCubes className="text-sm sm:text-xl text-emerald-500 opacity-80" />
+            <FaCubes className="text-sm sm:text-xl text-brand-500 opacity-80" />
           </div>
         </motion.div>
 
         <div className="flex flex-col drop-shadow-lg bg-white/40 backdrop-blur-sm px-3 sm:px-4 py-2 rounded-xl border border-white/40">
           <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-800 tracking-tight italic flex items-center gap-2">
-            <span className="text-emerald-700">RS</span> SIMRS KHANZA
+            <span className="text-brand-700">RS</span> SIMRS KHANZA
           </h1>
           <p className="text-xs sm:text-sm font-semibold text-slate-600 mt-1 flex items-center gap-1">
-            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
+            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-brand-500 inline-block animate-pulse"></span>
             GUWOSARI, Pajangan, Bantul
           </p>
         </div>

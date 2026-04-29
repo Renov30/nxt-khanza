@@ -25,7 +25,7 @@ const CATEGORIES = [
 const MOCK_MENU_ITEMS = [
   { id: 1, label: "Informasi Kamar", icon: FaBed, link: "/rawat-inap", color: "text-amber-500", category: 0 },
   { id: 2, label: "Jadwal Praktek", icon: FaUserMd, link: "/", color: "text-indigo-500", category: 0 },
-  { id: 3, label: "Registrasi", icon: FaIdCard, link: "/registrasi", color: "text-emerald-500", category: 0 },
+  { id: 3, label: "Registrasi", icon: FaIdCard, link: "/registrasi", color: "text-brand-500", category: 0 },
   { id: 4, label: "Booking Periksa", icon: FaAddressBook, link: "/", color: "text-teal-500", category: 0 },
   { id: 5, label: "Booking Registrasi", icon: FaAddressBook, link: "/", color: "text-rose-500", category: 0 },
   { id: 6, label: "IGD/UGD", icon: FaAmbulance, link: "/", color: "text-red-500", category: 0 },
@@ -39,7 +39,7 @@ const MOCK_MENU_ITEMS = [
   { id: 14, label: "Permintaan Radiologi", icon: FaXRay, link: "/", color: "text-orange-500", category: 0 },
 
   // Some dummy data for category B
-  { id: 15, label: "Daftar Resep Obat", icon: FaPills, link: "/", color: "text-emerald-500", category: 1 },
+  { id: 15, label: "Daftar Resep Obat", icon: FaPills, link: "/", color: "text-brand-500", category: 1 },
   { id: 16, label: "Gudang Farmasi", icon: FaBoxOpen, link: "/", color: "text-amber-600", category: 1 },
 
   // Some dummy data for category C
@@ -85,15 +85,15 @@ export default function DaftarMenuPage() {
             className="h-full border-r border-slate-200 bg-white shadow-sm flex flex-col z-10 shrink-0"
           >
             {/* Sidebar Header & Search */}
-            <div className="p-4 border-b border-slate-100 bg-emerald-50/50">
-              <h3 className="font-bold text-emerald-800 text-sm mb-3">Navigasi Menu</h3>
+            <div className="p-4 border-b border-slate-100 bg-brand-50/50">
+              <h3 className="font-bold text-brand-800 text-sm mb-3">Navigasi Menu</h3>
               <div className="relative">
                 <input
                   type="text"
                   placeholder="Cari fitur aplikasi..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-white border border-slate-200 rounded-lg pl-9 pr-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all shadow-sm"
+                  className="w-full bg-white border border-slate-200 rounded-lg pl-9 pr-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all shadow-sm"
                 />
                 <FaSearch className="absolute left-3 top-2.5 text-slate-400" />
               </div>
@@ -106,7 +106,7 @@ export default function DaftarMenuPage() {
                   key={idx}
                   onClick={() => { setActiveCategory(idx); setSearchQuery(""); }}
                   className={`w-full text-left px-3 py-2 rounded-md text-xs transition-colors ${activeCategory === idx && searchQuery === ""
-                    ? "bg-emerald-50 text-emerald-700 font-bold border border-emerald-200/50 shadow-sm"
+                    ? "bg-brand-50 text-brand-700 font-bold border border-brand-200/50 shadow-sm"
                     : "text-slate-600 hover:bg-slate-50 border border-transparent font-medium"
                     }`}
                 >
@@ -129,17 +129,17 @@ export default function DaftarMenuPage() {
         {/* Top Floating Toggle Button */}
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          className={`cursor-pointer absolute top-6 ${isSidebarOpen ? '-left-4' : 'left-4'} w-8 h-8 flex items-center justify-center z-20 bg-white border border-slate-200 rounded-full shadow-md hover:bg-emerald-50 hover:text-emerald-600 transition-all duration-300 text-slate-500`}
+          className={`cursor-pointer absolute top-6 ${isSidebarOpen ? '-left-4' : 'left-4'} w-8 h-8 flex items-center justify-center z-20 bg-white border border-slate-200 rounded-full shadow-md hover:bg-brand-50 hover:text-brand-600 transition-all duration-300 text-slate-500`}
         >
           {isSidebarOpen ? <FaChevronLeft className="text-[10px]" /> : <FaChevronRight className="text-[10px]" />}
         </button>
 
         {/* Content Header with Full Width Divider */}
-        <div className="pt-5 pb-4 px-8 pl-16 border-b border-emerald-100/70 bg-white/40 backdrop-blur-sm z-10 shrink-0 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] flex items-center justify-between">
+        <div className="pt-5 pb-4 px-8 pl-16 border-b border-brand-100/70 bg-white/40 backdrop-blur-sm z-10 shrink-0 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] flex items-center justify-between">
           <h2 className="text-xl font-bold text-slate-700 font-serif tracking-tight">
             {searchQuery
               ? `Hasil Pencarian: "${searchQuery}"`
-              : <span className="text-emerald-700 text-lg sm:text-xl drop-shadow-sm">{CATEGORIES[activeCategory]}</span>
+              : <span className="text-brand-700 text-lg sm:text-xl drop-shadow-sm">{CATEGORIES[activeCategory]}</span>
             }
           </h2>
 
@@ -160,10 +160,10 @@ export default function DaftarMenuPage() {
                   <div
                     className="flex flex-col items-center justify-start p-4 rounded-xl hover:bg-white border border-transparent hover:border-slate-200 hover:shadow-lg transition-all cursor-pointer group text-center gap-4 w-36 h-40"
                   >
-                    <div className={`w-20 h-20 shrink-0 flex items-center justify-center rounded-2xl bg-white group-hover:bg-emerald-50 border border-slate-100 group-hover:border-emerald-200 shadow-sm transition-colors ${item.color}`}>
+                    <div className={`w-20 h-20 shrink-0 flex items-center justify-center rounded-2xl bg-white group-hover:bg-brand-50 border border-slate-100 group-hover:border-brand-200 shadow-sm transition-colors ${item.color}`}>
                       <item.icon className="text-4xl drop-shadow-sm group-hover:scale-110 transition-transform" />
                     </div>
-                    <span className="text-[11px] font-semibold text-slate-600 group-hover:text-emerald-800 transition-colors leading-tight px-1">
+                    <span className="text-[11px] font-semibold text-slate-600 group-hover:text-brand-800 transition-colors leading-tight px-1">
                       {item.label}
                     </span>
                   </div>

@@ -40,8 +40,8 @@ export default function TabbedTable({ tabs, defaultTabId, onTabChange, hideTabBa
               onClick={() => handleTabClick(tab.id)}
               className={`px-4 py-1.5 text-xs transition-colors ${
                 activeTab === tab.id 
-                  ? "font-bold border border-b-0 border-slate-300 rounded-t-lg bg-white text-emerald-700 pb-2 z-10 -mb-[1px]" 
-                  : "font-semibold border-b border-transparent text-slate-500 hover:text-emerald-600"
+                  ? "font-bold border border-b-0 border-slate-300 rounded-t-lg bg-white text-brand-700 pb-2 z-10 -mb-[1px]" 
+                  : "font-semibold border-b border-transparent text-slate-500 hover:text-brand-600"
               }`}
             >
               {tab.label}

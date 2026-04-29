@@ -36,7 +36,7 @@ export default function BottomActionPanel({
   return (
     <div className="bg-white px-4 py-3 border-t border-slate-200 text-xs shadow-[0_-4px_10px_rgba(0,0,0,0.03)] z-20 shrink-0 flex flex-col gap-3">
       {extraFilters && (
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-y-2 border-b border-emerald-50 pb-2 mb-1">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-y-2 border-b border-brand-50 pb-2 mb-1">
           {extraFilters}
         </div>
       )}
@@ -45,19 +45,19 @@ export default function BottomActionPanel({
         <div className="flex items-center gap-2 flex-wrap">
           <span className="font-semibold text-slate-600 ml-1">Periode :</span>
           <div className="flex items-center gap-1.5">
-            <input type="date" className="border border-slate-200 rounded text-slate-600 px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-white shadow-sm" />
+            <input type="date" className="border border-slate-200 rounded text-slate-600 px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-white shadow-sm" />
             <span className="text-slate-400 font-bold">s.d.</span>
-            <input type="date" className="border border-slate-200 rounded text-slate-600 px-2 py-1 focus:outline-emerald-500 focus:ring-1 focus:ring-emerald-500 bg-white shadow-sm" />
+            <input type="date" className="border border-slate-200 rounded text-slate-600 px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-white shadow-sm" />
           </div>
         </div>
 
         <div className="flex items-center gap-2 flex-wrap sm:mr-2">
           <span className="font-semibold text-slate-600">Key Word :</span>
-          <div className="flex bg-white border border-slate-200 rounded-md shadow-sm overflow-hidden focus-within:ring-1 focus-within:ring-emerald-500 w-[250px]">
+          <div className="flex bg-white border border-slate-200 rounded-md shadow-sm overflow-hidden focus-within:ring-1 focus-within:ring-brand-500 w-[250px]">
             <input type="text" className="w-full bg-transparent outline-none px-2 py-1 text-slate-700" />
             <div className="flex border-l border-slate-200">
-              <button className="px-2 text-emerald-500 hover:bg-emerald-50 transition-colors"><FaCheck className="text-[10px]" /></button>
-              <button className="px-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 transition-colors border-l border-slate-100"><FaSearch className="text-[10px]" /></button>
+              <button className="px-2 text-brand-500 hover:bg-brand-50 transition-colors"><FaCheck className="text-[10px]" /></button>
+              <button className="px-2 text-slate-400 hover:text-brand-600 hover:bg-brand-50 transition-colors border-l border-slate-100"><FaSearch className="text-[10px]" /></button>
             </div>
           </div>
         </div>
@@ -69,7 +69,7 @@ export default function BottomActionPanel({
           {customButtons}
           {!hideStandardButtons && (
             <>
-              <ActionButton onClick={onSave} icon={<FaSave className="text-emerald-600 drop-shadow-sm" />} label="Simpan" />
+              <ActionButton onClick={onSave} icon={<FaSave className="text-brand-600 drop-shadow-sm" />} label="Simpan" />
               <ActionButton onClick={onNew} icon={<FaFileAlt className="text-red-600 drop-shadow-sm" />} label="Baru" />
               <ActionButton onClick={onReplace} icon={<FaEdit className="text-orange-500 drop-shadow-sm" />} label="Ganti" />
               <ActionButton onClick={onDelete} icon={<FaTrash className="text-orange-600 drop-shadow-sm" />} label="Hapus" />
@@ -101,7 +101,7 @@ export function ActionButton({ icon, label, isExit, className = "", onClick }: {
   return (
     <button 
       onClick={onClick}
-      className={`flex items-center gap-2 px-3 py-1.5 bg-white border ${isExit ? 'border-red-200 hover:border-red-400 hover:bg-red-50 text-red-700' : 'border-slate-200 hover:border-emerald-400 hover:bg-emerald-50 text-slate-700'} rounded shadow-sm hover:shadow active:scale-95 transition-all text-[11px] font-bold ${className}`}
+      className={`flex items-center gap-2 px-3 py-1.5 bg-white border ${isExit ? 'border-red-200 hover:border-red-400 hover:bg-red-50 text-red-700' : 'border-slate-200 hover:border-brand-400 hover:bg-brand-50 text-slate-700'} rounded shadow-sm hover:shadow active:scale-95 transition-all text-[11px] font-bold ${className}`}
     >
       <span className="text-sm">{icon}</span>
       <span>{label}</span>
