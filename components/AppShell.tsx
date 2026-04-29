@@ -119,29 +119,6 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       </main>
 
-      {/* Bottom Status Bar */}
-      <motion.footer
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.4, duration: 0.5 }}
-        className="bg-brand-50/90 backdrop-blur-md border-t border-brand-200 text-xs font-semibold text-slate-600 flex items-center h-8 z-20 shadow-[0_-2px_10px_rgba(0,0,0,0.02)] w-full overflow-x-auto whitespace-nowrap [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
-      >
-        <div className="px-3 sm:px-5 py-1 border-r border-brand-200/60 flex items-center min-w-max h-full">
-          Status Admin :
-        </div>
-        <div className="px-3 sm:px-5 py-1 border-r border-brand-200/60 flex items-center hover:bg-brand-100 cursor-pointer transition-colors h-full min-w-max">
-          {isLoggedIn ? username || 'Admin Utama' : 'Belum Login'}
-        </div>
-        <div className="hidden sm:flex px-5 py-1 border-r border-brand-200/60 items-center h-full text-slate-500 font-mono">
-          22/04/2026
-        </div>
-        <div className="hidden sm:flex px-5 py-1 border-r border-brand-200/60 items-center h-full text-slate-500 font-mono">
-          192.168.2.230
-        </div>
-        <div className="px-3 sm:px-5 py-1 flex items-center min-w-max h-full text-[11px] flex-1">
-          <span><span className="hidden sm:inline">Dikembangkan oleh </span><span className="inline sm:hidden">Dev: </span><span className="text-brand-700 font-bold">Novgeny R. Ermiawan / Khanza.Soft Media</span></span>
-        </div>
-      </motion.footer>
 
       {/* Context Menu */}
       <AnimatePresence>
