@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import {
   FaSave, FaFileAlt, FaEdit, FaTrash, FaPrint, FaList, FaTimes, FaSearch, FaCheck
 } from 'react-icons/fa';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface BottomActionPanelProps {
   onSave?: () => void;
@@ -99,12 +101,21 @@ export default function BottomActionPanel({
 // Exportable Button Component
 export function ActionButton({ icon, label, isExit, className = "", onClick }: { icon: React.ReactNode, label: string, isExit?: boolean, className?: string, onClick?: () => void }) {
   return (
-    <button 
+    <Button 
+      variant="outline"
+      size="sm"
       onClick={onClick}
-      className={`flex items-center gap-2 px-3 py-1.5 bg-white border ${isExit ? 'border-red-200 hover:border-red-400 hover:bg-red-50 text-red-700' : 'border-slate-200 hover:border-brand-400 hover:bg-brand-50 text-slate-700'} rounded shadow-sm hover:shadow active:scale-95 transition-all text-[11px] font-bold ${className}`}
+      className={cn(
+        "bg-white h-7.5 font-bold text-[11px] transition-all active:scale-95",
+        isExit 
+          ? "border-red-200 hover:border-red-400 hover:bg-red-50 text-red-700" 
+          : "border-slate-200 hover:border-brand-400 hover:bg-brand-50 text-slate-700",
+        className
+      )}
     >
       <span className="text-sm">{icon}</span>
       <span>{label}</span>
-    </button>
+    </Button>
   );
 }
+

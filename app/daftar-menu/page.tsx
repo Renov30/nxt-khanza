@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from '@/components/ui/button';
 import {
   FaSearch, FaChevronLeft, FaChevronRight, FaTimes,
   FaIdCard, FaBed, FaCalendarAlt, FaAddressBook, FaXRay,
@@ -48,6 +49,7 @@ const MOCK_MENU_ITEMS = [
   // Some dummy data for category H
   { id: 18, label: "Daftar Parkir", icon: FaCar, link: "/", color: "text-slate-800", category: 7 },
 ];
+
 
 export default function DaftarMenuPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -144,10 +146,14 @@ export default function DaftarMenuPage() {
           </h2>
 
           <Link href="/">
-            <button className="flex items-center gap-2 px-3 py-1.5 bg-white border border-red-200 hover:border-red-400 hover:bg-red-50 text-red-600 rounded-lg shadow-sm hover:shadow transition-all text-xs font-bold">
+            <Button 
+              variant="outline" 
+              size="sm"
+              className="border-red-200 hover:border-red-400 hover:bg-red-50 text-red-600 shadow-sm transition-all font-bold"
+            >
               <FaTimes />
               <span>Keluar</span>
-            </button>
+            </Button>
           </Link>
         </div>
 
