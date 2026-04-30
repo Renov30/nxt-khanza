@@ -84,7 +84,7 @@ function RiwayatPasienContent() {
   const [checkedMenu, setCheckedMenu] = useState<Record<string, boolean>>(
     Object.fromEntries(perawatanMenuItems.map(m => [m, m === 'Semua']))
   );
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => { setMounted(true); }, []);
   if (!mounted) return null;
@@ -149,9 +149,9 @@ function RiwayatPasienContent() {
       {/* Expandable Patient Data */}
       <AnimatePresence>
         {showPatientData && (
-          <motion.div 
-            initial={{ height: 0, opacity: 0 }} 
-            animate={{ height: 'auto', opacity: 1 }} 
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="bg-white border-b border-slate-200 shrink-0 overflow-hidden"
@@ -198,30 +198,30 @@ function RiwayatPasienContent() {
               initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }} transition={{ duration: 0.15 }}
               className="flex-1 overflow-auto"
             >
-            <table className="w-full text-left border-collapse text-xs whitespace-nowrap">
-              <thead className="sticky top-0 bg-slate-100 border-b border-slate-300 z-10 shadow-sm text-slate-600">
-                <tr>
-                  {['No', 'No.Rawat', 'Tanggal', 'Jam', 'Kd.Dokter', 'Dokter Dituju/DPJP', 'Umur', 'Poliklinik/Kamar', 'Jenis Bayar'].map(h => (
-                    <th key={h} className="py-2 px-3 border-r border-slate-300 font-semibold last:border-r-0">{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {demoKunjungan.map((row, i) => (
-                  <tr key={i} className={`${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/80'} hover:bg-brand-50 transition-colors cursor-pointer`}>
-                    <td className="py-2 px-3 border-r border-slate-200 text-center">{row.no}</td>
-                    <td className="py-2 px-3 border-r border-slate-200 text-brand-600 font-bold">{row.noRawat}</td>
-                    <td className="py-2 px-3 border-r border-slate-200">{row.tgl}</td>
-                    <td className="py-2 px-3 border-r border-slate-200">{row.jam}</td>
-                    <td className="py-2 px-3 border-r border-slate-200">{row.kdDokter}</td>
-                    <td className="py-2 px-3 border-r border-slate-200">{row.dokter}</td>
-                    <td className="py-2 px-3 border-r border-slate-200">{row.umur}</td>
-                    <td className="py-2 px-3 border-r border-slate-200">{row.poli}</td>
-                    <td className="py-2 px-3">{row.bayar}</td>
+              <table className="w-full text-left border-collapse text-xs whitespace-nowrap">
+                <thead className="sticky top-0 bg-slate-100 border-b border-slate-300 z-10 shadow-sm text-slate-600">
+                  <tr>
+                    {['No', 'No.Rawat', 'Tanggal', 'Jam', 'Kd.Dokter', 'Dokter Dituju/DPJP', 'Umur', 'Poliklinik/Kamar', 'Jenis Bayar'].map(h => (
+                      <th key={h} className="py-2 px-3 border-r border-slate-300 font-semibold last:border-r-0">{h}</th>
+                    ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {demoKunjungan.map((row, i) => (
+                    <tr key={i} className={`${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/80'} hover:bg-brand-50 transition-colors cursor-pointer`}>
+                      <td className="py-2 px-3 border-r border-slate-200 text-center">{row.no}</td>
+                      <td className="py-2 px-3 border-r border-slate-200 text-brand-600 font-bold">{row.noRawat}</td>
+                      <td className="py-2 px-3 border-r border-slate-200">{row.tgl}</td>
+                      <td className="py-2 px-3 border-r border-slate-200">{row.jam}</td>
+                      <td className="py-2 px-3 border-r border-slate-200">{row.kdDokter}</td>
+                      <td className="py-2 px-3 border-r border-slate-200">{row.dokter}</td>
+                      <td className="py-2 px-3 border-r border-slate-200">{row.umur}</td>
+                      <td className="py-2 px-3 border-r border-slate-200">{row.poli}</td>
+                      <td className="py-2 px-3">{row.bayar}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </motion.div>
           )}
 
@@ -232,39 +232,39 @@ function RiwayatPasienContent() {
               initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }} transition={{ duration: 0.15 }}
               className="flex-1 overflow-auto p-4"
             >
-            {demoSoap.map((group, gi) => (
-              <div key={gi} className="mb-6">
-                <div className="flex items-center gap-3 mb-3 text-xs">
-                  <span className="font-bold text-brand-700 bg-brand-50 px-3 py-1 rounded-full">Tgl.Reg: {group.tglReg}</span>
-                  <span className="font-semibold text-slate-600">No.Rawat: {group.noRawat}</span>
-                </div>
-                <div className="border border-slate-200 rounded-lg overflow-hidden">
-                  {/* CPPT Header */}
-                  <div className="bg-slate-100 text-[11px] font-bold text-slate-600 grid grid-cols-12 gap-0">
-                    <div className="col-span-1 p-2 border-r border-slate-200 text-center">Status</div>
-                    <div className="col-span-1 p-2 border-r border-slate-200">Tgl, Jam</div>
-                    <div className="col-span-2 p-2 border-r border-slate-200">Profesional Pemberi Asuhan</div>
-                    <div className="col-span-4 p-2 border-r border-slate-200">Hasil Asesmen Pasien dan Pemberian Pelayanan</div>
-                    <div className="col-span-2 p-2 border-r border-slate-200">Instruksi / IPA</div>
-                    <div className="col-span-2 p-2">Review & Verifikasi DPJP</div>
+              {demoSoap.map((group, gi) => (
+                <div key={gi} className="mb-6">
+                  <div className="flex items-center gap-3 mb-3 text-xs">
+                    <span className="font-bold text-brand-700 bg-brand-50 px-3 py-1 rounded-full">Tgl.Reg: {group.tglReg}</span>
+                    <span className="font-semibold text-slate-600">No.Rawat: {group.noRawat}</span>
                   </div>
-                  {/* CPPT Entries */}
-                  {group.entries.map((entry, ei) => (
-                    <div key={ei} className={`grid grid-cols-12 gap-0 text-xs border-t border-slate-200 ${ei % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}`}>
-                      <div className="col-span-1 p-2 border-r border-slate-200 text-center font-semibold text-brand-700">{entry.status}</div>
-                      <div className="col-span-1 p-2 border-r border-slate-200 text-slate-600">{entry.tglJam}</div>
-                      <div className="col-span-2 p-2 border-r border-slate-200">
-                        <div className="font-semibold text-slate-700">{entry.petugas}</div>
-                        <div className="text-slate-500 text-[11px]">{entry.profesi}</div>
-                      </div>
-                      <div className="col-span-4 p-2 border-r border-slate-200 whitespace-pre-wrap break-words">{entry.soap}</div>
-                      <div className="col-span-2 p-2 border-r border-slate-200 text-slate-600">{entry.instruksi || '-'}</div>
-                      <div className="col-span-2 p-2 text-slate-400 italic text-[11px]">-</div>
+                  <div className="border border-slate-200 rounded-lg overflow-hidden">
+                    {/* CPPT Header */}
+                    <div className="bg-slate-100 text-[11px] font-bold text-slate-600 grid grid-cols-12 gap-0">
+                      <div className="col-span-1 p-2 border-r border-slate-200 text-center">Status</div>
+                      <div className="col-span-1 p-2 border-r border-slate-200">Tgl, Jam</div>
+                      <div className="col-span-2 p-2 border-r border-slate-200">Profesional Pemberi Asuhan</div>
+                      <div className="col-span-4 p-2 border-r border-slate-200">Hasil Asesmen Pasien dan Pemberian Pelayanan</div>
+                      <div className="col-span-2 p-2 border-r border-slate-200">Instruksi / IPA</div>
+                      <div className="col-span-2 p-2">Review & Verifikasi DPJP</div>
                     </div>
-                  ))}
+                    {/* CPPT Entries */}
+                    {group.entries.map((entry, ei) => (
+                      <div key={ei} className={`grid grid-cols-12 gap-0 text-xs border-t border-slate-200 ${ei % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}`}>
+                        <div className="col-span-1 p-2 border-r border-slate-200 text-center font-semibold text-brand-700">{entry.status}</div>
+                        <div className="col-span-1 p-2 border-r border-slate-200 text-slate-600">{entry.tglJam}</div>
+                        <div className="col-span-2 p-2 border-r border-slate-200">
+                          <div className="font-semibold text-slate-700">{entry.petugas}</div>
+                          <div className="text-slate-500 text-[11px]">{entry.profesi}</div>
+                        </div>
+                        <div className="col-span-4 p-2 border-r border-slate-200 whitespace-pre-wrap break-words">{entry.soap}</div>
+                        <div className="col-span-2 p-2 border-r border-slate-200 text-slate-600">{entry.instruksi || '-'}</div>
+                        <div className="col-span-2 p-2 text-slate-400 italic text-[11px]">-</div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
             </motion.div>
           )}
 
@@ -275,89 +275,89 @@ function RiwayatPasienContent() {
               initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }} transition={{ duration: 0.15 }}
               className="flex-1 flex overflow-hidden"
             >
-            {/* Left Sidebar with Checkboxes */}
-            <motion.div initial={false} animate={{ width: sidebarOpen ? 260 : 40 }}
-              className="bg-white border-r border-slate-200 flex flex-col overflow-hidden shrink-0">
-              <div className="p-2 border-b border-slate-100 flex items-center gap-2 h-10">
-                <button onClick={() => setSidebarOpen(!sidebarOpen)}
-                  className="p-1 hover:bg-brand-50 rounded text-brand-700 shrink-0"><FaBars className="text-xs" /></button>
-                {sidebarOpen && <span className="text-xs font-bold text-brand-700 truncate">Pilih Data</span>}
-              </div>
-              {sidebarOpen && (
-                <div className="flex-1 overflow-y-auto custom-scrollbar p-2 space-y-0.5">
-                  {perawatanMenuItems.map((item) => (
-                    <button key={item} onClick={() => toggleMenu(item)}
-                      className={`flex items-center gap-2 px-2 py-1.5 w-full text-left text-xs rounded transition-colors ${checkedMenu[item] ? 'bg-brand-50 text-brand-700 font-semibold' : 'text-slate-600 hover:bg-slate-50'
-                        }`}>
-                      {checkedMenu[item]
-                        ? <FaCheckSquare className="text-brand-500 shrink-0" />
-                        : <FaSquare className="text-slate-300 shrink-0" />}
-                      <span className="truncate">{item}</span>
-                    </button>
-                  ))}
+              {/* Left Sidebar with Checkboxes */}
+              <motion.div initial={false} animate={{ width: sidebarOpen ? 260 : 40 }}
+                className="bg-white border-r border-slate-200 flex flex-col overflow-hidden shrink-0">
+                <div className="p-2 border-b border-slate-100 flex items-center gap-2 h-10">
+                  <button onClick={() => setSidebarOpen(!sidebarOpen)}
+                    className="p-1 hover:bg-brand-50 rounded text-brand-700 shrink-0"><FaBars className="text-xs" /></button>
+                  {sidebarOpen && <span className="text-xs font-bold text-brand-700 truncate">Pilih Data</span>}
                 </div>
-              )}
-            </motion.div>
-
-            {/* Right Detail Panel */}
-            <div className="flex-1 overflow-auto p-4">
-              <div className="space-y-4">
-                {/* Registration Detail Card */}
-                <div className="bg-white rounded-lg border border-slate-200 p-4">
-                  <h3 className="text-[13px] font-bold text-brand-700 mb-3 flex items-center gap-2 border-b border-brand-100 pb-2">
-                    <FaClipboardList className="text-brand-500" /> Detail Registrasi
-                  </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
-                    {[
-                      ['No. Rawat', demoPerawatanDetail.noRawat],
-                      ['No. Registrasi', demoPerawatanDetail.noReg],
-                      ['Tanggal Registrasi', demoPerawatanDetail.tglRegistrasi],
-                      ['Umur Saat Daftar', demoPerawatanDetail.umurDaftar],
-                      ['Unit/Poliklinik', demoPerawatanDetail.unitPoli],
-                      ['Dokter Poli', demoPerawatanDetail.dokterPoli],
-                      ['DPJP Ranap', demoPerawatanDetail.dpjpRanap],
-                      ['Cara Bayar', demoPerawatanDetail.caraBayar],
-                      ['Penanggung Jawab', demoPerawatanDetail.pj],
-                      ['Alamat P.J.', demoPerawatanDetail.alamatPJ],
-                      ['Hubungan P.J.', demoPerawatanDetail.hubPJ],
-                      ['Status', demoPerawatanDetail.status],
-                    ].map(([label, value]) => (
-                      <div key={label} className="flex gap-2">
-                        <span className="font-semibold text-slate-500 min-w-[130px]">{label}</span>
-                        <span className="text-slate-400">:</span>
-                        <span className="text-slate-800">{value}</span>
-                      </div>
+                {sidebarOpen && (
+                  <div className="flex-1 overflow-y-auto custom-scrollbar p-2 space-y-0.5">
+                    {perawatanMenuItems.map((item) => (
+                      <button key={item} onClick={() => toggleMenu(item)}
+                        className={`flex items-center gap-2 px-2 py-1.5 w-full text-left text-xs rounded transition-colors ${checkedMenu[item] ? 'bg-brand-50 text-brand-700 font-semibold' : 'text-slate-600 hover:bg-slate-50'
+                          }`}>
+                        {checkedMenu[item]
+                          ? <FaCheckSquare className="text-brand-500 shrink-0" />
+                          : <FaSquare className="text-slate-300 shrink-0" />}
+                        <span className="truncate">{item}</span>
+                      </button>
                     ))}
                   </div>
-                </div>
+                )}
+              </motion.div>
 
-                {/* Care Detail Card */}
-                <div className="bg-white rounded-lg border border-slate-200 p-4">
-                  <h3 className="text-[13px] font-bold text-brand-700 mb-3 flex items-center gap-2 border-b border-brand-100 pb-2">
-                    <FaNotesMedical className="text-brand-500" /> Detail Perawatan
-                  </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
-                    {[
-                      ['Cara Masuk', demoPerawatanDetail.caramasuk],
-                      ['Transportasi', demoPerawatanDetail.transportasi],
-                      ['Alasan Kedatangan', demoPerawatanDetail.alasanKedatangan],
-                      ['Keadaan', demoPerawatanDetail.keadaan],
-                    ].map(([label, value]) => (
-                      <div key={label} className="flex gap-2">
-                        <span className="font-semibold text-slate-500 min-w-[130px]">{label}</span>
-                        <span className="text-slate-400">:</span>
-                        <span className="text-slate-800">{value}</span>
-                      </div>
-                    ))}
+              {/* Right Detail Panel */}
+              <div className="flex-1 overflow-auto p-4">
+                <div className="space-y-4">
+                  {/* Registration Detail Card */}
+                  <div className="bg-white rounded-lg border border-slate-200 p-4">
+                    <h3 className="text-[13px] font-bold text-brand-700 mb-3 flex items-center gap-2 border-b border-brand-100 pb-2">
+                      <FaClipboardList className="text-brand-500" /> Detail Registrasi
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+                      {[
+                        ['No. Rawat', demoPerawatanDetail.noRawat],
+                        ['No. Registrasi', demoPerawatanDetail.noReg],
+                        ['Tanggal Registrasi', demoPerawatanDetail.tglRegistrasi],
+                        ['Umur Saat Daftar', demoPerawatanDetail.umurDaftar],
+                        ['Unit/Poliklinik', demoPerawatanDetail.unitPoli],
+                        ['Dokter Poli', demoPerawatanDetail.dokterPoli],
+                        ['DPJP Ranap', demoPerawatanDetail.dpjpRanap],
+                        ['Cara Bayar', demoPerawatanDetail.caraBayar],
+                        ['Penanggung Jawab', demoPerawatanDetail.pj],
+                        ['Alamat P.J.', demoPerawatanDetail.alamatPJ],
+                        ['Hubungan P.J.', demoPerawatanDetail.hubPJ],
+                        ['Status', demoPerawatanDetail.status],
+                      ].map(([label, value]) => (
+                        <div key={label} className="flex gap-2">
+                          <span className="font-semibold text-slate-500 min-w-[130px]">{label}</span>
+                          <span className="text-slate-400">:</span>
+                          <span className="text-slate-800">{value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Care Detail Card */}
+                  <div className="bg-white rounded-lg border border-slate-200 p-4">
+                    <h3 className="text-[13px] font-bold text-brand-700 mb-3 flex items-center gap-2 border-b border-brand-100 pb-2">
+                      <FaNotesMedical className="text-brand-500" /> Detail Perawatan
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+                      {[
+                        ['Cara Masuk', demoPerawatanDetail.caramasuk],
+                        ['Transportasi', demoPerawatanDetail.transportasi],
+                        ['Alasan Kedatangan', demoPerawatanDetail.alasanKedatangan],
+                        ['Keadaan', demoPerawatanDetail.keadaan],
+                      ].map(([label, value]) => (
+                        <div key={label} className="flex gap-2">
+                          <span className="font-semibold text-slate-500 min-w-[130px]">{label}</span>
+                          <span className="text-slate-400">:</span>
+                          <span className="text-slate-800">{value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Placeholder for selected assessment modules */}
+                  <div className="bg-slate-50 rounded-lg border border-dashed border-slate-300 p-6 text-center text-xs text-slate-400 italic">
+                    Pilih modul asesmen pada panel kiri untuk menampilkan data perawatan lengkap
                   </div>
                 </div>
-
-                {/* Placeholder for selected assessment modules */}
-                <div className="bg-slate-50 rounded-lg border border-dashed border-slate-300 p-6 text-center text-xs text-slate-400 italic">
-                  Pilih modul asesmen pada panel kiri untuk menampilkan data perawatan lengkap
-                </div>
               </div>
-            </div>
             </motion.div>
           )}
         </AnimatePresence>

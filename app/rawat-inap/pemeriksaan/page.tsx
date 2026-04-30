@@ -6,7 +6,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import {
   FaBed, FaSave, FaFileAlt, FaTrash, FaEdit, FaPrint, FaListAlt,
   FaSignOutAlt, FaSearch, FaHistory, FaSync, FaStethoscope, FaSyringe,
-  FaNotesMedical, FaHeartbeat, FaPills, FaClipboardList, FaCheck, FaBars
+  FaNotesMedical, FaHeartbeat, FaPills, FaClipboardList, FaCheck, FaBars, FaUtensils
 } from 'react-icons/fa';
 import BottomActionPanel, { ActionButton } from '@/components/BottomActionPanel';
 
@@ -28,6 +28,7 @@ function PemeriksaanContent() {
   const sidebarMenu = [
     { icon: <FaStethoscope />, label: 'Resume Pasien' },
     { icon: <FaHistory />, label: 'Riwayat Pasien' },
+    { icon: <FaUtensils />, label: 'Asuhan Gizi' },
     { icon: <FaSyringe />, label: 'Bundle PPI' },
     { icon: <FaClipboardList />, label: 'Rekapan HAIs' },
   ];
@@ -81,6 +82,8 @@ function PemeriksaanContent() {
                 onClick={() => {
                   if (item.label === 'Riwayat Pasien') {
                     router.push(`/rawat-inap/riwayat-pasien?noRM=617211&nama=Tn.+Sukarji`);
+                  } else if (item.label === 'Asuhan Gizi') {
+                    router.push(`/rawat-inap/asuhan-gizi?noRawat=${noRawatParam}`);
                   }
                 }}
                 className="flex items-center gap-3 px-3 py-3 hover:bg-brand-50 cursor-pointer text-xs text-slate-700 border-b border-slate-50 transition-colors whitespace-nowrap"
@@ -300,6 +303,7 @@ function PemeriksaanContent() {
       {/* Main Bottom Actions */}
       <BottomActionPanel
         recordCount={0}
+        onExit={() => router.push('/rawat-inap')}
       />
     </motion.div>
   );
