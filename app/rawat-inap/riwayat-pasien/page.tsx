@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useState, useEffect, Suspense } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, useRouter } from 'next/navigation';
 import {
   FaHistory, FaSearch, FaUserInjured, FaChevronDown, FaChevronUp,
   FaCalendarAlt, FaStethoscope, FaNotesMedical, FaClipboardList,
-  FaCheckSquare, FaSquare, FaBars, FaPrint
+  FaCheckSquare, FaSquare, FaBars, FaPrint, FaTimes
 } from 'react-icons/fa';
+import { ActionButton } from '@/components/BottomActionPanel';
 import BottomActionPanel from '@/components/BottomActionPanel';
 
 // Demo data
@@ -20,10 +21,14 @@ const demoSoap = [
   {
     tglReg: '2025-10-23', noRawat: '2025/10/23/000065',
     entries: [
-      { status: 'Ranap', tglJam: '2025-10-23 12:15:51', petugas: 'dr.desi', profesi: 'dr. Veronica Noveni Dea Paula',
-        soap: 'Menerima advice dr.Andris,Dr.PD,\nJu UGD Inj D4 Jam\nRanplex 1x1 jam\nBi Kg Inj jam\n1x TIV inj.it.', instruksi: 'Advice dr.Andris,Dr.PD,', ipa: '' },
-      { status: 'Ranap', tglJam: '2025-10-23 18:04:06', petugas: 'yunita.k', profesi: 'Yunita Keu, Amd. Kep',
-        soap: 'S : Pasien mengatakan Batuk be dahak(+), Mual(+), Pusing(+), BAB/BAK(+), Mu/Mi baik(+)\nO : Nl. sedang\nTensi : 114/91\nNadi(Imnt) : 92\nRespirasi(Imnt) : 22\nSuhu(C) : 36\nTinggi(Cm) : -\nBerat(Kg) : -\nSpO2(%) : 99\nGCS(E,V,M) : 15\nAlergi :\nKesadaran : Compos Mentis', instruksi: '', ipa: '' },
+      {
+        status: 'Ranap', tglJam: '2025-10-23 12:15:51', petugas: 'dr.desi', profesi: 'dr. Veronica Noveni Dea Paula',
+        soap: 'Menerima advice dr.Andris,Dr.PD,\nJu UGD Inj D4 Jam\nRanplex 1x1 jam\nBi Kg Inj jam\n1x TIV inj.it.', instruksi: 'Advice dr.Andris,Dr.PD,', ipa: ''
+      },
+      {
+        status: 'Ranap', tglJam: '2025-10-23 18:04:06', petugas: 'yunita.k', profesi: 'Yunita Keu, Amd. Kep',
+        soap: 'S : Pasien mengatakan Batuk be dahak(+), Mual(+), Pusing(+), BAB/BAK(+), Mu/Mi baik(+)\nO : Nl. sedang\nTensi : 114/91\nNadi(Imnt) : 92\nRespirasi(Imnt) : 22\nSuhu(C) : 36\nTinggi(Cm) : -\nBerat(Kg) : -\nSpO2(%) : 99\nGCS(E,V,M) : 15\nAlergi :\nKesadaran : Compos Mentis', instruksi: '', ipa: ''
+      },
     ]
   },
 ];
@@ -142,31 +147,40 @@ function RiwayatPasienContent() {
       </button>
 
       {/* Expandable Patient Data */}
-      {showPatientData && (
-        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} className="bg-white border-b border-slate-200 px-4 py-3 shrink-0 overflow-hidden">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
-            {[
-              ['No. RM', noRMParam], ['Nama', nmPasienParam], ['Jenis Kelamin', 'Laki-laki'],
-              ['Tempat Lahir', 'Blora'], ['Tgl. Lahir', '1959-06-22'], ['Agama', 'Islam'],
-              ['Gol. Darah', 'O'], ['Status Nikah', 'MENIKAH'], ['Pendidikan', 'SLTA'],
-              ['Alamat', 'Jl. Contoh No. 123, Sormasang'], ['Ibu Kandung', 'Suminah'], ['No. KTP', '3312xxxxxxxx'],
-            ].map(([label, value]) => (
-              <div key={label} className="flex flex-col gap-0.5">
-                <span className="font-semibold text-slate-500">{label}</span>
-                <span className="text-slate-800">{value}</span>
+      <AnimatePresence>
+        {showPatientData && (
+          <motion.div 
+            initial={{ height: 0, opacity: 0 }} 
+            animate={{ height: 'auto', opacity: 1 }} 
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="bg-white border-b border-slate-200 shrink-0 overflow-hidden"
+          >
+            <div className="px-4 py-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+                {[
+                  ['No. RM', noRMParam], ['Nama', nmPasienParam], ['Jenis Kelamin', 'Laki-laki'],
+                  ['Tempat Lahir', 'Blora'], ['Tgl. Lahir', '1959-06-22'], ['Agama', 'Islam'],
+                  ['Gol. Darah', 'O'], ['Status Nikah', 'MENIKAH'], ['Pendidikan', 'SLTA'],
+                  ['Alamat', 'Jl. Contoh No. 123, Sormasang'], ['Ibu Kandung', 'Suminah'], ['No. KTP', '3312xxxxxxxx'],
+                ].map(([label, value]) => (
+                  <div key={label} className="flex flex-col gap-0.5">
+                    <span className="font-semibold text-slate-500">{label}</span>
+                    <span className="text-slate-800">{value}</span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </motion.div>
-      )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Tabs */}
       <div className="flex bg-white border-b border-slate-200 px-3 shrink-0 overflow-x-auto custom-scrollbar">
         {tabs.map((tab) => (
           <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-            className={`px-4 py-2 text-xs font-semibold transition-all whitespace-nowrap relative ${
-              activeTab === tab.id ? 'text-brand-700 font-bold' : 'text-slate-500 hover:text-brand-600'
-            }`}
+            className={`px-4 py-2 text-xs font-semibold transition-all whitespace-nowrap relative ${activeTab === tab.id ? 'text-brand-700 font-bold' : 'text-slate-500 hover:text-brand-600'
+              }`}
           >
             {tab.label}
             {activeTab === tab.id && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-brand-500 rounded-full" />}
@@ -260,9 +274,8 @@ function RiwayatPasienContent() {
                 <div className="flex-1 overflow-y-auto custom-scrollbar p-2 space-y-0.5">
                   {perawatanMenuItems.map((item) => (
                     <button key={item} onClick={() => toggleMenu(item)}
-                      className={`flex items-center gap-2 px-2 py-1.5 w-full text-left text-xs rounded transition-colors ${
-                        checkedMenu[item] ? 'bg-brand-50 text-brand-700 font-semibold' : 'text-slate-600 hover:bg-slate-50'
-                      }`}>
+                      className={`flex items-center gap-2 px-2 py-1.5 w-full text-left text-xs rounded transition-colors ${checkedMenu[item] ? 'bg-brand-50 text-brand-700 font-semibold' : 'text-slate-600 hover:bg-slate-50'
+                        }`}>
                       {checkedMenu[item]
                         ? <FaCheckSquare className="text-brand-500 shrink-0" />
                         : <FaSquare className="text-slate-300 shrink-0" />}
@@ -373,13 +386,24 @@ function RiwayatPasienContent() {
           </div>
         )}
 
+        <div className="flex items-center gap-2 px-2 border-l border-slate-200 ml-2">
+          <span className="text-slate-500 font-semibold whitespace-nowrap">Key Word :</span>
+          <input type="text" placeholder="Cari di sini..."
+            className="border border-slate-300 rounded px-2 py-1 w-40 text-xs focus:outline-none focus:border-brand-500" />
+        </div>
+
         <div className="ml-auto flex items-center gap-2">
-          <button className="bg-brand-600 hover:bg-brand-700 text-white px-3 py-1.5 rounded font-bold text-[11px] flex items-center gap-1.5 transition-colors shadow-sm">
-            <FaSearch className="text-[10px]" /> Tampilkan
-          </button>
-          <button className="border border-slate-200 hover:border-brand-400 hover:bg-brand-50 text-slate-700 px-3 py-1.5 rounded font-bold text-[11px] flex items-center gap-1.5 transition-colors">
-            <FaPrint className="text-[10px]" /> Cetak
-          </button>
+          <ActionButton
+            icon={<FaSearch className="drop-shadow-sm" />}
+            label="Tampilkan"
+            variant="primary"
+          />
+          <ActionButton
+            icon={<FaTimes className="text-red-500 drop-shadow-sm" />}
+            label="Keluar"
+            isExit
+            onClick={() => router.back()}
+          />
         </div>
       </div>
     </motion.div>
