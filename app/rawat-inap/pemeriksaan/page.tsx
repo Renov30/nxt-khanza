@@ -78,6 +78,11 @@ function PemeriksaanContent() {
             {sidebarMenu.map((item, idx) => (
               <div
                 key={idx}
+                onClick={() => {
+                  if (item.label === 'Riwayat Pasien') {
+                    router.push(`/rawat-inap/riwayat-pasien?noRM=617211&nama=Tn.+Sukarji`);
+                  }
+                }}
                 className="flex items-center gap-3 px-3 py-3 hover:bg-brand-50 cursor-pointer text-xs text-slate-700 border-b border-slate-50 transition-colors whitespace-nowrap"
                 title={!isSidebarOpen ? item.label : undefined}
               >

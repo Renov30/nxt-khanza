@@ -73,7 +73,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="bg-gradient-to-r from-brand-700 via-brand-600 to-brand-800 text-white flex overflow-x-auto whitespace-nowrap px-2 py-1 shadow-md z-30 border-b border-brand-500/50 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        className="bg-gradient-to-r from-brand-700 via-brand-600 to-brand-800 text-white flex overflow-x-auto whitespace-nowrap px-2 py-0.5 lg:py-1 shadow-md z-30 border-b border-brand-500/50 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
       >
         <div className="flex items-center gap-1 w-max">
           <TopMenuItem
@@ -104,7 +104,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.5 }}
-        className="bg-white/80 backdrop-blur-md border-b border-brand-100 flex items-center px-4 py-2 shadow-sm z-20 gap-1 overflow-x-auto relative [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        className="bg-white/80 backdrop-blur-md border-b border-brand-100 flex items-center px-4 py-1 lg:py-2 shadow-sm z-20 gap-1 overflow-x-auto relative [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
       >
         <Link href="/daftar-menu">
           <SecondaryMenuItem
@@ -115,7 +115,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             active={pathname === "/daftar-menu"}
           />
         </Link>
-        <div className="w-px h-10 bg-brand-100 mx-2 self-center"></div>
+        <div className="w-px h-8 lg:h-10 bg-brand-100 mx-2 self-center"></div>
         <Link href="/registrasi">
           <SecondaryMenuItem
             icon={
@@ -387,9 +387,9 @@ function TopMenuItem({
     <motion.button
       whileHover={{ y: -1, backgroundColor: "rgba(255,255,255,0.15)" }}
       whileTap={{ scale: 0.96 }}
-      className="flex items-center gap-1 px-3 py-0.5 rounded-lg text-[10px] font-medium transition-colors hover:shadow-sm"
+      className="flex items-center gap-1 lg:gap-2 px-3 py-0.5 lg:py-1 rounded-lg text-[10px] lg:text-xs font-medium transition-colors hover:shadow-sm"
     >
-      <span className="text-sm drop-shadow-md">{icon}</span>
+      <span className="text-sm lg:text-base drop-shadow-md">{icon}</span>
       <span className="drop-shadow-sm">{label}</span>
     </motion.button>
   );
@@ -419,15 +419,15 @@ function SecondaryMenuItem({
           : "rgba(209,250,229,0.3)",
       }}
       whileTap={{ scale: 0.95 }}
-      className={`group flex flex-col items-center justify-center gap-1 min-w-[76px] p-2 rounded-xl transition-all border ${active ? "border-brand-200 bg-brand-50/60 shadow-sm" : "border-transparent"} hover:border-brand-100 hover:shadow-sm relative overflow-hidden`}
+      className={`group flex flex-col items-center justify-center gap-1 min-w-[70px] lg:min-w-[76px] p-1 lg:p-2 rounded-xl transition-all border ${active ? "border-brand-200 bg-brand-50/60 shadow-sm" : "border-transparent"} hover:border-brand-100 hover:shadow-sm relative overflow-hidden`}
     >
       <span
-        className={`text-2xl drop-shadow-sm z-10 ${active && !isRed ? "text-brand-600" : ""}`}
+        className={`text-xl lg:text-2xl drop-shadow-sm z-10 ${active && !isRed ? "text-brand-600" : ""}`}
       >
         {icon}
       </span>
       <span
-        className={`text-[11px] font-bold z-10 ${isRed ? "text-red-600" : active ? "text-brand-700" : "text-slate-600 group-hover:text-brand-700"}`}
+        className={`text-[10px] lg:text-[11px] font-bold z-10 ${isRed ? "text-red-600" : active ? "text-brand-700" : "text-slate-600 group-hover:text-brand-700"}`}
       >
         {label}
       </span>
