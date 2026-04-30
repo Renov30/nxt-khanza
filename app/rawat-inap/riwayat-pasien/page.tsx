@@ -189,10 +189,15 @@ function RiwayatPasienContent() {
       </div>
 
       {/* Tab Content */}
-      <div className="flex-1 overflow-hidden flex flex-col">
-        {/* Tab 1: Riwayat Kunjungan */}
-        {activeTab === 'kunjungan' && (
-          <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-hidden flex flex-col relative">
+        <AnimatePresence mode="wait">
+          {/* Tab 1: Riwayat Kunjungan */}
+          {activeTab === 'kunjungan' && (
+            <motion.div
+              key="kunjungan"
+              initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }} transition={{ duration: 0.15 }}
+              className="flex-1 overflow-auto"
+            >
             <table className="w-full text-left border-collapse text-xs whitespace-nowrap">
               <thead className="sticky top-0 bg-slate-100 border-b border-slate-300 z-10 shadow-sm text-slate-600">
                 <tr>
@@ -217,12 +222,16 @@ function RiwayatPasienContent() {
                 ))}
               </tbody>
             </table>
-          </div>
-        )}
+            </motion.div>
+          )}
 
-        {/* Tab 2: Riwayat S.O.A.P.I.E */}
-        {activeTab === 'soapie' && (
-          <div className="flex-1 overflow-auto p-4">
+          {/* Tab 2: Riwayat S.O.A.P.I.E */}
+          {activeTab === 'soapie' && (
+            <motion.div
+              key="soapie"
+              initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }} transition={{ duration: 0.15 }}
+              className="flex-1 overflow-auto p-4"
+            >
             {demoSoap.map((group, gi) => (
               <div key={gi} className="mb-6">
                 <div className="flex items-center gap-3 mb-3 text-xs">
@@ -256,12 +265,16 @@ function RiwayatPasienContent() {
                 </div>
               </div>
             ))}
-          </div>
-        )}
+            </motion.div>
+          )}
 
-        {/* Tab 3: Riwayat Perawatan */}
-        {activeTab === 'perawatan' && (
-          <div className="flex-1 flex overflow-hidden">
+          {/* Tab 3: Riwayat Perawatan */}
+          {activeTab === 'perawatan' && (
+            <motion.div
+              key="perawatan"
+              initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }} transition={{ duration: 0.15 }}
+              className="flex-1 flex overflow-hidden"
+            >
             {/* Left Sidebar with Checkboxes */}
             <motion.div initial={false} animate={{ width: sidebarOpen ? 260 : 40 }}
               className="bg-white border-r border-slate-200 flex flex-col overflow-hidden shrink-0">
@@ -345,8 +358,9 @@ function RiwayatPasienContent() {
                 </div>
               </div>
             </div>
-          </div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Bottom Action Panel with Filters */}
