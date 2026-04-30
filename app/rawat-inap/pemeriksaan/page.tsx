@@ -26,22 +26,10 @@ function PemeriksaanContent() {
   if (!mounted) return null;
 
   const sidebarMenu = [
-    { icon: <FaStethoscope />, label: 'Skrining TB' },
+    { icon: <FaStethoscope />, label: 'Resume Pasien' },
+    { icon: <FaHistory />, label: 'Riwayat Pasien' },
     { icon: <FaSyringe />, label: 'Bundle PPI' },
     { icon: <FaClipboardList />, label: 'Rekapan HAIs' },
-    { icon: <FaHistory />, label: 'Riwayat Pasien' },
-    { icon: <FaPills />, label: 'Input Resep' },
-    { icon: <FaNotesMedical />, label: 'Copy Resep' },
-    { icon: <FaHeartbeat />, label: 'Permintaan Stok Pasien' },
-    { icon: <FaNotesMedical />, label: 'Permintaan Resep Pulang' },
-    { icon: <FaNotesMedical />, label: 'Input Obat & BHP' },
-    { icon: <FaNotesMedical />, label: 'Input Gas Medik (O2)' },
-    { icon: <FaNotesMedical />, label: 'Data Obat & BHP' },
-    { icon: <FaNotesMedical />, label: 'Berkas Digital' },
-    { icon: <FaNotesMedical />, label: 'Permintaan Lab' },
-    { icon: <FaNotesMedical />, label: 'Permintaan Rad' },
-    { icon: <FaNotesMedical />, label: 'Konsultasi Medik' },
-    { icon: <FaNotesMedical />, label: 'Jadwal Operasi' },
   ];
 
   return (

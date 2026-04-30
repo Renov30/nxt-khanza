@@ -387,9 +387,9 @@ function TopMenuItem({
     <motion.button
       whileHover={{ y: -1, backgroundColor: "rgba(255,255,255,0.15)" }}
       whileTap={{ scale: 0.96 }}
-      className="flex items-center gap-2 px-3 py-1 rounded-lg text-xs font-medium transition-colors hover:shadow-sm"
+      className="flex items-center gap-1 px-3 py-0.5 rounded-lg text-[10px] font-medium transition-colors hover:shadow-sm"
     >
-      <span className="text-base drop-shadow-md">{icon}</span>
+      <span className="text-sm drop-shadow-md">{icon}</span>
       <span className="drop-shadow-sm">{label}</span>
     </motion.button>
   );
