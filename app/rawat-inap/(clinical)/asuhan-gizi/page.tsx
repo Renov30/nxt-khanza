@@ -240,7 +240,7 @@ function AsuhannGiziContent() {
         </button>
       )}
 
-      {/* Collapsible Input Form - expands from top, pushing table down */}
+      {/* Collapsible Input Form - expands from top, replacing table */}
       <AnimatePresence initial={false}>
         {isFormOpen && (
           <motion.div
@@ -248,10 +248,9 @@ function AsuhannGiziContent() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="overflow-hidden border-b border-slate-200 shrink-0"
-            style={{ maxHeight: '60vh' }}
+            className="overflow-hidden border-b border-slate-200 flex flex-col flex-1"
           >
-            <div className="p-3 bg-white overflow-y-auto custom-scrollbar" style={{ maxHeight: '60vh' }}>
+            <div className="p-3 bg-white overflow-y-auto custom-scrollbar flex-1">
               {formContent}
             </div>
           </motion.div>
@@ -269,8 +268,8 @@ function AsuhannGiziContent() {
         </button>
       )}
 
-      {/* Data Table - takes remaining space */}
-      <div className="flex-1 overflow-auto">
+      {/* Data Table - takes remaining space, hidden when form is open */}
+      <div className={`flex-1 overflow-auto ${isFormOpen ? 'hidden' : 'block'}`}>
         <table className="w-full text-left border-collapse text-xs whitespace-nowrap">
           <thead className="sticky top-0 bg-slate-100 border-b border-slate-300 z-10 shadow-sm text-slate-600">
             <tr>
