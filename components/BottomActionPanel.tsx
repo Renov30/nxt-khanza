@@ -71,10 +71,10 @@ export default function BottomActionPanel({
           {customButtons}
           {!hideStandardButtons && (
             <>
-              <ActionButton onClick={onSave} icon={<FaSave className="text-brand-600 drop-shadow-sm" />} label="Simpan" />
-              <ActionButton onClick={onNew} icon={<FaFileAlt className="text-red-600 drop-shadow-sm" />} label="Baru" />
+              <ActionButton onClick={onSave} icon={<FaSave className="text-white drop-shadow-sm" />} label="Simpan" variant="primary" />
+              <ActionButton onClick={onNew} icon={<FaFileAlt className="text-brand-600 drop-shadow-sm" />} label="Baru" />
               <ActionButton onClick={onReplace} icon={<FaEdit className="text-orange-500 drop-shadow-sm" />} label="Ganti" />
-              <ActionButton onClick={onDelete} icon={<FaTrash className="text-orange-600 drop-shadow-sm" />} label="Hapus" />
+              <ActionButton onClick={onDelete} icon={<FaTrash className="text-red-500 drop-shadow-sm" />} label="Hapus" variant="danger" />
               <ActionButton onClick={onPrint} icon={<FaPrint className="text-indigo-600 drop-shadow-sm" />} label="Cetak" />
               <ActionButton onClick={onAll} icon={<FaList className="text-slate-600 drop-shadow-sm" />} label="Semua" />
             </>
@@ -99,17 +99,21 @@ export default function BottomActionPanel({
 }
 
 // Exportable Button Component
-export function ActionButton({ icon, label, isExit, className = "", onClick }: { icon: React.ReactNode, label: string, isExit?: boolean, className?: string, onClick?: () => void }) {
+export function ActionButton({ icon, label, isExit, variant, className = "", onClick }: { icon: React.ReactNode, label: string, isExit?: boolean, variant?: 'primary' | 'danger', className?: string, onClick?: () => void }) {
   return (
     <Button 
-      variant="outline"
+      variant={variant === 'primary' ? 'default' : 'outline'}
       size="sm"
       onClick={onClick}
       className={cn(
-        "bg-white h-7.5 font-bold text-[11px] transition-all active:scale-95",
-        isExit 
-          ? "border-red-200 hover:border-red-400 hover:bg-red-50 text-red-700" 
-          : "border-slate-200 hover:border-brand-400 hover:bg-brand-50 text-slate-700",
+        "h-7.5 font-bold text-[11px] transition-all active:scale-95",
+        variant === 'primary'
+          ? "bg-brand-600 hover:bg-brand-700 text-white border-brand-600 shadow-sm"
+          : variant === 'danger'
+          ? "bg-white border-red-200 hover:border-red-400 hover:bg-red-50 text-red-700"
+          : isExit 
+          ? "bg-white border-red-200 hover:border-red-400 hover:bg-red-50 text-red-700" 
+          : "bg-white border-slate-200 hover:border-brand-400 hover:bg-brand-50 text-slate-700",
         className
       )}
     >

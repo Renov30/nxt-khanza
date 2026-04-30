@@ -70,9 +70,7 @@ export default function Registrasi() {
               <div className="flex items-center gap-1.5 flex-1 flex-wrap">
                 <input type="date" className="border border-slate-200 rounded-md px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-white" defaultValue="2026-04-22" />
                 <span className="font-medium text-slate-500 pl-1">Jam :</span>
-                <select className="border border-slate-200 rounded-md py-1 px-1 text-center min-w-[45px] bg-white"><option>09</option><option>10</option></select>
-                <select className="border border-slate-200 rounded-md py-1 px-1 text-center min-w-[45px] bg-white"><option>24</option><option>25</option></select>
-                <select className="border border-slate-200 rounded-md py-1 px-1 text-center min-w-[45px] bg-white"><option>19</option><option>20</option></select>
+                <input type="time" step="1" className="border border-slate-200 rounded-md px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-white" defaultValue="09:24:19" />
                 <input type="checkbox" className="accent-brand-600 ml-1 w-3.5 h-3.5 rounded" defaultChecked />
               </div>
             </div>

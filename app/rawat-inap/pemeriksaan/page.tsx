@@ -106,32 +106,25 @@ function PemeriksaanContent() {
           {/* Top Patient Info Bar */}
           <div className="bg-white border-b border-slate-200 p-3 shrink-0 flex flex-wrap gap-4 items-center text-xs">
             <div className="flex items-center gap-1 w-full sm:w-auto">
-              <label className="font-semibold text-slate-600 min-w-[80px] sm:min-w-0">No.Rawat :</label>
+              <label className="font-semibold text-slate-600 min-w-[80px] sm:min-w-0">Pasien :</label>
               <input type="text" className="border border-slate-300 rounded px-2 py-1 flex-1 sm:w-40 bg-slate-50 focus:outline-none focus:border-brand-500" value={noRawatParam} readOnly />
             </div>
             <div className="flex items-center gap-1 w-full sm:w-auto">
-              <label className="font-semibold text-slate-600 min-w-[80px] sm:min-w-0">No.RM :</label>
               <input type="text" className="border border-slate-300 rounded px-2 py-1 flex-1 sm:w-24 bg-slate-50 focus:outline-none focus:border-brand-500" defaultValue="617211" readOnly />
             </div>
             <div className="flex items-center gap-1 w-full md:w-auto">
-              <label className="font-semibold text-slate-600 min-w-[80px] sm:min-w-0">Nama Pasien :</label>
               <input type="text" className="border border-slate-300 rounded px-2 py-1 flex-1 md:w-64 bg-slate-50 focus:outline-none focus:border-brand-500" defaultValue="Tn. Sukarji" readOnly />
             </div>
             <div className="flex flex-wrap items-center gap-1 sm:ml-auto w-full sm:w-auto">
               <label className="font-semibold text-slate-600">Tanggal :</label>
               <input type="date" className="border border-slate-300 rounded px-2 py-1 mr-2 focus:outline-none focus:border-brand-500" defaultValue="2026-04-30" />
-              <label className="font-semibold text-slate-600">Jam :</label>
-              <div className="flex gap-1">
-                <input type="text" className="border border-slate-300 rounded px-2 py-1 w-10 sm:w-12 text-center focus:outline-none focus:border-brand-500" defaultValue="09" />
-                <input type="text" className="border border-slate-300 rounded px-2 py-1 w-10 sm:w-12 text-center focus:outline-none focus:border-brand-500" defaultValue="26" />
-                <input type="text" className="border border-slate-300 rounded px-2 py-1 w-10 sm:w-12 text-center focus:outline-none focus:border-brand-500" defaultValue="25" />
-              </div>
+              <input type="time" step="1" className="border border-slate-300 rounded px-2 py-1 text-xs focus:outline-none focus:border-brand-500 bg-white" defaultValue="09:26:25" />
               <input type="checkbox" className="accent-brand-500 w-4 h-4 cursor-pointer ml-2" defaultChecked />
             </div>
           </div>
 
           {/* Tabs */}
-          <div className="flex bg-slate-100 border-b border-slate-200 px-2 pt-2 shrink-0 overflow-x-auto custom-scrollbar">
+          <div className="flex bg-white border-b border-slate-200 px-3 shrink-0 overflow-x-auto custom-scrollbar">
             {['Penanganan Dokter', 'Penanganan Petugas', 'Penanganan Dokter & Petugas', 'Pemeriksaan / CPPT', 'Pemeriksaan Obstetri', 'Pemeriksaan Ginekologi'].map((tab) => {
               const tabId = tab.toLowerCase().replace(/[^a-z0-9]/g, '');
               const isActive = activeTab === (tab === 'Pemeriksaan / CPPT' ? 'cppt' : tabId);
@@ -139,12 +132,15 @@ function PemeriksaanContent() {
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab === 'Pemeriksaan / CPPT' ? 'cppt' : tabId)}
-                  className={`px-4 py-2 text-xs font-semibold rounded-t-lg transition-colors whitespace-nowrap border border-b-0 ${isActive
-                    ? 'bg-white text-brand-700 border-slate-200'
-                    : 'bg-slate-200 text-slate-600 border-slate-300 hover:bg-slate-300'
+                  className={`px-4 py-2.5 text-xs font-semibold transition-all whitespace-nowrap relative ${isActive
+                    ? 'text-brand-700 font-bold'
+                    : 'text-slate-500 hover:text-brand-600'
                     }`}
                 >
                   {tab}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-brand-500 rounded-full" />
+                  )}
                 </button>
               );
             })}
@@ -157,7 +153,7 @@ function PemeriksaanContent() {
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                   {/* Main Form Area */}
                   <div className="lg:col-span-3 flex flex-col gap-5">
-                    
+
                     {/* Petugas & Alergi */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-50/50 p-3 rounded-lg border border-slate-200">
                       <div className="flex flex-col gap-1.5">
