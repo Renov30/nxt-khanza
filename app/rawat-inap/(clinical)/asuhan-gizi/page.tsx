@@ -4,7 +4,7 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, useRouter } from 'next/navigation';
 import {
-  FaUtensils, FaSearch, FaChevronDown, FaChevronUp
+  FaUtensils, FaSearch, FaChevronDown, FaChevronUp, FaClipboardList
 } from 'react-icons/fa';
 import BottomActionPanel from '@/components/BottomActionPanel';
 
@@ -28,16 +28,18 @@ const demoData = [
 // Allergy item component
 function AllergyItem({ label, value, onChange }: { label: string; value: boolean; onChange: (v: boolean) => void }) {
   return (
-    <div className="flex items-center gap-3 text-xs">
-      <span className="min-w-[170px] text-slate-700">{label}</span>
-      <label className="flex items-center gap-1 cursor-pointer">
-        <input type="radio" name={label} checked={value} onChange={() => onChange(true)} className="accent-brand-500 w-3.5 h-3.5" />
-        <span className="text-slate-600">Ya</span>
-      </label>
-      <label className="flex items-center gap-1 cursor-pointer">
-        <input type="radio" name={label} checked={!value} onChange={() => onChange(false)} className="accent-brand-500 w-3.5 h-3.5" />
-        <span className="text-slate-600">Tidak</span>
-      </label>
+    <div className="flex items-center justify-between gap-2 py-1 border-b border-slate-100 last:border-0 sm:border-0 sm:py-0">
+      <span className="text-[11px] text-slate-700 leading-tight pr-2">{label}</span>
+      <div className="flex items-center gap-3 shrink-0">
+        <label className="flex items-center gap-1.5 cursor-pointer group">
+          <input type="radio" name={label} checked={value} onChange={() => onChange(true)} className="accent-brand-500 w-3.5 h-3.5 cursor-pointer" />
+          <span className="text-[11px] text-slate-600 group-hover:text-brand-600 transition-colors">Ya</span>
+        </label>
+        <label className="flex items-center gap-1.5 cursor-pointer group">
+          <input type="radio" name={label} checked={!value} onChange={() => onChange(false)} className="accent-brand-500 w-3.5 h-3.5 cursor-pointer" />
+          <span className="text-[11px] text-slate-600 group-hover:text-brand-600 transition-colors">Tidak</span>
+        </label>
+      </div>
     </div>
   );
 }
@@ -84,136 +86,127 @@ function AsuhannGiziContent() {
   useEffect(() => { setMounted(true); }, []);
   if (!mounted) return null;
 
-  // Input helper component
-  const FormInput = ({ label, value, onChange, unit, width = 'w-20' }: { label: string; value: string; onChange: (v: string) => void; unit?: string; width?: string }) => (
-    <div className="flex items-center gap-1.5">
-      <span className="font-semibold text-slate-600 text-xs whitespace-nowrap">{label}</span>
-      <input type="text" value={value} onChange={e => onChange(e.target.value)}
-        className={`${width} border border-slate-300 rounded px-2 py-1 text-xs focus:outline-none focus:border-brand-500 bg-white`} />
-      {unit && <span className="text-xs text-slate-500">{unit}</span>}
+  // Input helper component - Updated to UI_STANDARDS.md (Top-Aligned)
+  const FormField = ({ label, value, onChange, unit, placeholder, type = 'text', readOnly = false, className = "" }: {
+    label: string; value: string; onChange?: (v: string) => void; unit?: string; placeholder?: string; type?: string; readOnly?: boolean; className?: string
+  }) => (
+    <div className={`flex flex-col gap-1.5 ${className}`}>
+      <label className="text-xs font-semibold text-slate-600 flex items-center justify-between">
+        {label}
+        {unit && <span className="text-[10px] text-slate-400 font-normal uppercase">{unit}</span>}
+      </label>
+      <input
+        type={type}
+        value={value}
+        onChange={e => onChange?.(e.target.value)}
+        placeholder={placeholder}
+        readOnly={readOnly}
+        className={`w-full border border-slate-300 rounded px-2 py-1.5 text-xs focus:outline-none focus:border-brand-500 transition-colors ${readOnly ? 'bg-slate-50 cursor-not-allowed' : 'bg-white'}`}
+      />
     </div>
   );
 
-  const FormTextarea = ({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) => (
+  const FormTextarea = ({ label, value, onChange, placeholder }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string }) => (
     <div className="flex flex-col gap-1.5">
       <label className="text-xs font-semibold text-slate-600">{label}</label>
-      <textarea value={value} onChange={e => onChange(e.target.value)} rows={3}
-        className="border border-slate-300 rounded px-2 py-1.5 text-xs focus:outline-none focus:border-brand-500 bg-white resize-y" />
+      <textarea
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        rows={3}
+        placeholder={placeholder}
+        className="border border-slate-300 rounded px-2 py-1.5 text-xs focus:outline-none focus:border-brand-500 bg-white resize-y min-h-[80px]"
+      />
     </div>
   );
 
   const formContent = (
-    <div className="space-y-4">
-      {/* Patient Info Row */}
-      <div className="flex flex-wrap gap-3 items-center text-xs">
-        <div className="flex items-center gap-1.5">
-          <span className="font-semibold text-slate-600">No. Rawat :</span>
-          <input type="text" className="border border-slate-300 rounded px-2 py-1 w-40 bg-slate-50 text-xs" value={noRawatParam} readOnly />
-        </div>
-        <div className="flex items-center gap-1.5">
-          <span className="font-semibold text-slate-600">No. RM :</span>
-          <input type="text" className="border border-slate-300 rounded px-2 py-1 w-20 bg-slate-50 text-xs" defaultValue="617244" readOnly />
-        </div>
-        <div className="flex items-center gap-1.5">
-          <input type="text" className="border border-slate-300 rounded px-2 py-1 w-36 bg-slate-50 text-xs" defaultValue="Tn. Sukarji" readOnly />
-        </div>
-        <div className="flex items-center gap-1.5">
-          <span className="font-semibold text-slate-600">Tgl.Lahir :</span>
-          <input type="text" className="border border-slate-300 rounded px-2 py-1 w-28 bg-slate-50 text-xs" defaultValue="1959-06-22" readOnly />
-        </div>
-      </div>
-
-      <div className="flex flex-wrap gap-3 items-center text-xs">
-        <div className="flex items-center gap-1.5">
-          <span className="font-semibold text-slate-600">J.K. :</span>
-          <input type="text" className="border border-slate-300 rounded px-2 py-1 w-16 bg-slate-50 text-xs" defaultValue="Laki-Laki" readOnly />
-        </div>
-        <div className="flex items-center gap-1.5">
-          <span className="font-semibold text-slate-600">Diagnosa :</span>
-          <input type="text" className="border border-slate-300 rounded px-2 py-1 flex-1 min-w-[200px] bg-slate-50 text-xs" defaultValue="pneumonia / pasien umum" readOnly />
-        </div>
-        <div className="flex items-center gap-1.5">
-          <span className="font-semibold text-slate-600">Tanggal :</span>
-          <input type="date" className="border border-slate-300 rounded px-2 py-1 text-xs focus:outline-none focus:border-brand-500 bg-white" defaultValue="2026-04-30" />
+    <div className="space-y-6">
+      {/* Patient Data Summary Section */}
+      <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <FormField label="No. Rawat" value={noRawatParam} readOnly />
+          <FormField label="No. RM" value="617244" readOnly />
+          <FormField label="Nama Pasien" value="Tn. Sukarji" readOnly />
+          <FormField label="Tgl. Lahir" value="1959-06-22" readOnly />
+          <FormField label="Jenis Kelamin" value="Laki-Laki" readOnly />
+          <FormField label="Diagnosa Awal" value="pneumonia / pasien umum" className="lg:col-span-2" readOnly />
+          <FormField label="Tanggal Asuhan" value="2026-04-30" type="date" />
         </div>
       </div>
 
       {/* Antropometri Section */}
-      <div className="bg-brand-50/40 p-3 rounded-lg border border-brand-100/50">
-        <h3 className="text-[13px] font-bold text-brand-700 mb-3 flex items-center gap-2 border-b border-brand-100 pb-2">
-          Antropometri
+      <div className="bg-brand-50/40 p-4 rounded-lg border border-brand-100/50">
+        <h3 className="text-[13px] font-bold text-brand-700 mb-4 flex items-center gap-2 border-b border-brand-100 pb-2">
+          Pengukuran Antropometri
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-          <FormInput label="BB :" value={bb} onChange={setBb} unit="Kg" />
-          <FormInput label="TB :" value={tb} onChange={setTb} unit="Cm" />
-          <FormInput label="IMT :" value={imt} onChange={setImt} unit="Kg/m²" />
-          <FormInput label="LLA :" value={lla} onChange={setLla} unit="Cm" />
-          <FormInput label="TL :" value={tl} onChange={setTl} unit="Cm" />
-          <FormInput label="ULNA :" value={ulna} onChange={setUlna} unit="Cm" />
-          <FormInput label="BB Ideal :" value={bbIdeal} onChange={setBbIdeal} unit="Kg" />
-          <FormInput label="BB/U :" value={bbU} onChange={setBbU} unit="SD" />
-          <FormInput label="TKU :" value={tku} onChange={setTku} unit="SD" />
-          <FormInput label="BB/TB :" value={bbTb} onChange={setBbTb} unit="SD" />
-          <FormInput label="LLA/U :" value={llaUPersen} onChange={setLlaUPersen} unit="SD" />
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+          <FormField label="BB" value={bb} onChange={setBb} unit="Kg" placeholder="0" />
+          <FormField label="TB" value={tb} onChange={setTb} unit="Cm" placeholder="0" />
+          <FormField label="IMT" value={imt} onChange={setImt} unit="Kg/m²" placeholder="0" />
+          <FormField label="LLA" value={lla} onChange={setLla} unit="Cm" placeholder="0" />
+          <FormField label="TL" value={tl} onChange={setTl} unit="Cm" placeholder="0" />
+          <FormField label="ULNA" value={ulna} onChange={setUlna} unit="Cm" placeholder="0" />
+          <FormField label="BB Ideal" value={bbIdeal} onChange={setBbIdeal} unit="Kg" placeholder="0" />
+          <FormField label="BB/U" value={bbU} onChange={setBbU} unit="SD" placeholder="0" />
+          <FormField label="TKU" value={tku} onChange={setTku} unit="SD" placeholder="0" />
+          <FormField label="BB/TB" value={bbTb} onChange={setBbTb} unit="SD" placeholder="0" />
+          <FormField label="LLA/U" value={llaUPersen} onChange={setLlaUPersen} unit="SD" placeholder="0" />
         </div>
       </div>
 
-      {/* Biokimia & Fisik/Klinis */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <FormTextarea label="Biokimia :" value={biokimia} onChange={setBiokimia} />
-        <FormTextarea label="Fisik/Klinis :" value={fisikKlinis} onChange={setFisikKlinis} />
+      {/* Pemeriksaan Fisik & Biokimia */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <FormTextarea label="Pemeriksaan Biokimia" value={biokimia} onChange={setBiokimia} placeholder="Masukkan hasil lab/biokimia..." />
+        <FormTextarea label="Pemeriksaan Fisik / Klinis" value={fisikKlinis} onChange={setFisikKlinis} placeholder="Masukkan kondisi fisik/klinis pasien..." />
       </div>
 
-      {/* Riwayat Gizi Section */}
-      <div className="bg-brand-50/40 p-3 rounded-lg border border-brand-100/50">
-        <h3 className="text-[13px] font-bold text-brand-700 mb-3 flex items-center gap-2 border-b border-brand-100 pb-2">
-          Riwayat Gizi
+      {/* Riwayat Gizi & Personal */}
+      <div className="bg-brand-50/40 p-4 rounded-lg border border-brand-100/50">
+        <h3 className="text-[13px] font-bold text-brand-700 mb-4 flex items-center gap-2 border-b border-brand-100 pb-2">
+          Riwayat Gizi & Diet
         </h3>
-        <div className="mb-3">
-          <span className="text-xs font-semibold text-slate-600 block mb-2">Alergi Makanan :</span>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 ml-2">
-            <AllergyItem label="Telur" value={alergiTelur} onChange={setAlergiTelur} />
-            <AllergyItem label="Udang" value={alergiUdang} onChange={setAlergiUdang} />
-            <AllergyItem label="Susu sapi dan produk olahannya" value={alergiSusuSapi} onChange={setAlergiSusuSapi} />
-            <AllergyItem label="Ikan" value={alergiIkan} onChange={setAlergiIkan} />
-            <AllergyItem label="Kacang kedelai / tanah" value={alergiKacang} onChange={setAlergiKacang} />
-            <AllergyItem label="Hazelnut / Almond" value={alergiHazelnut} onChange={setAlergiHazelnut} />
-            <AllergyItem label="Gluten / gandum" value={alergiGluten} onChange={setAlergiGluten} />
+        <div className="space-y-4">
+          <div>
+            <span className="text-xs font-semibold text-slate-600 block mb-3">Alergi Makanan :</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-1 gap-x-12 px-2">
+              {/* Kolom Kiri */}
+              <div className="space-y-1">
+                <AllergyItem label="Telur" value={alergiTelur} onChange={setAlergiTelur} />
+                <AllergyItem label="Susu Sapi & Produk Olahannya" value={alergiSusuSapi} onChange={setAlergiSusuSapi} />
+                <AllergyItem label="Kacang Kedelai / Tanah" value={alergiKacang} onChange={setAlergiKacang} />
+                <AllergyItem label="Gluten / Gandum" value={alergiGluten} onChange={setAlergiGluten} />
+              </div>
+              {/* Kolom Kanan */}
+              <div className="space-y-1">
+                <AllergyItem label="Udang" value={alergiUdang} onChange={setAlergiUdang} />
+                <AllergyItem label="Ikan" value={alergiIkan} onChange={setAlergiIkan} />
+                <AllergyItem label="Hazelnut / Almond" value={alergiHazelnut} onChange={setAlergiHazelnut} />
+                <div className="h-5 invisible md:block" aria-hidden="true" /> {/* Spacer penyeimbang */}
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold text-slate-600">Pola Makan :</label>
-            <input type="text" value={polaMakan} onChange={e => setPolaMakan(e.target.value)}
-              className="border border-slate-300 rounded px-2 py-1.5 text-xs focus:outline-none focus:border-brand-500 bg-white" />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold text-slate-600">Riwayat Personal :</label>
-            <input type="text" value={riwayatPersonal} onChange={e => setRiwayatPersonal(e.target.value)}
-              className="border border-slate-300 rounded px-2 py-1.5 text-xs focus:outline-none focus:border-brand-500 bg-white" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-brand-100/30">
+            <FormField label="Pola Makan" value={polaMakan} onChange={setPolaMakan} placeholder="Contoh: 3x makan utama, porsi habis" />
+            <FormField label="Riwayat Personal" value={riwayatPersonal} onChange={setRiwayatPersonal} placeholder="Riwayat penyakit keluarga/personal..." />
           </div>
         </div>
       </div>
 
-      {/* Clinical Notes */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <FormTextarea label="Diagnosa Gizi :" value={diagnosaGizi} onChange={setDiagnosaGizi} />
-        <FormTextarea label="Intervensi Gizi :" value={intervensiGizi} onChange={setIntervensiGizi} />
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <FormTextarea label="Instruksi :" value={instruksi} onChange={setInstruksi} />
-        <FormTextarea label="Monitoring & Evaluasi :" value={monitoringEvaluasi} onChange={setMonitoringEvaluasi} />
+      {/* Clinical Diagnosis & Interventions */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <FormTextarea label="Diagnosa Gizi (ADIME)" value={diagnosaGizi} onChange={setDiagnosaGizi} />
+        <FormTextarea label="Intervensi Gizi" value={intervensiGizi} onChange={setIntervensiGizi} />
+        <FormTextarea label="Instruksi Medis" value={instruksi} onChange={setInstruksi} />
+        <FormTextarea label="Monitoring & Evaluasi" value={monitoringEvaluasi} onChange={setMonitoringEvaluasi} />
       </div>
 
-      {/* Petugas */}
-      <div className="flex flex-wrap gap-3 items-center text-xs border-t border-slate-200 pt-3">
-        <div className="flex items-center gap-1.5">
-          <span className="font-semibold text-slate-600">Petugas :</span>
-          <input type="text" className="border border-slate-300 rounded px-2 py-1 w-24 bg-slate-50 text-xs" defaultValue="ayu" readOnly />
+      {/* Petugas Section */}
+      <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 flex flex-wrap items-end gap-4">
+        <div className="flex-1 min-w-[250px]">
+          <FormField label="Petugas Pengisi Asuhan" value="Ukhuwwatun Hasanah Pristari Rahayu, S.Gz" readOnly />
         </div>
-        <input type="text" className="border border-slate-300 rounded px-2 py-1 flex-1 min-w-[200px] bg-slate-50 text-xs" defaultValue="Ukhuwwatun Hasanah Pristari Rahayu, S.Gz" readOnly />
-        <button className="bg-brand-50 border border-brand-200 p-1.5 rounded hover:bg-brand-100 text-brand-600 transition-colors">
-          <FaSearch className="text-[10px]" />
+        <button className="h-[38px] px-4 bg-white border border-slate-300 rounded text-brand-600 hover:bg-brand-50 transition-colors flex items-center gap-2 text-xs font-bold shadow-sm">
+          <FaSearch className="text-[10px]" /> Cari Petugas
         </button>
       </div>
     </div>
@@ -222,12 +215,12 @@ function AsuhannGiziContent() {
   return (
     <>
       {/* Page Header */}
-        <div className="bg-gradient-to-r from-brand-100 to-slate-50 px-4 py-1 border-b border-brand-100 flex items-center justify-between shadow-sm z-10 shrink-0">
-          <h2 className="text-brand-800 font-bold text-sm flex items-center gap-2 tracking-wide">
-            <FaUtensils className="text-brand-600" />
-            Data Asuhan Gizi Pasien
-          </h2>
-        </div>
+      <div className="bg-gradient-to-r from-brand-100 to-slate-50 px-4 py-1 border-b border-brand-100 flex items-center justify-between shadow-sm z-10 shrink-0">
+        <h2 className="text-brand-800 font-bold text-sm flex items-center gap-2 tracking-wide">
+          <FaUtensils className="text-brand-600" />
+          Data Asuhan Gizi Pasien
+        </h2>
+      </div>
 
       {/* Toggle Button - above table when form is closed */}
       {!isFormOpen && (
