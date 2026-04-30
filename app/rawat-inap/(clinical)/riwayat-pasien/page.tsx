@@ -10,7 +10,6 @@ import {
 } from 'react-icons/fa';
 import { ActionButton } from '@/components/BottomActionPanel';
 import BottomActionPanel from '@/components/BottomActionPanel';
-import ClinicalSidebar from '@/components/ClinicalSidebar';
 
 // Demo data
 const demoKunjungan = [
@@ -106,9 +105,8 @@ function RiwayatPasienContent() {
   ];
 
   return (
-    <div className="flex flex-col w-full h-full overflow-hidden bg-slate-50 text-slate-800 rounded-tl-xl shadow-inner border-t border-l border-white">
-      <ClinicalSidebar noRawat="" noRM={noRMParam} namaPasien={nmPasienParam}>
-        {/* Page Header */}
+    <>
+      {/* Page Header */}
         <div className="bg-gradient-to-r from-brand-100 to-slate-50 px-4 py-1 border-b border-brand-100 flex items-center justify-between shadow-sm z-10 shrink-0">
           <h2 className="text-brand-800 font-bold text-sm flex items-center gap-2 tracking-wide">
             <FaHistory className="text-brand-600" />
@@ -418,8 +416,7 @@ function RiwayatPasienContent() {
           />
         </div>
       </div>
-      </ClinicalSidebar>
-    </div>
+    </>
   );
 }
 

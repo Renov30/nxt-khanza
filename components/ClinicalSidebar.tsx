@@ -2,18 +2,11 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import {
   FaBed, FaStethoscope, FaHistory, FaUtensils, FaSyringe,
   FaClipboardList, FaBars, FaSearch
 } from 'react-icons/fa';
-
-interface ClinicalSidebarProps {
-  noRawat?: string;
-  noRM?: string;
-  namaPasien?: string;
-  children: React.ReactNode;
-}
 
 const menuItems = [
   { icon: <FaBed />, label: 'Pemeriksaan / CPPT', path: '/rawat-inap/pemeriksaan' },
@@ -24,9 +17,14 @@ const menuItems = [
   { icon: <FaClipboardList />, label: 'Rekapan HAIs', path: '' },
 ];
 
-export default function ClinicalSidebar({ noRawat = '', noRM = '617211', namaPasien = 'Tn.+Sukarji', children }: ClinicalSidebarProps) {
+export default function ClinicalSidebar({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  
+  const noRawat = searchParams.get('noRawat') || '';
+  const noRM = searchParams.get('noRM') || '617211';
+  const namaPasien = searchParams.get('nama') || 'Tn. Sukarji';
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('khanza_clinical_sidebar_open');

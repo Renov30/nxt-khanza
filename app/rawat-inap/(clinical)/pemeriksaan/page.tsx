@@ -9,7 +9,6 @@ import {
   FaNotesMedical, FaHeartbeat, FaPills, FaClipboardList, FaCheck, FaBars, FaUtensils
 } from 'react-icons/fa';
 import BottomActionPanel, { ActionButton } from '@/components/BottomActionPanel';
-import ClinicalSidebar from '@/components/ClinicalSidebar';
 
 function PemeriksaanContent() {
   const searchParams = useSearchParams();
@@ -26,8 +25,7 @@ function PemeriksaanContent() {
   if (!mounted) return null;
 
   return (
-    <div className="flex flex-col w-full h-full overflow-hidden bg-slate-50 text-slate-800 rounded-tl-xl shadow-inner border-t border-l border-white">
-      <ClinicalSidebar noRawat={noRawatParam} noRM="617211" namaPasien="Tn.+Sukarji">
+    <>
         {/* Page Header - now inside content area, beside sidebar */}
         <div className="bg-gradient-to-r from-brand-100 to-slate-50 px-4 py-1 border-b border-brand-100 flex items-center justify-between shadow-sm z-10 shrink-0">
           <h2 className="text-brand-800 font-bold text-sm flex items-center gap-2 tracking-wide">
@@ -234,14 +232,12 @@ function PemeriksaanContent() {
               </div>
             )}
           </div>
-      </ClinicalSidebar>
-
       {/* Main Bottom Actions */}
       <BottomActionPanel
         recordCount={0}
         onExit={() => router.push('/rawat-inap')}
       />
-    </div>
+    </>
   );
 }
 
