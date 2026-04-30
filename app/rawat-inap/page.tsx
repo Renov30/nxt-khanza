@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import {
   FaSearch, FaCheck, FaPrint, FaExchangeAlt, FaSignOutAlt,
   FaFolderOpen, FaTimes, FaBed
@@ -26,7 +27,7 @@ export default function RawatInap() {
   ];
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0 }}
@@ -40,27 +41,6 @@ export default function RawatInap() {
           <FaBed className="text-brand-600" />
           Daftar Pasien Rawat Inap
         </h2>
-      </div>
-
-      {/* Top Filters - Improved UI */}
-      <div className="flex items-center flex-wrap gap-4 p-3 bg-white border-b border-slate-200 text-xs shadow-sm z-0">
-        <div className="flex items-center gap-2">
-          <span className="font-semibold text-slate-600">No. Rawat</span>
-          <div className="flex gap-1">
-            <input type="text" placeholder="Tahun" className="border border-slate-200 rounded-md px-2 py-1.5 w-[80px] focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-slate-50 focus:bg-white transition-all" />
-            <input type="text" placeholder="No" className="border border-slate-200 rounded-md px-2 py-1.5 w-[80px] focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-slate-50 focus:bg-white transition-all" />
-            <input type="text" placeholder="Cari by No. Rawat..." className="border border-slate-200 rounded-md px-3 py-1.5 w-[200px] focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-slate-50 focus:bg-white transition-all placeholder-slate-400" />
-          </div>
-        </div>
-        <div className="w-px h-6 bg-slate-200 mx-1"></div>
-        <div className="flex items-center gap-2">
-          <span className="font-semibold text-slate-600">Status Bayar</span>
-          <select className="border border-slate-200 rounded-md px-3 py-1.5 w-[140px] focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 text-xs bg-slate-50 focus:bg-white cursor-pointer transition-all">
-            <option>Semua</option>
-            <option>Belum Bayar</option>
-            <option>Sudah Bayar</option>
-          </select>
-        </div>
       </div>
 
       {/* Table Area - Modernized */}
@@ -91,7 +71,14 @@ export default function RawatInap() {
                   ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/80'} 
                   hover:bg-brand-50 hover:shadow-[inset_4px_0_0_0_var(--color-brand-500)]`}
               >
-                <td className="py-2 px-3 text-slate-700 font-medium">{row.no}</td>
+                <td className="py-2 px-3 text-slate-700 font-medium">
+                  <Link 
+                    href={`/rawat-inap/pemeriksaan?noRawat=${encodeURIComponent(row.no)}`}
+                    className="text-brand-600 hover:text-brand-800 hover:underline font-bold"
+                  >
+                    {row.no}
+                  </Link>
+                </td>
                 <td className="py-2 px-3 text-brand-600 font-semibold">{row.rm}</td>
                 <td className="py-2 px-3 text-slate-800 font-bold">{row.nama}</td>
                 <td className="py-2 px-3 text-slate-600 truncate max-w-[150px]" title={row.alamat}>{row.alamat}</td>
@@ -111,7 +98,7 @@ export default function RawatInap() {
       </div>
 
       {/* Actions and Filters Panel */}
-      <BottomActionPanel 
+      <BottomActionPanel
         recordCount={2}
         hideStandardButtons
         customButtons={
@@ -121,28 +108,6 @@ export default function RawatInap() {
             <ActionButton icon={<FaExchangeAlt className="text-blue-600 drop-shadow-sm" />} label="Pindah" />
             <ActionButton icon={<FaPrint className="text-indigo-600 drop-shadow-sm" />} label="Cetak" />
           </>
-        }
-        extraFilters={
-          <div className="flex items-center gap-6 flex-wrap">
-            <div className="flex items-center gap-3 bg-slate-50 p-1.5 rounded-lg border border-slate-100">
-              <label className="flex items-center gap-2 cursor-pointer font-medium hover:text-brand-700 text-slate-600 transition-colors px-2">
-                <input type="radio" name="filter_tgl" className="accent-brand-600 w-3.5 h-3.5" defaultChecked />
-                Belum Pulang
-              </label>
-              <div className="w-px h-4 bg-slate-300"></div>
-              <label className="flex items-center gap-2 cursor-pointer font-medium hover:text-brand-700 text-slate-600 transition-colors px-2">
-                <input type="radio" name="filter_tgl" className="accent-brand-600 w-3.5 h-3.5" />
-                Tgl. Masuk
-              </label>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="flex items-center bg-white border border-slate-200 rounded-lg px-2 py-1 w-[200px] focus-within:border-brand-500 focus-within:ring-1 focus-within:ring-brand-500 shadow-sm overflow-hidden transition-all">
-                <span className="text-slate-400 font-medium pr-2 border-r border-slate-200">Kamar</span>
-                <input type="text" placeholder="Cari kamar..." className="w-full bg-transparent outline-none pl-2 text-slate-700 placeholder-slate-400" />
-              </div>
-            </div>
-          </div>
         }
       />
     </motion.div>

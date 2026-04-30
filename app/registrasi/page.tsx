@@ -230,24 +230,6 @@ export default function Registrasi() {
       {/* Actions and Filters Panel */}
       <BottomActionPanel
         recordCount={16}
-        extraFilters={
-          <div className="flex items-center gap-4 flex-wrap w-full">
-            <div className="flex items-center gap-1.5">
-              <span className="font-semibold text-slate-600 w-12 text-right">Dokter :</span>
-              <div className="flex bg-slate-50 border border-slate-200 rounded-md shadow-sm overflow-hidden focus-within:ring-1 focus-within:ring-brand-500 w-[220px]">
-                <input type="text" className="w-full bg-transparent outline-none px-2 py-1 text-slate-700" />
-                <button className="px-2 text-slate-400 hover:text-brand-600 hover:bg-brand-50 border-l border-slate-200"><FaSearch className="text-[10px]" /></button>
-              </div>
-            </div>
-            <div className="flex items-center gap-1.5 ml-2">
-              <span className="font-semibold text-slate-600 w-10 text-right">Unit :</span>
-              <div className="flex bg-slate-50 border border-slate-200 rounded-md shadow-sm overflow-hidden focus-within:ring-1 focus-within:ring-brand-500 w-[220px]">
-                <input type="text" className="w-full bg-transparent outline-none px-2 py-1 text-slate-700" />
-                <button className="px-2 text-slate-400 hover:text-brand-600 hover:bg-brand-50 border-l border-slate-200"><FaSearch className="text-[10px]" /></button>
-              </div>
-            </div>
-          </div>
-        }
       />
     </motion.div>
   );
