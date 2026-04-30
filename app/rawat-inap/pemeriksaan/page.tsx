@@ -154,121 +154,125 @@ function PemeriksaanContent() {
           <div className="flex-1 overflow-auto bg-white p-4 relative">
             {activeTab === 'cppt' && (
               <div className="flex flex-col h-full gap-4">
-                <div className="flex flex-col lg:flex-row gap-6">
-                  {/* Left Column Form */}
-                  <div className="flex-1 flex flex-col gap-3 min-w-[300px]">
-                    <div className="flex items-center gap-2">
-                      <label className="w-24 text-right text-xs font-semibold text-slate-600">Dilakukan :</label>
-                      <input type="text" className="border border-slate-300 rounded px-2 py-1 w-24 bg-slate-50 focus:outline-none focus:border-brand-500 text-xs" defaultValue="renov" />
-                      <input type="text" className="border border-slate-300 rounded px-2 py-1 flex-1 bg-slate-50 focus:outline-none focus:border-brand-500 text-xs" defaultValue="Novgeny Ramadhalero Ermawan" />
-                      <button className="p-1.5 text-brand-500 hover:bg-brand-50 rounded"><FaEdit /></button>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <label className="w-24 text-right text-xs font-semibold text-slate-600">Jabatan :</label>
-                      <input type="text" className="border border-slate-300 rounded px-2 py-1 flex-1 bg-slate-50 focus:outline-none focus:border-brand-500 text-xs" defaultValue="Administrasi IT" />
-                      <button className="p-1.5 text-brand-500 hover:bg-brand-50 rounded"><FaEdit /></button>
-                    </div>
-
-                    <div className="flex items-start gap-2">
-                      <label className="w-24 text-right text-xs font-semibold text-slate-600 mt-1">Subjek :</label>
-                      <textarea className="border border-slate-300 rounded p-2 flex-1 h-20 resize-none focus:outline-none focus:border-brand-500 text-xs"></textarea>
-                    </div>
-
-                    <div className="flex items-start gap-2">
-                      <label className="w-24 text-right text-xs font-semibold text-slate-600 mt-1">Objek :</label>
-                      <textarea className="border border-slate-300 rounded p-2 flex-1 h-20 resize-none focus:outline-none focus:border-brand-500 text-xs"></textarea>
-                    </div>
-
-                    {/* Vitals Grid */}
-                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-3 mt-3 sm:ml-28">
-                      <div className="flex items-center justify-between sm:justify-start gap-2">
-                        <label className="text-xs font-semibold text-slate-600 whitespace-nowrap">Suhu (C) :</label>
-                        <input type="text" className="border border-slate-300 rounded px-2 py-1 w-16 focus:outline-none focus:border-brand-500 text-xs" />
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                  {/* Main Form Area */}
+                  <div className="lg:col-span-3 flex flex-col gap-5">
+                    
+                    {/* Petugas & Alergi */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-50/50 p-3 rounded-lg border border-slate-200">
+                      <div className="flex flex-col gap-1.5">
+                        <label className="text-xs font-semibold text-slate-600">Dilakukan Oleh</label>
+                        <div className="flex gap-1">
+                          <input type="text" className="border border-slate-300 rounded px-2 py-1.5 w-20 focus:outline-none focus:border-brand-500 text-xs bg-white" defaultValue="renov" />
+                          <input type="text" className="border border-slate-300 rounded px-2 py-1.5 flex-1 focus:outline-none focus:border-brand-500 text-xs bg-white" defaultValue="Novgeny Ramadhalero Ermawan" />
+                          <button className="px-2 text-brand-500 hover:bg-brand-50 rounded border border-transparent hover:border-brand-200 transition-colors"><FaEdit /></button>
+                        </div>
                       </div>
-                      <div className="flex items-center justify-between sm:justify-start gap-2">
-                        <label className="text-xs font-semibold text-slate-600 whitespace-nowrap">Tensi (mmHg) :</label>
-                        <input type="text" className="border border-slate-300 rounded px-2 py-1 w-16 focus:outline-none focus:border-brand-500 text-xs" />
+                      <div className="flex flex-col gap-1.5">
+                        <label className="text-xs font-semibold text-slate-600">Jabatan / Departemen</label>
+                        <div className="flex gap-1">
+                          <input type="text" className="border border-slate-300 rounded px-2 py-1.5 flex-1 focus:outline-none focus:border-brand-500 text-xs bg-white" defaultValue="Administrasi IT" />
+                          <button className="px-2 text-brand-500 hover:bg-brand-50 rounded border border-transparent hover:border-brand-200 transition-colors"><FaEdit /></button>
+                        </div>
                       </div>
-                      <div className="flex items-center justify-between sm:justify-start gap-2">
-                        <label className="text-xs font-semibold text-slate-600 whitespace-nowrap">Berat (Kg) :</label>
-                        <input type="text" className="border border-slate-300 rounded px-2 py-1 w-16 focus:outline-none focus:border-brand-500 text-xs" />
-                      </div>
-
-                      <div className="flex items-center justify-between sm:justify-start gap-2">
-                        <label className="text-xs font-semibold text-slate-600 whitespace-nowrap">TB (Cm) :</label>
-                        <input type="text" className="border border-slate-300 rounded px-2 py-1 w-16 focus:outline-none focus:border-brand-500 text-xs" />
-                      </div>
-                      <div className="flex items-center justify-between sm:justify-start gap-2">
-                        <label className="text-xs font-semibold text-slate-600 whitespace-nowrap">RR (/menit) :</label>
-                        <input type="text" className="border border-slate-300 rounded px-2 py-1 w-16 focus:outline-none focus:border-brand-500 text-xs" />
-                      </div>
-                      <div className="flex items-center justify-between sm:justify-start gap-2">
-                        <label className="text-xs font-semibold text-slate-600 whitespace-nowrap">Nadi (/menit) :</label>
-                        <input type="text" className="border border-slate-300 rounded px-2 py-1 w-16 focus:outline-none focus:border-brand-500 text-xs" />
-                      </div>
-
-                      <div className="flex items-center justify-between sm:justify-start gap-2">
-                        <label className="text-xs font-semibold text-slate-600 whitespace-nowrap">SpO2 (%) :</label>
-                        <input type="text" className="border border-slate-300 rounded px-2 py-1 w-16 focus:outline-none focus:border-brand-500 text-xs" />
-                      </div>
-                      <div className="flex items-center justify-between sm:justify-start gap-2">
-                        <label className="text-xs font-semibold text-slate-600 whitespace-nowrap">GCS (E,V,M) :</label>
-                        <input type="text" className="border border-slate-300 rounded px-2 py-1 w-16 focus:outline-none focus:border-brand-500 text-xs" />
-                      </div>
-                      <div className="flex items-center justify-between sm:justify-start gap-2">
-                        <label className="text-xs font-semibold text-slate-600 whitespace-nowrap">Kesadaran :</label>
-                        <select className="border border-slate-300 rounded px-1 py-1 w-24 sm:w-28 focus:outline-none focus:border-brand-500 text-xs bg-white">
-                          <option>-</option>
-                          <option>Compos Mentis</option>
-                          <option>Apatis</option>
-                          <option>Somnolent</option>
-                          <option>Sopor</option>
-                          <option>Coma</option>
-                        </select>
+                      <div className="flex flex-col gap-1.5">
+                        <label className="text-xs font-semibold text-slate-600">Alergi</label>
+                        <input type="text" className="border border-slate-300 rounded px-2 py-1.5 flex-1 focus:outline-none focus:border-brand-500 text-xs" placeholder="Tidak ada alergi..." />
                       </div>
                     </div>
-                  </div>
 
-                  {/* Right Column Form */}
-                  <div className="flex-1 flex flex-col gap-3 min-w-[300px]">
-                    <div className="flex items-start gap-2">
-                      <label className="w-20 text-right text-xs font-semibold text-slate-600 mt-1">Alergi :</label>
-                      <input type="text" className="border border-slate-300 rounded px-2 py-1 flex-1 focus:outline-none focus:border-brand-500 text-xs" />
+                    {/* SOAP & Instruksi */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="flex flex-col gap-1.5">
+                        <label className="text-xs font-semibold text-slate-600">Subjek (S)</label>
+                        <textarea className="border border-slate-300 rounded p-2 flex-1 h-20 resize-none focus:outline-none focus:border-brand-500 text-xs" placeholder="Keluhan pasien..."></textarea>
+                      </div>
+                      <div className="flex flex-col gap-1.5">
+                        <label className="text-xs font-semibold text-slate-600">Objek (O)</label>
+                        <textarea className="border border-slate-300 rounded p-2 flex-1 h-20 resize-none focus:outline-none focus:border-brand-500 text-xs" placeholder="Hasil pemeriksaan..."></textarea>
+                      </div>
+                      <div className="flex flex-col gap-1.5">
+                        <label className="text-xs font-semibold text-slate-600">Asesmen (A)</label>
+                        <textarea className="border border-slate-300 rounded p-2 flex-1 h-20 resize-none focus:outline-none focus:border-brand-500 text-xs" placeholder="Diagnosis/Asesmen..."></textarea>
+                      </div>
+                      <div className="flex flex-col gap-1.5">
+                        <label className="text-xs font-semibold text-slate-600">Plan (P)</label>
+                        <textarea className="border border-slate-300 rounded p-2 flex-1 h-20 resize-none focus:outline-none focus:border-brand-500 text-xs" placeholder="Rencana tindakan..."></textarea>
+                      </div>
+                      <div className="flex flex-col gap-1.5">
+                        <label className="text-xs font-semibold text-slate-600">Instruksi</label>
+                        <textarea className="border border-slate-300 rounded p-2 flex-1 h-20 resize-none focus:outline-none focus:border-brand-500 text-xs" placeholder="Instruksi medis..."></textarea>
+                      </div>
+                      <div className="flex flex-col gap-1.5">
+                        <label className="text-xs font-semibold text-slate-600">Evaluasi</label>
+                        <textarea className="border border-slate-300 rounded p-2 flex-1 h-20 resize-none focus:outline-none focus:border-brand-500 text-xs" placeholder="Evaluasi tindakan..."></textarea>
+                      </div>
                     </div>
 
-                    <div className="flex items-start gap-2">
-                      <label className="w-20 text-right text-xs font-semibold text-slate-600 mt-1">Asesmen :</label>
-                      <textarea className="border border-slate-300 rounded p-2 flex-1 h-16 resize-none focus:outline-none focus:border-brand-500 text-xs"></textarea>
-                    </div>
-
-                    <div className="flex items-start gap-2">
-                      <label className="w-20 text-right text-xs font-semibold text-slate-600 mt-1">Plan :</label>
-                      <textarea className="border border-slate-300 rounded p-2 flex-1 h-16 resize-none focus:outline-none focus:border-brand-500 text-xs"></textarea>
-                    </div>
-
-                    <div className="flex items-start gap-2">
-                      <label className="w-20 text-right text-xs font-semibold text-slate-600 mt-1">Instruksi :</label>
-                      <textarea className="border border-slate-300 rounded p-2 flex-1 h-16 resize-none focus:outline-none focus:border-brand-500 text-xs"></textarea>
-                    </div>
-
-                    <div className="flex items-start gap-2">
-                      <label className="w-20 text-right text-xs font-semibold text-slate-600 mt-1">Evaluasi :</label>
-                      <textarea className="border border-slate-300 rounded p-2 flex-1 h-16 resize-none focus:outline-none focus:border-brand-500 text-xs"></textarea>
+                    {/* Tanda-Tanda Vital */}
+                    <div className="bg-brand-50/40 p-4 rounded-lg border border-brand-100/50">
+                      <h3 className="text-[13px] font-bold text-brand-700 mb-3 flex items-center gap-2 border-b border-brand-100 pb-2">
+                        <FaHeartbeat className="text-brand-500" /> Tanda-Tanda Vital (TTV)
+                      </h3>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+                        <div className="flex flex-col gap-1">
+                          <label className="text-[11px] font-semibold text-slate-600">Suhu (°C)</label>
+                          <input type="text" className="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:border-brand-500 text-xs bg-white" />
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <label className="text-[11px] font-semibold text-slate-600">Tensi (mmHg)</label>
+                          <input type="text" className="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:border-brand-500 text-xs bg-white" />
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <label className="text-[11px] font-semibold text-slate-600">Berat (Kg)</label>
+                          <input type="text" className="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:border-brand-500 text-xs bg-white" />
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <label className="text-[11px] font-semibold text-slate-600">Tinggi (Cm)</label>
+                          <input type="text" className="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:border-brand-500 text-xs bg-white" />
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <label className="text-[11px] font-semibold text-slate-600">Respirasi (/mnt)</label>
+                          <input type="text" className="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:border-brand-500 text-xs bg-white" />
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <label className="text-[11px] font-semibold text-slate-600">Nadi (/mnt)</label>
+                          <input type="text" className="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:border-brand-500 text-xs bg-white" />
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <label className="text-[11px] font-semibold text-slate-600">SpO2 (%)</label>
+                          <input type="text" className="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:border-brand-500 text-xs bg-white" />
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <label className="text-[11px] font-semibold text-slate-600">GCS (E,V,M)</label>
+                          <input type="text" className="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:border-brand-500 text-xs bg-white" />
+                        </div>
+                        <div className="flex flex-col gap-1 sm:col-span-2 md:col-span-2">
+                          <label className="text-[11px] font-semibold text-slate-600">Kesadaran</label>
+                          <select className="border border-slate-300 rounded px-2 py-1.5 focus:outline-none focus:border-brand-500 text-xs bg-white">
+                            <option>-</option>
+                            <option>Compos Mentis</option>
+                            <option>Apatis</option>
+                            <option>Somnolent</option>
+                            <option>Sopor</option>
+                            <option>Coma</option>
+                          </select>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
                   {/* Actions Right Side */}
-                  <div className="w-full lg:w-40 flex flex-row lg:flex-col flex-wrap gap-3 shrink-0">
-                    <button className="flex items-center gap-2 px-3 py-2 bg-white border border-slate-300 rounded hover:bg-slate-50 transition-colors shadow-sm text-xs font-semibold text-slate-700 w-full">
-                      <FaHistory className="text-blue-500" /> Riwayat Pasien
+                  <div className="lg:col-span-1 flex flex-row lg:flex-col flex-wrap gap-3 shrink-0">
+                    <button className="flex items-center gap-2 px-3 py-2.5 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors shadow-sm text-xs font-semibold text-slate-700 w-full md:w-auto lg:w-full">
+                      <FaHistory className="text-blue-500 text-sm" /> Riwayat Pasien
                     </button>
-                    <button className="flex items-center justify-between px-3 py-2 bg-white border border-slate-300 rounded hover:bg-slate-50 transition-colors shadow-sm text-xs font-semibold text-slate-700 w-full">
-                      <span className="flex items-center gap-2"><FaFileAlt className="text-red-400" /> Resume Pasien</span>
-                      <div className="w-2 h-2 rounded bg-green-500"></div>
+                    <button className="flex items-center justify-between px-3 py-2.5 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors shadow-sm text-xs font-semibold text-slate-700 w-full md:w-auto lg:w-full">
+                      <span className="flex items-center gap-2"><FaFileAlt className="text-rose-500 text-sm" /> Resume Pasien</span>
+                      <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_4px_#10b981]"></div>
                     </button>
-                    <button className="flex items-center gap-2 px-3 py-2 bg-white border border-slate-300 rounded hover:bg-slate-50 transition-colors shadow-sm text-xs font-semibold text-slate-700 w-full">
-                      <FaSync className="text-brand-500" /> Muat Ulang
+                    <button className="flex items-center gap-2 px-3 py-2.5 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors shadow-sm text-xs font-semibold text-slate-700 w-full md:w-auto lg:w-full">
+                      <FaSync className="text-brand-500 text-sm" /> Muat Ulang
                     </button>
                   </div>
                 </div>
