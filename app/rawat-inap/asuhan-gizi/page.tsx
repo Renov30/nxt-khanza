@@ -7,6 +7,7 @@ import {
   FaUtensils, FaSearch, FaChevronDown, FaChevronUp
 } from 'react-icons/fa';
 import BottomActionPanel from '@/components/BottomActionPanel';
+import ClinicalSidebar from '@/components/ClinicalSidebar';
 
 // Demo data for table
 const demoData = [
@@ -220,18 +221,15 @@ function AsuhannGiziContent() {
   );
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3 }}
-      className="flex flex-col w-full h-full overflow-hidden bg-slate-50 text-slate-800 rounded-tl-xl shadow-inner border-t border-l border-white"
-    >
-      {/* Page Header */}
-      <div className="bg-gradient-to-r from-brand-100 to-slate-50 px-4 py-1 border-b border-brand-100 flex items-center justify-between shadow-sm z-10 shrink-0">
-        <h2 className="text-brand-800 font-bold text-sm flex items-center gap-2 tracking-wide">
-          <FaUtensils className="text-brand-600" />
-          Data Asuhan Gizi Pasien
-        </h2>
-      </div>
+    <div className="flex flex-col w-full h-full overflow-hidden bg-slate-50 text-slate-800 rounded-tl-xl shadow-inner border-t border-l border-white">
+      <ClinicalSidebar noRawat={noRawatParam} noRM="617244" namaPasien="Tn.+Sukarji">
+        {/* Page Header */}
+        <div className="bg-gradient-to-r from-brand-100 to-slate-50 px-4 py-1 border-b border-brand-100 flex items-center justify-between shadow-sm z-10 shrink-0">
+          <h2 className="text-brand-800 font-bold text-sm flex items-center gap-2 tracking-wide">
+            <FaUtensils className="text-brand-600" />
+            Data Asuhan Gizi Pasien
+          </h2>
+        </div>
 
       {/* Toggle Button - above table when form is closed */}
       {!isFormOpen && (
@@ -326,13 +324,14 @@ function AsuhannGiziContent() {
           </tbody>
         </table>
       </div>
+      </ClinicalSidebar>
 
       {/* Bottom Action Panel - always at bottom */}
       <BottomActionPanel
         recordCount={1}
         onExit={() => router.push('/rawat-inap')}
       />
-    </motion.div>
+    </div>
   );
 }
 

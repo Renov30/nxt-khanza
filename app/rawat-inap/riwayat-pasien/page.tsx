@@ -10,6 +10,7 @@ import {
 } from 'react-icons/fa';
 import { ActionButton } from '@/components/BottomActionPanel';
 import BottomActionPanel from '@/components/BottomActionPanel';
+import ClinicalSidebar from '@/components/ClinicalSidebar';
 
 // Demo data
 const demoKunjungan = [
@@ -105,18 +106,15 @@ function RiwayatPasienContent() {
   ];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3 }}
-      className="flex flex-col w-full h-full overflow-hidden bg-slate-50 text-slate-800 rounded-tl-xl shadow-inner border-t border-l border-white"
-    >
-      {/* Page Header */}
-      <div className="bg-gradient-to-r from-brand-100 to-slate-50 px-4 py-1 border-b border-brand-100 flex items-center justify-between shadow-sm z-10 shrink-0">
-        <h2 className="text-brand-800 font-bold text-sm flex items-center gap-2 tracking-wide">
-          <FaHistory className="text-brand-600" />
-          <span className="truncate">Riwayat Perawatan Rawat Inap</span>
-        </h2>
-      </div>
+    <div className="flex flex-col w-full h-full overflow-hidden bg-slate-50 text-slate-800 rounded-tl-xl shadow-inner border-t border-l border-white">
+      <ClinicalSidebar noRawat="" noRM={noRMParam} namaPasien={nmPasienParam}>
+        {/* Page Header */}
+        <div className="bg-gradient-to-r from-brand-100 to-slate-50 px-4 py-1 border-b border-brand-100 flex items-center justify-between shadow-sm z-10 shrink-0">
+          <h2 className="text-brand-800 font-bold text-sm flex items-center gap-2 tracking-wide">
+            <FaHistory className="text-brand-600" />
+            <span className="truncate">Riwayat Perawatan Rawat Inap</span>
+          </h2>
+        </div>
 
       {/* Patient Info Bar */}
       <div className="bg-white border-b border-slate-200 p-3 shrink-0 flex flex-wrap gap-4 items-center text-xs">
@@ -420,7 +418,8 @@ function RiwayatPasienContent() {
           />
         </div>
       </div>
-    </motion.div>
+      </ClinicalSidebar>
+    </div>
   );
 }
 

@@ -9,6 +9,7 @@ import {
   FaNotesMedical, FaHeartbeat, FaPills, FaClipboardList, FaCheck, FaBars, FaUtensils
 } from 'react-icons/fa';
 import BottomActionPanel, { ActionButton } from '@/components/BottomActionPanel';
+import ClinicalSidebar from '@/components/ClinicalSidebar';
 
 function PemeriksaanContent() {
   const searchParams = useSearchParams();
@@ -17,7 +18,6 @@ function PemeriksaanContent() {
 
   const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState('cppt');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -25,79 +25,16 @@ function PemeriksaanContent() {
 
   if (!mounted) return null;
 
-  const sidebarMenu = [
-    { icon: <FaStethoscope />, label: 'Resume Pasien' },
-    { icon: <FaHistory />, label: 'Riwayat Pasien' },
-    { icon: <FaUtensils />, label: 'Asuhan Gizi' },
-    { icon: <FaSyringe />, label: 'Bundle PPI' },
-    { icon: <FaClipboardList />, label: 'Rekapan HAIs' },
-  ];
-
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.3 }}
-      className="flex flex-col w-full h-full overflow-hidden bg-slate-50 text-slate-800 rounded-tl-xl shadow-inner border-t border-l border-white"
-    >
-      {/* Page Header */}
-      <div className="bg-gradient-to-r from-brand-100 to-slate-50 px-4 py-1 border-b border-brand-100 flex items-center justify-between shadow-sm z-10 shrink-0">
-        <h2 className="text-brand-800 font-bold text-sm flex items-center gap-2 tracking-wide">
-          <FaBed className="text-brand-600" />
-          <span className="truncate">Pemeriksaan / Tindakan Rawat Inap</span>
-        </h2>
-      </div>
-
-      <div className="flex flex-1 overflow-hidden">
-        {/* Left Sidebar Menu */}
-        <motion.div
-          initial={false}
-          animate={{ width: isSidebarOpen ? 224 : 48 }}
-          className="bg-white border-r border-slate-200 flex flex-col overflow-hidden shrink-0"
-        >
-          <div className="p-2 border-b border-slate-100 flex items-center gap-2 h-12">
-            <button
-              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="p-1.5 hover:bg-brand-50 rounded transition-colors text-brand-700 shrink-0 focus:outline-none"
-              title="Toggle Sidebar"
-            >
-              <FaBars />
-            </button>
-            {isSidebarOpen && (
-              <div className="relative flex-1">
-                <input
-                  type="text"
-                  className="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:ring-1 focus:ring-brand-500"
-                  placeholder="Cari menu..."
-                />
-                <FaSearch className="absolute left-2.5 top-2 text-slate-400 text-xs" />
-              </div>
-            )}
-          </div>
-          <div className="flex-1 overflow-y-auto custom-scrollbar">
-            {sidebarMenu.map((item, idx) => (
-              <div
-                key={idx}
-                onClick={() => {
-                  if (item.label === 'Riwayat Pasien') {
-                    router.push(`/rawat-inap/riwayat-pasien?noRM=617211&nama=Tn.+Sukarji`);
-                  } else if (item.label === 'Asuhan Gizi') {
-                    router.push(`/rawat-inap/asuhan-gizi?noRawat=${noRawatParam}`);
-                  }
-                }}
-                className="flex items-center gap-3 px-3 py-3 hover:bg-brand-50 cursor-pointer text-xs text-slate-700 border-b border-slate-50 transition-colors whitespace-nowrap"
-                title={!isSidebarOpen ? item.label : undefined}
-              >
-                <span className="text-brand-500 text-sm shrink-0">{item.icon}</span>
-                {isSidebarOpen && <span>{item.label}</span>}
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Main Content Area */}
-        <div className="flex-1 flex flex-col overflow-hidden">
+    <div className="flex flex-col w-full h-full overflow-hidden bg-slate-50 text-slate-800 rounded-tl-xl shadow-inner border-t border-l border-white">
+      <ClinicalSidebar noRawat={noRawatParam} noRM="617211" namaPasien="Tn.+Sukarji">
+        {/* Page Header - now inside content area, beside sidebar */}
+        <div className="bg-gradient-to-r from-brand-100 to-slate-50 px-4 py-1 border-b border-brand-100 flex items-center justify-between shadow-sm z-10 shrink-0">
+          <h2 className="text-brand-800 font-bold text-sm flex items-center gap-2 tracking-wide">
+            <FaBed className="text-brand-600" />
+            <span className="truncate">Pemeriksaan / Tindakan Rawat Inap</span>
+          </h2>
+        </div>
 
           {/* Top Patient Info Bar */}
           <div className="bg-white border-b border-slate-200 p-3 shrink-0 flex flex-wrap gap-4 items-center text-xs">
@@ -297,15 +234,14 @@ function PemeriksaanContent() {
               </div>
             )}
           </div>
-        </div>
-      </div>
+      </ClinicalSidebar>
 
       {/* Main Bottom Actions */}
       <BottomActionPanel
         recordCount={0}
         onExit={() => router.push('/rawat-inap')}
       />
-    </motion.div>
+    </div>
   );
 }
 
