@@ -17,7 +17,7 @@ function PemeriksaanContent() {
 
   const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState('cppt');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -107,13 +107,13 @@ function PemeriksaanContent() {
           <div className="bg-white border-b border-slate-200 p-3 shrink-0 flex flex-wrap gap-4 items-center text-xs">
             <div className="flex items-center gap-1 w-full sm:w-auto">
               <label className="font-semibold text-slate-600 min-w-[80px] sm:min-w-0">Pasien :</label>
-              <input type="text" className="border border-slate-300 rounded px-2 py-1 flex-1 sm:w-40 bg-slate-50 focus:outline-none focus:border-brand-500" value={noRawatParam} readOnly />
+              <input type="text" className="border border-slate-300 rounded px-2 py-1 flex-1 sm:w-35 bg-slate-50 focus:outline-none focus:border-brand-500" value={noRawatParam} readOnly />
             </div>
             <div className="flex items-center gap-1 w-full sm:w-auto">
-              <input type="text" className="border border-slate-300 rounded px-2 py-1 flex-1 sm:w-24 bg-slate-50 focus:outline-none focus:border-brand-500" defaultValue="617211" readOnly />
+              <input type="text" className="border border-slate-300 rounded px-2 py-1 flex-1 sm:w-15 bg-slate-50 focus:outline-none focus:border-brand-500" defaultValue="617211" readOnly />
             </div>
             <div className="flex items-center gap-1 w-full md:w-auto">
-              <input type="text" className="border border-slate-300 rounded px-2 py-1 flex-1 md:w-64 bg-slate-50 focus:outline-none focus:border-brand-500" defaultValue="Tn. Sukarji" readOnly />
+              <input type="text" className="border border-slate-300 rounded px-2 py-1 flex-1 md:w-50 bg-slate-50 focus:outline-none focus:border-brand-500" defaultValue="Tn. Sukarji" readOnly />
             </div>
             <div className="flex flex-wrap items-center gap-1 sm:ml-auto w-full sm:w-auto">
               <label className="font-semibold text-slate-600">Tanggal :</label>
@@ -207,7 +207,7 @@ function PemeriksaanContent() {
                   {/* Tanda-Tanda Vital */}
                   <div className="bg-brand-50/40 p-4 rounded-lg border border-brand-100/50">
                     <h3 className="text-[13px] font-bold text-brand-700 mb-3 flex items-center gap-2 border-b border-brand-100 pb-2">
-                      <FaHeartbeat className="text-brand-500" /> Tanda-Tanda Vital (TTV)
+                      Tanda-Tanda Vital (TTV)
                     </h3>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
                       <div className="flex flex-col gap-1">
