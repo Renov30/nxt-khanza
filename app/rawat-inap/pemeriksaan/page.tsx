@@ -3,10 +3,10 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { 
-  FaBed, FaSave, FaFileAlt, FaTrash, FaEdit, FaPrint, FaListAlt, 
+import {
+  FaBed, FaSave, FaFileAlt, FaTrash, FaEdit, FaPrint, FaListAlt,
   FaSignOutAlt, FaSearch, FaHistory, FaSync, FaStethoscope, FaSyringe,
-  FaNotesMedical, FaHeartbeat, FaPills, FaClipboardList, FaCheck
+  FaNotesMedical, FaHeartbeat, FaPills, FaClipboardList, FaCheck, FaBars
 } from 'react-icons/fa';
 import BottomActionPanel, { ActionButton } from '@/components/BottomActionPanel';
 
@@ -17,6 +17,7 @@ function PemeriksaanContent() {
 
   const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState('cppt');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   useEffect(() => {
     setMounted(true);
@@ -52,61 +53,80 @@ function PemeriksaanContent() {
       className="flex flex-col w-full h-full overflow-hidden bg-slate-50 text-slate-800 rounded-tl-xl shadow-inner border-t border-l border-white"
     >
       {/* Page Header */}
-      <div className="bg-gradient-to-r from-brand-100 to-slate-50 px-4 py-2 border-b border-brand-100 flex items-center justify-between shadow-sm z-10 shrink-0">
+      <div className="bg-gradient-to-r from-brand-100 to-slate-50 px-4 py-1 border-b border-brand-100 flex items-center justify-between shadow-sm z-10 shrink-0">
         <h2 className="text-brand-800 font-bold text-sm flex items-center gap-2 tracking-wide">
           <FaBed className="text-brand-600" />
-          :: Daftar Pasien Rawat Inap :: / Pemeriksaan / Tindakan Rawat Inap ::
+          <span className="truncate">Pemeriksaan / Tindakan Rawat Inap</span>
         </h2>
       </div>
 
       <div className="flex flex-1 overflow-hidden">
         {/* Left Sidebar Menu */}
-        <div className="w-56 bg-white border-r border-slate-200 flex flex-col overflow-hidden shrink-0">
-          <div className="p-2 border-b border-slate-100">
-            <div className="relative">
-              <input 
-                type="text" 
-                className="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:ring-1 focus:ring-brand-500"
-                placeholder="Cari menu..."
-              />
-              <FaSearch className="absolute left-2.5 top-2 text-slate-400 text-xs" />
-            </div>
+        <motion.div
+          initial={false}
+          animate={{ width: isSidebarOpen ? 224 : 48 }}
+          className="bg-white border-r border-slate-200 flex flex-col overflow-hidden shrink-0"
+        >
+          <div className="p-2 border-b border-slate-100 flex items-center gap-2 h-12">
+            <button
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+              className="p-1.5 hover:bg-brand-50 rounded transition-colors text-brand-700 shrink-0 focus:outline-none"
+              title="Toggle Sidebar"
+            >
+              <FaBars />
+            </button>
+            {isSidebarOpen && (
+              <div className="relative flex-1">
+                <input
+                  type="text"
+                  className="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:ring-1 focus:ring-brand-500"
+                  placeholder="Cari menu..."
+                />
+                <FaSearch className="absolute left-2.5 top-2 text-slate-400 text-xs" />
+              </div>
+            )}
           </div>
           <div className="flex-1 overflow-y-auto custom-scrollbar">
             {sidebarMenu.map((item, idx) => (
-              <div 
-                key={idx} 
-                className="flex items-center gap-2 px-3 py-2 hover:bg-brand-50 cursor-pointer text-xs text-slate-700 border-b border-slate-50 transition-colors"
+              <div
+                key={idx}
+                className="flex items-center gap-3 px-3 py-3 hover:bg-brand-50 cursor-pointer text-xs text-slate-700 border-b border-slate-50 transition-colors whitespace-nowrap"
+                title={!isSidebarOpen ? item.label : undefined}
               >
-                <span className="text-brand-500">{item.icon}</span>
-                <span>{item.label}</span>
+                <span className="text-brand-500 text-sm shrink-0">{item.icon}</span>
+                {isSidebarOpen && <span>{item.label}</span>}
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Main Content Area */}
         <div className="flex-1 flex flex-col overflow-hidden">
-          
+
           {/* Top Patient Info Bar */}
           <div className="bg-white border-b border-slate-200 p-3 shrink-0 flex flex-wrap gap-4 items-center text-xs">
-            <div className="flex items-center gap-2">
-              <label className="font-semibold text-slate-600">No.Rawat :</label>
-              <input type="text" className="border border-slate-300 rounded px-2 py-1 w-40 bg-slate-50 focus:outline-none focus:border-brand-500" value={noRawatParam} readOnly />
+            <div className="flex items-center gap-1 w-full sm:w-auto">
+              <label className="font-semibold text-slate-600 min-w-[80px] sm:min-w-0">No.Rawat :</label>
+              <input type="text" className="border border-slate-300 rounded px-2 py-1 flex-1 sm:w-40 bg-slate-50 focus:outline-none focus:border-brand-500" value={noRawatParam} readOnly />
             </div>
-            <div className="flex items-center gap-2">
-              <input type="text" className="border border-slate-300 rounded px-2 py-1 w-24 bg-slate-50 focus:outline-none focus:border-brand-500" defaultValue="617211" readOnly />
+            <div className="flex items-center gap-1 w-full sm:w-auto">
+              <label className="font-semibold text-slate-600 min-w-[80px] sm:min-w-0">No.RM :</label>
+              <input type="text" className="border border-slate-300 rounded px-2 py-1 flex-1 sm:w-24 bg-slate-50 focus:outline-none focus:border-brand-500" defaultValue="617211" readOnly />
             </div>
-            <div className="flex items-center gap-2">
-              <input type="text" className="border border-slate-300 rounded px-2 py-1 w-64 bg-slate-50 focus:outline-none focus:border-brand-500" defaultValue="Tn. Sukarji" readOnly />
+            <div className="flex items-center gap-1 w-full md:w-auto">
+              <label className="font-semibold text-slate-600 min-w-[80px] sm:min-w-0">Nama Pasien :</label>
+              <input type="text" className="border border-slate-300 rounded px-2 py-1 flex-1 md:w-64 bg-slate-50 focus:outline-none focus:border-brand-500" defaultValue="Tn. Sukarji" readOnly />
             </div>
-            <div className="flex items-center gap-2 ml-auto">
+            <div className="flex flex-wrap items-center gap-1 sm:ml-auto w-full sm:w-auto">
               <label className="font-semibold text-slate-600">Tanggal :</label>
-              <input type="date" className="border border-slate-300 rounded px-2 py-1 focus:outline-none focus:border-brand-500" defaultValue="2026-04-30" />
-              <input type="text" className="border border-slate-300 rounded px-2 py-1 w-12 text-center focus:outline-none focus:border-brand-500" defaultValue="09" />
-              <input type="text" className="border border-slate-300 rounded px-2 py-1 w-12 text-center focus:outline-none focus:border-brand-500" defaultValue="26" />
-              <input type="text" className="border border-slate-300 rounded px-2 py-1 w-12 text-center focus:outline-none focus:border-brand-500" defaultValue="25" />
-              <input type="checkbox" className="accent-brand-500 w-4 h-4 cursor-pointer" defaultChecked />
+              <input type="date" className="border border-slate-300 rounded px-2 py-1 mr-2 focus:outline-none focus:border-brand-500" defaultValue="2026-04-30" />
+              <label className="font-semibold text-slate-600">Jam :</label>
+              <div className="flex gap-1">
+                <input type="text" className="border border-slate-300 rounded px-2 py-1 w-10 sm:w-12 text-center focus:outline-none focus:border-brand-500" defaultValue="09" />
+                <input type="text" className="border border-slate-300 rounded px-2 py-1 w-10 sm:w-12 text-center focus:outline-none focus:border-brand-500" defaultValue="26" />
+                <input type="text" className="border border-slate-300 rounded px-2 py-1 w-10 sm:w-12 text-center focus:outline-none focus:border-brand-500" defaultValue="25" />
+              </div>
+              <input type="checkbox" className="accent-brand-500 w-4 h-4 cursor-pointer ml-2" defaultChecked />
             </div>
           </div>
 
@@ -119,11 +139,10 @@ function PemeriksaanContent() {
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab === 'Pemeriksaan / CPPT' ? 'cppt' : tabId)}
-                  className={`px-4 py-2 text-xs font-semibold rounded-t-lg transition-colors whitespace-nowrap border border-b-0 ${
-                    isActive 
-                      ? 'bg-white text-brand-700 border-slate-200' 
-                      : 'bg-slate-200 text-slate-600 border-slate-300 hover:bg-slate-300'
-                  }`}
+                  className={`px-4 py-2 text-xs font-semibold rounded-t-lg transition-colors whitespace-nowrap border border-b-0 ${isActive
+                    ? 'bg-white text-brand-700 border-slate-200'
+                    : 'bg-slate-200 text-slate-600 border-slate-300 hover:bg-slate-300'
+                    }`}
                 >
                   {tab}
                 </button>
@@ -135,7 +154,7 @@ function PemeriksaanContent() {
           <div className="flex-1 overflow-auto bg-white p-4 relative">
             {activeTab === 'cppt' && (
               <div className="flex flex-col h-full gap-4">
-                <div className="flex gap-6 h-full">
+                <div className="flex flex-col lg:flex-row gap-6">
                   {/* Left Column Form */}
                   <div className="flex-1 flex flex-col gap-3 min-w-[300px]">
                     <div className="flex items-center gap-2">
@@ -146,7 +165,7 @@ function PemeriksaanContent() {
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <label className="w-24 text-right text-xs font-semibold text-slate-600">Profesi / Jabatan / Departemen :</label>
+                      <label className="w-24 text-right text-xs font-semibold text-slate-600">Jabatan :</label>
                       <input type="text" className="border border-slate-300 rounded px-2 py-1 flex-1 bg-slate-50 focus:outline-none focus:border-brand-500 text-xs" defaultValue="Administrasi IT" />
                       <button className="p-1.5 text-brand-500 hover:bg-brand-50 rounded"><FaEdit /></button>
                     </div>
@@ -162,44 +181,44 @@ function PemeriksaanContent() {
                     </div>
 
                     {/* Vitals Grid */}
-                    <div className="grid grid-cols-3 gap-2 pl-26 ml-26">
-                      <div className="flex items-center gap-2 justify-end">
-                        <label className="text-xs font-semibold text-slate-600">Suhu (C) :</label>
+                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-3 mt-3 sm:ml-28">
+                      <div className="flex items-center justify-between sm:justify-start gap-2">
+                        <label className="text-xs font-semibold text-slate-600 whitespace-nowrap">Suhu (C) :</label>
                         <input type="text" className="border border-slate-300 rounded px-2 py-1 w-16 focus:outline-none focus:border-brand-500 text-xs" />
                       </div>
-                      <div className="flex items-center gap-2 justify-end">
-                        <label className="text-xs font-semibold text-slate-600">Tensi (mmHg) :</label>
+                      <div className="flex items-center justify-between sm:justify-start gap-2">
+                        <label className="text-xs font-semibold text-slate-600 whitespace-nowrap">Tensi (mmHg) :</label>
                         <input type="text" className="border border-slate-300 rounded px-2 py-1 w-16 focus:outline-none focus:border-brand-500 text-xs" />
                       </div>
-                      <div className="flex items-center gap-2 justify-end">
-                        <label className="text-xs font-semibold text-slate-600">Berat (Kg) :</label>
-                        <input type="text" className="border border-slate-300 rounded px-2 py-1 w-16 focus:outline-none focus:border-brand-500 text-xs" />
-                      </div>
-
-                      <div className="flex items-center gap-2 justify-end">
-                        <label className="text-xs font-semibold text-slate-600">TB (Cm) :</label>
-                        <input type="text" className="border border-slate-300 rounded px-2 py-1 w-16 focus:outline-none focus:border-brand-500 text-xs" />
-                      </div>
-                      <div className="flex items-center gap-2 justify-end">
-                        <label className="text-xs font-semibold text-slate-600">RR (/menit) :</label>
-                        <input type="text" className="border border-slate-300 rounded px-2 py-1 w-16 focus:outline-none focus:border-brand-500 text-xs" />
-                      </div>
-                      <div className="flex items-center gap-2 justify-end">
-                        <label className="text-xs font-semibold text-slate-600">Nadi (/menit) :</label>
+                      <div className="flex items-center justify-between sm:justify-start gap-2">
+                        <label className="text-xs font-semibold text-slate-600 whitespace-nowrap">Berat (Kg) :</label>
                         <input type="text" className="border border-slate-300 rounded px-2 py-1 w-16 focus:outline-none focus:border-brand-500 text-xs" />
                       </div>
 
-                      <div className="flex items-center gap-2 justify-end">
-                        <label className="text-xs font-semibold text-slate-600">SpO2 (%) :</label>
+                      <div className="flex items-center justify-between sm:justify-start gap-2">
+                        <label className="text-xs font-semibold text-slate-600 whitespace-nowrap">TB (Cm) :</label>
                         <input type="text" className="border border-slate-300 rounded px-2 py-1 w-16 focus:outline-none focus:border-brand-500 text-xs" />
                       </div>
-                      <div className="flex items-center gap-2 justify-end">
-                        <label className="text-xs font-semibold text-slate-600">GCS (E,V,M) :</label>
+                      <div className="flex items-center justify-between sm:justify-start gap-2">
+                        <label className="text-xs font-semibold text-slate-600 whitespace-nowrap">RR (/menit) :</label>
                         <input type="text" className="border border-slate-300 rounded px-2 py-1 w-16 focus:outline-none focus:border-brand-500 text-xs" />
                       </div>
-                      <div className="flex items-center gap-2 justify-end">
-                        <label className="text-xs font-semibold text-slate-600">Kesadaran :</label>
-                        <select className="border border-slate-300 rounded px-1 py-1 w-24 focus:outline-none focus:border-brand-500 text-xs bg-white">
+                      <div className="flex items-center justify-between sm:justify-start gap-2">
+                        <label className="text-xs font-semibold text-slate-600 whitespace-nowrap">Nadi (/menit) :</label>
+                        <input type="text" className="border border-slate-300 rounded px-2 py-1 w-16 focus:outline-none focus:border-brand-500 text-xs" />
+                      </div>
+
+                      <div className="flex items-center justify-between sm:justify-start gap-2">
+                        <label className="text-xs font-semibold text-slate-600 whitespace-nowrap">SpO2 (%) :</label>
+                        <input type="text" className="border border-slate-300 rounded px-2 py-1 w-16 focus:outline-none focus:border-brand-500 text-xs" />
+                      </div>
+                      <div className="flex items-center justify-between sm:justify-start gap-2">
+                        <label className="text-xs font-semibold text-slate-600 whitespace-nowrap">GCS (E,V,M) :</label>
+                        <input type="text" className="border border-slate-300 rounded px-2 py-1 w-16 focus:outline-none focus:border-brand-500 text-xs" />
+                      </div>
+                      <div className="flex items-center justify-between sm:justify-start gap-2">
+                        <label className="text-xs font-semibold text-slate-600 whitespace-nowrap">Kesadaran :</label>
+                        <select className="border border-slate-300 rounded px-1 py-1 w-24 sm:w-28 focus:outline-none focus:border-brand-500 text-xs bg-white">
                           <option>-</option>
                           <option>Compos Mentis</option>
                           <option>Apatis</option>
@@ -240,7 +259,7 @@ function PemeriksaanContent() {
                   </div>
 
                   {/* Actions Right Side */}
-                  <div className="w-40 flex flex-col gap-3 shrink-0">
+                  <div className="w-full lg:w-40 flex flex-row lg:flex-col flex-wrap gap-3 shrink-0">
                     <button className="flex items-center gap-2 px-3 py-2 bg-white border border-slate-300 rounded hover:bg-slate-50 transition-colors shadow-sm text-xs font-semibold text-slate-700 w-full">
                       <FaHistory className="text-blue-500" /> Riwayat Pasien
                     </button>
@@ -291,32 +310,12 @@ function PemeriksaanContent() {
 
               </div>
             )}
-            
+
             {activeTab !== 'cppt' && (
               <div className="flex items-center justify-center h-full text-slate-400">
                 Menu {activeTab.toUpperCase()} belum tersedia (Demo)
               </div>
             )}
-          </div>
-
-          {/* Table Search / Filter Bar */}
-          <div className="bg-slate-100 border-t border-slate-300 p-2 shrink-0 flex items-center gap-3 text-xs">
-            <div className="flex items-center gap-2">
-              <label className="text-slate-600">Tgl.Rawat :</label>
-              <input type="date" className="border border-slate-300 rounded px-2 py-1 focus:outline-none focus:border-brand-500" defaultValue="2026-04-30" />
-              <label className="text-slate-600">s.d.</label>
-              <input type="date" className="border border-slate-300 rounded px-2 py-1 focus:outline-none focus:border-brand-500" defaultValue="2026-04-30" />
-            </div>
-            <div className="flex items-center gap-2">
-              <label className="text-slate-600">No.RM :</label>
-              <input type="text" className="border border-slate-300 rounded px-2 py-1 w-24 focus:outline-none focus:border-brand-500" />
-              <button className="p-1 text-brand-500 hover:bg-brand-50 rounded"><FaSearch /></button>
-            </div>
-            <div className="flex items-center gap-2 flex-1">
-              <label className="text-slate-600">Key Word :</label>
-              <input type="text" className="border border-slate-300 rounded px-2 py-1 flex-1 max-w-[200px] focus:outline-none focus:border-brand-500" defaultValue={noRawatParam} />
-              <button className="p-1 text-green-500 hover:bg-green-50 rounded"><FaCheck /></button>
-            </div>
           </div>
         </div>
       </div>
@@ -324,24 +323,6 @@ function PemeriksaanContent() {
       {/* Main Bottom Actions */}
       <BottomActionPanel
         recordCount={0}
-        hideStandardButtons
-        customButtons={
-          <>
-            <ActionButton icon={<FaSave className="text-brand-600 drop-shadow-sm" />} label="Simpan" />
-            <ActionButton icon={<FaFileAlt className="text-emerald-600 drop-shadow-sm" />} label="Baru" />
-            <ActionButton icon={<FaTrash className="text-red-600 drop-shadow-sm" />} label="Hapus" />
-            <ActionButton icon={<FaEdit className="text-orange-500 drop-shadow-sm" />} label="Ganti" />
-            <ActionButton icon={<FaPrint className="text-indigo-600 drop-shadow-sm" />} label="Cetak" />
-            <ActionButton icon={<FaSearch className="text-blue-600 drop-shadow-sm" />} label="Semua" />
-            <div className="w-px h-6 bg-slate-300 mx-1"></div>
-            <ActionButton icon={<FaListAlt className="text-rose-600 drop-shadow-sm" />} label="Log" />
-            <ActionButton 
-              icon={<FaSignOutAlt className="text-red-600 drop-shadow-sm" />} 
-              label="Keluar" 
-              onClick={() => router.push('/rawat-inap')}
-            />
-          </>
-        }
       />
     </motion.div>
   );
