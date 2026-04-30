@@ -387,8 +387,8 @@ function RiwayatPasienContent() {
         )}
 
         <div className="flex items-center gap-2 px-2 border-l border-slate-200 ml-2">
-          <span className="text-slate-500 font-semibold whitespace-nowrap">Key Word :</span>
-          <input type="text" placeholder="Cari di sini..."
+          <span className="text-slate-500 font-semibold whitespace-nowrap">Pencarian :</span>
+          <input type="text" placeholder="Cari data di sini..."
             className="border border-slate-300 rounded px-2 py-1 w-40 text-xs focus:outline-none focus:border-brand-500" />
         </div>
 

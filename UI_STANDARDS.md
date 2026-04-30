@@ -218,7 +218,7 @@ Setiap halaman konten memiliki header:
 ## 9. Bottom Action Panel (`BottomActionPanel`)
 
 ### Struktur:
-1. **Baris Filter** — Periode tanggal + Key Word search (atas).
+1. **Baris Filter** — Periode tanggal + Pencarian search (atas).
 2. **Baris Tombol** — Tombol aksi + Record count + Keluar (bawah).
 
 ### Aturan:

@@ -54,9 +54,9 @@ export default function BottomActionPanel({
         </div>
 
         <div className="flex items-center gap-2 flex-wrap sm:mr-2">
-          <span className="font-semibold text-slate-600">Key Word :</span>
+          <span className="font-semibold text-slate-600">Pencarian :</span>
           <div className="flex bg-white border border-slate-200 rounded-md shadow-sm overflow-hidden focus-within:ring-1 focus-within:ring-brand-500 w-[250px]">
-            <input type="text" className="w-full bg-transparent outline-none px-2 py-1 text-slate-700" />
+            <input type="text" className="w-full bg-transparent outline-none px-2 py-1 text-slate-700" placeholder="Cari data di sini..." />
             <div className="flex border-l border-slate-200">
               <button className="px-2 text-brand-500 hover:bg-brand-50 transition-colors"><FaCheck className="text-[10px]" /></button>
               <button className="px-2 text-slate-400 hover:text-brand-600 hover:bg-brand-50 transition-colors border-l border-slate-100"><FaSearch className="text-[10px]" /></button>
