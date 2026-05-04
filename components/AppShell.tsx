@@ -183,21 +183,20 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             />
           ) : (
             <div className="relative">
-              <div 
-                className="flex items-center gap-2 px-3 py-1 cursor-pointer hover:bg-brand-50/50 rounded-xl transition-all"
+              <div
+                className="flex items-center gap-3 px-3 py-1.5 cursor-pointer hover:bg-brand-100/40 rounded-xl transition-all duration-300 border border-transparent hover:border-brand-200/50 hover:shadow-sm group/account"
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsAccountMenuOpen(!isAccountMenuOpen);
                 }}
               >
-                <div className="flex flex-col items-end mr-1 hidden sm:flex">
-                  <span className="text-[12px] font-bold text-slate-700 max-w-[120px] truncate">
+                <div className="flex flex-col items-end hidden sm:flex">
+                  <span className="text-[14px] font-bold text-slate-700 max-w-[150px] truncate group-hover/account:text-brand-700 transition-colors">
                     {username || "User"}
                   </span>
-                  <span className="text-[9px] text-slate-500 font-medium">Online</span>
                 </div>
-                <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-brand-100 to-white flex items-center justify-center border border-brand-200 shadow-sm transition-transform active:scale-95 group-hover:border-brand-300">
-                  <FaUser className="text-brand-600 text-lg drop-shadow-sm" />
+                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-100 to-white flex items-center justify-center border border-brand-200 shadow-sm transition-all duration-300 group-hover/account:scale-105 group-hover/account:shadow-md group-hover/account:border-brand-300">
+                  <FaUser className="text-brand-600 text-xl drop-shadow-sm" />
                 </div>
               </div>
 
@@ -210,15 +209,19 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                     className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border border-brand-100 py-2 z-[100] overflow-hidden"
                   >
                     <div className="px-4 py-2 border-b border-slate-50 mb-1 sm:hidden">
-                       <span className="text-xs font-bold text-slate-700 block truncate">{username}</span>
-                       <span className="text-[10px] text-emerald-500">Online</span>
+                      <span className="text-xs font-bold text-slate-700 block truncate">
+                        {username}
+                      </span>
+                      <span className="text-[10px] text-emerald-500">
+                        Online
+                      </span>
                     </div>
                     <button className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-700 flex items-center gap-3 transition-colors font-medium">
                       <FaCog className="text-slate-400" />
                       <span>Settings</span>
                     </button>
                     <div className="h-px bg-slate-100 my-1 mx-2"></div>
-                    <button 
+                    <button
                       onClick={() => setIsLoggedIn(false)}
                       className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors font-bold"
                     >
