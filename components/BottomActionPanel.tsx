@@ -26,11 +26,16 @@ interface BottomActionPanelProps {
   onExit?: () => void;
   recordCount?: number;
   extraFilters?: React.ReactNode;
+  leftFilters?: React.ReactNode;
   customButtons?: React.ReactNode;
   hideStandardButtons?: boolean;
   searchValue?: string;
   onSearchChange?: (value: string) => void;
   onSearch?: () => void;
+  dateStart?: string;
+  dateEnd?: string;
+  onDateStartChange?: (value: string) => void;
+  onDateEndChange?: (value: string) => void;
 }
 
 export default function BottomActionPanel({
@@ -43,11 +48,16 @@ export default function BottomActionPanel({
   onExit,
   recordCount = 0,
   extraFilters,
+  leftFilters,
   customButtons,
   hideStandardButtons = false,
   searchValue = "",
   onSearchChange,
   onSearch,
+  dateStart,
+  dateEnd,
+  onDateStartChange,
+  onDateEndChange,
 }: BottomActionPanelProps) {
   const router = useRouter();
 
@@ -75,16 +85,21 @@ export default function BottomActionPanel({
       {/* Filters Row */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-y-2 bg-slate-50 p-1.5 rounded-lg border border-slate-100">
         <div className="flex items-center gap-2 flex-wrap">
+          {leftFilters}
           <span className="font-semibold text-slate-600 ml-1">Periode :</span>
           <div className="flex items-center gap-1.5">
             <input
               type="date"
               className="border border-slate-200 rounded text-slate-600 px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-white shadow-sm"
+              value={dateStart}
+              onChange={(e) => onDateStartChange?.(e.target.value)}
             />
             <span className="text-slate-400 font-bold">s.d.</span>
             <input
               type="date"
               className="border border-slate-200 rounded text-slate-600 px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-white shadow-sm"
+              value={dateEnd}
+              onChange={(e) => onDateEndChange?.(e.target.value)}
             />
           </div>
         </div>

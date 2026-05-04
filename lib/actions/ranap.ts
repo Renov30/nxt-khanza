@@ -2,13 +2,32 @@
 
 import { db } from "@/lib/db";
 
-export async function getDaftarRanap(keyword: string = "") {
+export async function getDaftarRanap(
+  keyword: string = "",
+  status: string = "Belum Pulang",
+  tglAwal: string = "",
+  tglAkhir: string = ""
+) {
   try {
-    let searchCondition = "";
+    let whereCondition = "";
     const params: any[] = [];
 
+    // 1. Handle Status & Date Filters
+    if (status === "Belum Pulang") {
+      whereCondition = "WHERE kamar_inap.stts_pulang = '-'";
+    } else if (status === "Sudah Pulang") {
+      whereCondition = "WHERE kamar_inap.stts_pulang <> '-' AND kamar_inap.tgl_keluar BETWEEN ? AND ?";
+      params.push(tglAwal, tglAkhir);
+    } else if (status === "Tgl. Masuk") {
+      whereCondition = "WHERE kamar_inap.tgl_masuk BETWEEN ? AND ?";
+      params.push(tglAwal, tglAkhir);
+    } else {
+      whereCondition = "WHERE 1=1";
+    }
+
+    // 2. Handle Search Keyword
     if (keyword) {
-      searchCondition = `
+      whereCondition += `
         AND (
           kamar_inap.no_rawat LIKE ? OR 
           reg_periksa.no_rkm_medis LIKE ? OR 
@@ -69,7 +88,7 @@ export async function getDaftarRanap(keyword: string = "") {
         GROUP BY dpjp_ranap.no_rawat
       ) dpjp ON kamar_inap.no_rawat=dpjp.no_rawat
       INNER JOIN penjab ON reg_periksa.kd_pj=penjab.kd_pj
-      WHERE kamar_inap.stts_pulang = '-' ${searchCondition}
+      ${whereCondition}
       ORDER BY bangsal.nm_bangsal, kamar_inap.tgl_masuk, kamar_inap.jam_masuk
     `;
 

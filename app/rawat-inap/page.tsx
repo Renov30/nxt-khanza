@@ -25,11 +25,18 @@ export default function RawatInap() {
   const [data, setData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchKeyword, setSearchKeyword] = useState("");
+  const [status, setStatus] = useState("Belum Pulang");
+  const [tglAwal, setTglAwal] = useState(
+    new Date().toISOString().split("T")[0],
+  );
+  const [tglAkhir, setTglAkhir] = useState(
+    new Date().toISOString().split("T")[0],
+  );
   const router = useRouter();
 
-  const fetchData = async (keyword: string = "") => {
+  const fetchData = async (keyword: string = searchKeyword) => {
     setIsLoading(true);
-    const result = await getDaftarRanap(keyword);
+    const result = await getDaftarRanap(keyword, status, tglAwal, tglAkhir);
     if (result.success) {
       setData(result.data);
     }
@@ -39,7 +46,7 @@ export default function RawatInap() {
   useEffect(() => {
     setMounted(true);
     fetchData();
-  }, []);
+  }, [status, tglAwal, tglAkhir]); // Re-fetch when filters change
 
   const handleSearch = () => {
     fetchData(searchKeyword);
@@ -76,7 +83,9 @@ export default function RawatInap() {
         <table className="w-full text-left border-collapse text-xs whitespace-nowrap">
           <thead className="sticky top-0 z-10 text-slate-600 shadow-sm backdrop-blur-md bg-white/95 border-b-2 border-brand-500">
             <tr className="border-b-2 border-brand-500">
-              <th className="py-2.5 px-3 font-bold border-r border-slate-200">No.</th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200">
+                No.
+              </th>
               <th className="py-2.5 px-3 font-bold border-r border-slate-200">
                 No.Rawat
               </th>
@@ -286,6 +295,24 @@ export default function RawatInap() {
         searchValue={searchKeyword}
         onSearchChange={setSearchKeyword}
         onSearch={handleSearch}
+        dateStart={tglAwal}
+        dateEnd={tglAkhir}
+        onDateStartChange={setTglAwal}
+        onDateEndChange={setTglAkhir}
+        leftFilters={
+          <div className="flex items-center gap-2 mr-2">
+            <span className="font-semibold text-slate-600">Status :</span>
+            <select
+              className="border border-slate-200 rounded text-slate-600 px-2 py-1 focus:outline-brand-500 focus:ring-1 focus:ring-brand-500 bg-white shadow-sm outline-none"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option value="Belum Pulang">Belum Pulang</option>
+              <option value="Sudah Pulang">Sudah Pulang</option>
+              <option value="Tgl. Masuk">Tanggal Masuk</option>
+            </select>
+          </div>
+        }
         customButtons={
           <>
             <ActionButton
