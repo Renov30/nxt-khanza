@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { cookies } from "next/headers";
 
 /**
  * Login action matching Khanza's encryption logic:
@@ -16,36 +17,49 @@ export async function loginAction(formData: FormData) {
   }
 
   try {
+    let userData = null;
+
     // 1. Check in 'user' table (Petugas/Staff)
-    // id_user uses key 'nur', password uses key 'windi'
     const [rows]: any = await db.execute(
       `SELECT * FROM user WHERE id_user = AES_ENCRYPT(?, 'nur') AND password = AES_ENCRYPT(?, 'windi')`,
       [id_user, password]
     );
 
     if (rows.length > 0) {
-      return {
-        success: true,
-        user: {
-          id: id_user,
-          role: 'user'
-        }
+      userData = {
+        id: id_user,
+        nama: rows[0].nama || id_user,
+        role: 'user'
       };
+    } else {
+      // 2. Fallback check in 'admin' table
+      const [adminRows]: any = await db.execute(
+        `SELECT * FROM admin WHERE usere = AES_ENCRYPT(?, 'nur') AND passworde = AES_ENCRYPT(?, 'windi')`,
+        [id_user, password]
+      );
+
+      if (adminRows.length > 0) {
+        userData = {
+          id: id_user,
+          nama: id_user,
+          role: 'admin'
+        };
+      }
     }
 
-    // 2. Fallback check in 'admin' table
-    const [adminRows]: any = await db.execute(
-      `SELECT * FROM admin WHERE usere = AES_ENCRYPT(?, 'nur') AND passworde = AES_ENCRYPT(?, 'windi')`,
-      [id_user, password]
-    );
+    if (userData) {
+      const cookieStore = await cookies();
+      cookieStore.set("user_session", JSON.stringify(userData), {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+        maxAge: 60 * 60 * 24 // 24 hours
+      });
 
-    if (adminRows.length > 0) {
       return {
         success: true,
-        user: {
-          id: id_user,
-          role: 'admin'
-        }
+        user: userData
       };
     }
 
@@ -54,4 +68,10 @@ export async function loginAction(formData: FormData) {
     console.error("Login error:", error);
     return { success: false, message: "Kesalahan koneksi database" };
   }
+}
+
+export async function logoutAction() {
+  const cookieStore = await cookies();
+  cookieStore.delete("user_session");
+  return { success: true };
 }

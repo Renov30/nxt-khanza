@@ -29,7 +29,7 @@ import {
   FaLock,
   FaThLarge,
 } from "react-icons/fa";
-import { loginAction } from "@/lib/actions/auth";
+import { loginAction, logoutAction } from "@/lib/actions/auth";
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
@@ -47,6 +47,25 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setMounted(true);
+
+    // Check session on mount
+    const checkSession = async () => {
+      try {
+        const response = await fetch("/api/auth/session");
+        const data = await response.json();
+        if (data.isLoggedIn) {
+          setIsLoggedIn(true);
+          setUsername(data.user.nama || data.user.id);
+        } else {
+          setIsLoginModalOpen(true);
+        }
+      } catch (err) {
+        setIsLoginModalOpen(true);
+      }
+    };
+
+    checkSession();
+
     const handleClick = () => {
       setContextMenu((prev) => ({ ...prev, show: false }));
       setIsAccountMenuOpen(false);
@@ -183,7 +202,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             />
           ) : (
             <div className="relative">
-              <div 
+              <div
                 className="flex items-center gap-3 px-3 py-1.5 cursor-pointer hover:bg-brand-100/40 rounded-xl transition-all duration-150 border border-transparent hover:border-brand-200/50 hover:shadow-sm group/account"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -222,7 +241,11 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                     </button>
                     <div className="h-px bg-slate-100 my-1 mx-2"></div>
                     <button
-                      onClick={() => setIsLoggedIn(false)}
+                      onClick={async () => {
+                        await logoutAction();
+                        setIsLoggedIn(false);
+                        setIsLoginModalOpen(true);
+                      }}
                       className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors font-bold"
                     >
                       <FaSignInAlt className="text-red-400 rotate-180" />
@@ -282,7 +305,11 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               <ContextMenuItem
                 icon={<FaKey className="text-yellow-600" />}
                 label="Log Out"
-                onClick={() => setIsLoggedIn(false)}
+                onClick={async () => {
+                  await logoutAction();
+                  setIsLoggedIn(false);
+                  setIsLoginModalOpen(true);
+                }}
               />
             )}
             <div className="w-full h-px bg-slate-100 my-1"></div>
@@ -308,10 +335,22 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-white w-[380px] flex flex-col rounded-xl overflow-hidden shadow-2xl border border-white/50"
+              className="bg-white w-[380px] flex flex-col rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/50"
             >
-              {/* Top spacer */}
-              <div className="h-6 bg-white w-full"></div>
+              {/* Login Header */}
+              <div className="bg-gradient-to-r from-brand-600 to-brand-700 px-6 py-4 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30">
+                  <FaLock className="text-white text-lg" />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold text-lg leading-tight">
+                    LOGIN
+                  </h3>
+                  <p className="text-white/70 text-[10px] font-medium tracking-wider">
+                    MASUK MENGGUNAKAN AKUN ANDA
+                  </p>
+                </div>
+              </div>
 
               {/* Form Area */}
               <form
@@ -379,7 +418,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                     <FaLock
                       className={`text-white/80 text-base ${isLoading ? "animate-pulse" : ""}`}
                     />
-                    {isLoading ? "Memproses..." : "Masuk ke Sistem"}
+                    {isLoading ? "Memproses..." : "Masuk"}
                   </button>
                 </div>
               </form>
