@@ -28,6 +28,9 @@ interface BottomActionPanelProps {
   extraFilters?: React.ReactNode;
   customButtons?: React.ReactNode;
   hideStandardButtons?: boolean;
+  searchValue?: string;
+  onSearchChange?: (value: string) => void;
+  onSearch?: () => void;
 }
 
 export default function BottomActionPanel({
@@ -42,6 +45,9 @@ export default function BottomActionPanel({
   extraFilters,
   customButtons,
   hideStandardButtons = false,
+  searchValue = "",
+  onSearchChange,
+  onSearch,
 }: BottomActionPanelProps) {
   const router = useRouter();
 
@@ -50,6 +56,12 @@ export default function BottomActionPanel({
       onExit();
     } else {
       router.push("/");
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && onSearch) {
+      onSearch();
     }
   };
 
@@ -84,12 +96,21 @@ export default function BottomActionPanel({
               type="text"
               className="w-full bg-transparent outline-none px-2 py-1 text-slate-700"
               placeholder="Cari data di sini..."
+              value={searchValue}
+              onChange={(e) => onSearchChange?.(e.target.value)}
+              onKeyDown={handleKeyDown}
             />
             <div className="flex border-l border-slate-200">
-              <button className="px-2 text-brand-500 hover:bg-brand-50 transition-colors">
+              <button
+                onClick={onSearch}
+                className="px-2 text-brand-500 hover:bg-brand-50 transition-colors"
+              >
                 <FaCheck className="text-[10px]" />
               </button>
-              <button className="px-2 text-slate-400 hover:text-brand-600 hover:bg-brand-50 transition-colors border-l border-slate-100">
+              <button
+                onClick={onSearch}
+                className="px-2 text-slate-400 hover:text-brand-600 hover:bg-brand-50 transition-colors border-l border-slate-100"
+              >
                 <FaSearch className="text-[10px]" />
               </button>
             </div>

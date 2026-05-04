@@ -24,11 +24,12 @@ export default function RawatInap() {
   const [mounted, setMounted] = useState(false);
   const [data, setData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchKeyword, setSearchKeyword] = useState("");
   const router = useRouter();
 
-  const fetchData = async () => {
+  const fetchData = async (keyword: string = "") => {
     setIsLoading(true);
-    const result = await getDaftarRanap();
+    const result = await getDaftarRanap(keyword);
     if (result.success) {
       setData(result.data);
     }
@@ -39,6 +40,10 @@ export default function RawatInap() {
     setMounted(true);
     fetchData();
   }, []);
+
+  const handleSearch = () => {
+    fetchData(searchKeyword);
+  };
 
   if (!mounted) return null;
 
@@ -278,6 +283,9 @@ export default function RawatInap() {
       <BottomActionPanel
         recordCount={data.length}
         hideStandardButtons
+        searchValue={searchKeyword}
+        onSearchChange={setSearchKeyword}
+        onSearch={handleSearch}
         customButtons={
           <>
             <ActionButton

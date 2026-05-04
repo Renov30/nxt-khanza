@@ -2,8 +2,30 @@
 
 import { db } from "@/lib/db";
 
-export async function getDaftarRanap() {
+export async function getDaftarRanap(keyword: string = "") {
   try {
+    let searchCondition = "";
+    const params: any[] = [];
+
+    if (keyword) {
+      searchCondition = `
+        AND (
+          kamar_inap.no_rawat LIKE ? OR 
+          reg_periksa.no_rkm_medis LIKE ? OR 
+          pasien.nm_pasien LIKE ? OR 
+          pasien.alamat LIKE ? OR 
+          kamar_inap.kd_kamar LIKE ? OR 
+          bangsal.nm_bangsal LIKE ? OR 
+          kamar_inap.diagnosa_awal LIKE ? OR 
+          kamar_inap.diagnosa_akhir LIKE ? OR 
+          COALESCE(dpjp.nm_dokter, dokter.nm_dokter) LIKE ? OR 
+          penjab.png_jawab LIKE ?
+        )
+      `;
+      const searchKey = `%${keyword}%`;
+      for (let i = 0; i < 10; i++) params.push(searchKey);
+    }
+
     const query = `
       SELECT 
         kamar_inap.no_rawat,
@@ -47,11 +69,11 @@ export async function getDaftarRanap() {
         GROUP BY dpjp_ranap.no_rawat
       ) dpjp ON kamar_inap.no_rawat=dpjp.no_rawat
       INNER JOIN penjab ON reg_periksa.kd_pj=penjab.kd_pj
-      WHERE kamar_inap.stts_pulang = '-'
+      WHERE kamar_inap.stts_pulang = '-' ${searchCondition}
       ORDER BY bangsal.nm_bangsal, kamar_inap.tgl_masuk, kamar_inap.jam_masuk
     `;
 
-    const [rows]: any = await db.execute(query);
+    const [rows]: any = await db.execute(query, params);
 
     // Format dates to string to avoid React rendering errors
     const formattedRows = rows.map((row: any) => ({
