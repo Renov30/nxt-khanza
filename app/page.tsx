@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { FaLaptopMedical, FaCubes } from 'react-icons/fa';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { FaLaptopMedical, FaCubes } from "react-icons/fa";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -31,7 +31,7 @@ export default function Home() {
       <motion.div
         initial={{ x: -50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
-        transition={{ delay: 0.6, type: 'spring', stiffness: 100 }}
+        transition={{ delay: 0.6, type: "spring", stiffness: 100 }}
         className="absolute bottom-16 left-4 sm:bottom-8 sm:left-8 z-10 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5"
       >
         {/* Logo 3D effect */}
@@ -48,7 +48,7 @@ export default function Home() {
 
         <div className="flex flex-col drop-shadow-lg bg-white/40 backdrop-blur-sm px-3 sm:px-4 py-2 rounded-xl border border-white/40">
           <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-800 tracking-tight italic flex items-center gap-2">
-            <span className="text-brand-700">RS</span> SIMRS KHANZA
+            <span className="text-brand-700">RS</span> SUKACITA BANTUL
           </h1>
           <p className="text-xs sm:text-sm font-semibold text-slate-600 mt-1 flex items-center gap-1">
             <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-brand-500 inline-block animate-pulse"></span>

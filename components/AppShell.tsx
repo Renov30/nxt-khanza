@@ -183,19 +183,19 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             />
           ) : (
             <div className="relative">
-              <div
-                className="flex items-center gap-3 px-3 py-1.5 cursor-pointer hover:bg-brand-100/40 rounded-xl transition-all duration-300 border border-transparent hover:border-brand-200/50 hover:shadow-sm group/account"
+              <div 
+                className="flex items-center gap-3 px-3 py-1.5 cursor-pointer hover:bg-brand-100/40 rounded-xl transition-all duration-150 border border-transparent hover:border-brand-200/50 hover:shadow-sm group/account"
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsAccountMenuOpen(!isAccountMenuOpen);
                 }}
               >
                 <div className="flex flex-col items-end hidden sm:flex">
-                  <span className="text-[14px] font-bold text-slate-700 max-w-[150px] truncate group-hover/account:text-brand-700 transition-colors">
+                  <span className="text-[14px] font-bold text-slate-600 max-w-[150px] truncate group-hover/account:text-brand-700 transition-colors duration-150">
                     {username || "User"}
                   </span>
                 </div>
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-100 to-white flex items-center justify-center border border-brand-200 shadow-sm transition-all duration-300 group-hover/account:scale-105 group-hover/account:shadow-md group-hover/account:border-brand-300">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-100 to-white flex items-center justify-center border border-brand-200 shadow-sm transition-all duration-150 group-hover/account:scale-105 group-hover/account:shadow-md group-hover/account:border-brand-300">
                   <FaUser className="text-brand-600 text-xl drop-shadow-sm" />
                 </div>
               </div>
@@ -404,7 +404,8 @@ function TopMenuItem({
     <motion.button
       whileHover={{ y: -1, backgroundColor: "rgba(255,255,255,0.15)" }}
       whileTap={{ scale: 0.96 }}
-      className="flex items-center gap-1 lg:gap-2 px-3 py-0.5 lg:py-1 rounded-lg text-[10px] lg:text-xs font-medium transition-colors hover:shadow-sm"
+      transition={{ duration: 0.1 }}
+      className="flex items-center gap-1 lg:gap-2 px-3 py-0.5 lg:py-1 rounded-lg text-[10px] lg:text-xs font-medium transition-colors duration-150 hover:shadow-sm"
     >
       <span className="text-sm lg:text-base drop-shadow-md">{icon}</span>
       <span className="drop-shadow-sm">{label}</span>
@@ -436,7 +437,8 @@ function SecondaryMenuItem({
           : "rgba(209,250,229,0.3)",
       }}
       whileTap={{ scale: 0.95 }}
-      className={`group flex flex-col items-center justify-center gap-1 min-w-[70px] lg:min-w-[76px] p-1 lg:p-2 rounded-xl transition-all border ${active ? "border-brand-200 bg-brand-50/60 shadow-sm" : "border-transparent"} hover:border-brand-100 hover:shadow-sm relative overflow-hidden`}
+      transition={{ duration: 0.1 }}
+      className={`group flex flex-col items-center justify-center gap-1 min-w-[70px] lg:min-w-[76px] p-1 lg:p-2 rounded-xl transition-all duration-150 border ${active ? "border-brand-200 bg-brand-50/60 shadow-sm" : "border-transparent"} hover:border-brand-100 hover:shadow-sm relative overflow-hidden`}
     >
       <span
         className={`text-xl lg:text-2xl drop-shadow-sm z-10 ${active && !isRed ? "text-brand-600" : ""}`}
