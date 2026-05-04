@@ -2,8 +2,11 @@
 
 import { db } from "@/lib/db";
 
-const SECRET_KEY = process.env.KHANZA_SECRET_KEY || 'windi';
-
+/**
+ * Login action matching Khanza's encryption logic:
+ * - Username key: 'nur'
+ * - Password key: 'windi'
+ */
 export async function loginAction(formData: FormData) {
   const id_user = formData.get("username") as string;
   const password = formData.get("password") as string;
@@ -13,41 +16,42 @@ export async function loginAction(formData: FormData) {
   }
 
   try {
-    // Check in 'user' table which is standard for staff in Khanza
+    // 1. Check in 'user' table (Petugas/Staff)
+    // id_user uses key 'nur', password uses key 'windi'
     const [rows]: any = await db.execute(
-      `SELECT id_user, nama FROM user WHERE id_user = ? AND password = AES_ENCRYPT(?, ?)`,
-      [id_user, password, SECRET_KEY]
+      `SELECT * FROM user WHERE id_user = AES_ENCRYPT(?, 'nur') AND password = AES_ENCRYPT(?, 'windi')`,
+      [id_user, password]
     );
 
     if (rows.length > 0) {
       return {
         success: true,
         user: {
-          id: rows[0].id_user,
-          nama: rows[0].nama
+          id: id_user,
+          role: 'user'
         }
       };
     }
 
-    // fallback check in 'admin' table
+    // 2. Fallback check in 'admin' table
     const [adminRows]: any = await db.execute(
-      `SELECT id_admin FROM admin WHERE id_admin = ? AND password = AES_ENCRYPT(?, ?)`,
-      [id_user, password, SECRET_KEY]
+      `SELECT * FROM admin WHERE usere = AES_ENCRYPT(?, 'nur') AND passworde = AES_ENCRYPT(?, 'windi')`,
+      [id_user, password]
     );
 
     if (adminRows.length > 0) {
       return {
         success: true,
         user: {
-          id: adminRows[0].id_admin,
-          nama: adminRows[0].id_admin // admin table usually only has ID
+          id: id_user,
+          role: 'admin'
         }
       };
     }
 
-    return { success: false, message: "Invalid username or password" };
+    return { success: false, message: "ID User atau Password salah" };
   } catch (error: any) {
     console.error("Login error:", error);
-    return { success: false, message: "Database connection error" };
+    return { success: false, message: "Kesalahan koneksi database" };
   }
 }
