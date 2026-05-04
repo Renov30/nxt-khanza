@@ -145,16 +145,6 @@ export default function DaftarMenuPage() {
             }
           </h2>
 
-          <Link href="/">
-            <Button 
-              variant="outline" 
-              size="sm"
-              className="border-red-200 hover:border-red-400 hover:bg-red-50 text-red-600 shadow-sm transition-all font-bold"
-            >
-              <FaTimes />
-              <span>Keluar</span>
-            </Button>
-          </Link>
         </div>
 
         {/* Icons Grid - Centered Flex Wrap with standard vertical sizing */}

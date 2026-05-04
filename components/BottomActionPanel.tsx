@@ -27,13 +27,6 @@ export default function BottomActionPanel({
 }: BottomActionPanelProps) {
   const router = useRouter();
 
-  const handleExit = () => {
-    if (onExit) {
-      onExit();
-    } else {
-      router.push('/');
-    }
-  };
 
   return (
     <div className="bg-white px-4 py-3 border-t border-slate-200 text-xs shadow-[0_-4px_10px_rgba(0,0,0,0.03)] z-20 shrink-0 flex flex-col gap-3">
@@ -86,12 +79,6 @@ export default function BottomActionPanel({
             Record : <span className="text-slate-800 ml-1.5">{recordCount}</span>
           </div>
 
-          <ActionButton 
-            icon={<FaTimes className="text-red-500 drop-shadow-sm" />} 
-            label="Keluar" 
-            isExit 
-            onClick={handleExit}
-          />
         </div>
       </div>
     </div>

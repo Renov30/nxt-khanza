@@ -408,12 +408,6 @@ function RiwayatPasienContent() {
             label="Tampilkan"
             variant="primary"
           />
-          <ActionButton
-            icon={<FaTimes className="text-red-500 drop-shadow-sm" />}
-            label="Keluar"
-            isExit
-            onClick={() => router.back()}
-          />
         </div>
       </div>
     </>

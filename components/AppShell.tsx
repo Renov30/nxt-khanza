@@ -43,11 +43,14 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    const handleClick = () =>
+    const handleClick = () => {
       setContextMenu((prev) => ({ ...prev, show: false }));
+      setIsAccountMenuOpen(false);
+    };
     window.addEventListener("click", handleClick);
     return () => window.removeEventListener("click", handleClick);
   }, []);
@@ -104,103 +107,130 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.5 }}
-        className="bg-white/80 backdrop-blur-md border-b border-brand-100 flex items-center px-4 py-1 lg:py-2 shadow-sm z-20 gap-1 overflow-x-auto relative [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        className="bg-white/80 backdrop-blur-md border-b border-brand-100 flex items-center px-4 shadow-sm z-20 relative"
       >
-        <Link href="/daftar-menu">
-          <SecondaryMenuItem
-            icon={
-              <FaHome className="text-slate-500 hover:text-brand-600 transition-colors" />
-            }
-            label="Menu"
-            active={pathname === "/daftar-menu"}
-          />
-        </Link>
-        <div className="w-px h-8 lg:h-10 bg-brand-100 mx-2 self-center"></div>
-        <Link href="/registrasi">
-          <SecondaryMenuItem
-            icon={
-              <FaIdCard className="text-slate-500 hover:text-brand-600 transition-colors" />
-            }
-            label="Registrasi"
-            active={pathname === "/registrasi"}
-          />
-        </Link>
-        <SecondaryMenuItem
-          icon={
-            <FaAmbulance className="text-slate-500 hover:text-red-500 transition-colors" />
-          }
-          label="IGD/UGD"
-        />
-        <SecondaryMenuItem
-          icon={
-            <FaFlask className="text-slate-500 hover:text-purple-500 transition-colors" />
-          }
-          label="Laborat"
-        />
-        <SecondaryMenuItem
-          icon={
-            <FaRadiation className="text-slate-500 hover:text-yellow-500 transition-colors" />
-          }
-          label="Radiologi"
-        />
-        <SecondaryMenuItem
-          icon={
-            <FaPills className="text-slate-500 hover:text-pink-500 transition-colors" />
-          }
-          label="Farmasi"
-        />
-        <Link href="/rawat-inap">
-          <SecondaryMenuItem
-            icon={
-              <FaBed className="text-slate-500 hover:text-blue-500 transition-colors" />
-            }
-            label="Rawat Inap"
-            active={pathname === "/rawat-inap"}
-          />
-        </Link>
-        <SecondaryMenuItem
-          icon={
-            <FaWheelchair className="text-slate-500 hover:text-teal-500 transition-colors" />
-          }
-          label="Rawat Jalan"
-        />
-
-        <div className="flex-1 min-w-[20px]"></div>
-
-        {!isLoggedIn ? (
-          <SecondaryMenuItem
-            icon={
-              <FaSignInAlt className="text-slate-500 group-hover:text-brand-600 transition-colors" />
-            }
-            label="Log In"
-            onClick={() => setIsLoginModalOpen(true)}
-          />
-        ) : (
-          <div className="flex items-center">
-            <div className="flex items-center gap-2 px-3 py-1 mr-2 border-r border-brand-200">
-              <span className="text-[14px] font-semibold text-slate-700 max-w-[100px] truncate">
-                {username || "renov"}
-              </span>
-              <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center border border-blue-200 shadow-sm cursor-pointer hover:bg-blue-200 transition-colors">
-                <FaUser className="text-blue-600 text-lg drop-shadow-sm" />
-              </div>
-            </div>
+        {/* Scrolling Menu Items Container */}
+        <div className="flex-1 flex items-center gap-1 overflow-x-auto py-1 lg:py-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+          <Link href="/daftar-menu">
             <SecondaryMenuItem
               icon={
-                <FaKey className="text-slate-500 group-hover:text-yellow-600 transition-colors" />
+                <FaHome className="text-slate-500 hover:text-brand-600 transition-colors" />
               }
-              label="Log Out"
-              onClick={() => setIsLoggedIn(false)}
+              label="Menu"
+              active={pathname === "/daftar-menu"}
             />
-          </div>
-        )}
-        <SecondaryMenuItem
-          icon={
-            <FaTimes className="text-red-500 hover:text-red-600 transition-colors" />
-          }
-          label="Keluar"
-          isRed
-        />
+          </Link>
+          <div className="w-px h-8 lg:h-10 bg-brand-100 mx-2 self-center shrink-0"></div>
+          <Link href="/registrasi">
+            <SecondaryMenuItem
+              icon={
+                <FaIdCard className="text-slate-500 hover:text-brand-600 transition-colors" />
+              }
+              label="Registrasi"
+              active={pathname === "/registrasi"}
+            />
+          </Link>
+          <SecondaryMenuItem
+            icon={
+              <FaAmbulance className="text-slate-500 hover:text-red-500 transition-colors" />
+            }
+            label="IGD/UGD"
+          />
+          <SecondaryMenuItem
+            icon={
+              <FaFlask className="text-slate-500 hover:text-purple-500 transition-colors" />
+            }
+            label="Laborat"
+          />
+          <SecondaryMenuItem
+            icon={
+              <FaRadiation className="text-slate-500 hover:text-yellow-500 transition-colors" />
+            }
+            label="Radiologi"
+          />
+          <SecondaryMenuItem
+            icon={
+              <FaPills className="text-slate-500 hover:text-pink-500 transition-colors" />
+            }
+            label="Farmasi"
+          />
+          <Link href="/rawat-inap">
+            <SecondaryMenuItem
+              icon={
+                <FaBed className="text-slate-500 hover:text-blue-500 transition-colors" />
+              }
+              label="Rawat Inap"
+              active={pathname === "/rawat-inap"}
+            />
+          </Link>
+          <SecondaryMenuItem
+            icon={
+              <FaWheelchair className="text-slate-500 hover:text-teal-500 transition-colors" />
+            }
+            label="Rawat Jalan"
+          />
+        </div>
+
+        {/* Fixed User Profile Container (No Overflow Clipping) */}
+        <div className="flex items-center pl-4 bg-white/20">
+          {!isLoggedIn ? (
+            <SecondaryMenuItem
+              icon={
+                <FaSignInAlt className="text-slate-500 group-hover:text-brand-600 transition-colors" />
+              }
+              label="Log In"
+              onClick={() => setIsLoginModalOpen(true)}
+            />
+          ) : (
+            <div className="relative">
+              <div 
+                className="flex items-center gap-2 px-3 py-1 cursor-pointer hover:bg-brand-50/50 rounded-xl transition-all"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsAccountMenuOpen(!isAccountMenuOpen);
+                }}
+              >
+                <div className="flex flex-col items-end mr-1 hidden sm:flex">
+                  <span className="text-[12px] font-bold text-slate-700 max-w-[120px] truncate">
+                    {username || "User"}
+                  </span>
+                  <span className="text-[9px] text-slate-500 font-medium">Online</span>
+                </div>
+                <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-brand-100 to-white flex items-center justify-center border border-brand-200 shadow-sm transition-transform active:scale-95 group-hover:border-brand-300">
+                  <FaUser className="text-brand-600 text-lg drop-shadow-sm" />
+                </div>
+              </div>
+
+              <AnimatePresence>
+                {isAccountMenuOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-2xl border border-brand-100 py-2 z-[100] overflow-hidden"
+                  >
+                    <div className="px-4 py-2 border-b border-slate-50 mb-1 sm:hidden">
+                       <span className="text-xs font-bold text-slate-700 block truncate">{username}</span>
+                       <span className="text-[10px] text-emerald-500">Online</span>
+                    </div>
+                    <button className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-700 flex items-center gap-3 transition-colors font-medium">
+                      <FaCog className="text-slate-400" />
+                      <span>Settings</span>
+                    </button>
+                    <div className="h-px bg-slate-100 my-1 mx-2"></div>
+                    <button 
+                      onClick={() => setIsLoggedIn(false)}
+                      className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors font-bold"
+                    >
+                      <FaSignInAlt className="text-red-400 rotate-180" />
+                      <span>Log Out</span>
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          )}
+        </div>
       </motion.nav>
 
       {/* Main Content Area */}
@@ -337,32 +367,16 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   )}
                 </div>
 
-                {/* Buttons Area */}
-                <div className="bg-white px-6 py-4 flex items-center justify-center gap-4">
+                <div className="bg-white px-6 py-4 flex items-center justify-center">
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="flex-1 flex justify-center items-center gap-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-full py-2 px-4 transition-colors shadow-sm text-sm font-bold text-slate-700 active:scale-95 disabled:opacity-50"
+                    className="w-full flex justify-center items-center gap-3 bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-700 hover:to-brand-800 text-white rounded-full py-2.5 px-6 transition-all shadow-md text-sm font-bold active:scale-95 disabled:opacity-50"
                   >
-                    <div className="w-5 h-5 flex items-center justify-center">
-                      <FaLock
-                        className={`text-yellow-500 text-lg drop-shadow-sm ${isLoading ? "animate-pulse" : ""}`}
-                      />
-                    </div>
-                    {isLoading ? "Loading..." : "Log-in"}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setIsLoginModalOpen(false);
-                      setLoginError("");
-                    }}
-                    className="flex-1 flex justify-center items-center gap-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-full py-2 px-4 transition-colors shadow-sm text-sm font-bold text-slate-700 active:scale-95"
-                  >
-                    <div className="w-5 h-5 flex items-center justify-center bg-red-500 rounded-md shadow-sm">
-                      <FaTimes className="text-white text-[10px]" />
-                    </div>
-                    Batal
+                    <FaLock
+                      className={`text-white/80 text-base ${isLoading ? "animate-pulse" : ""}`}
+                    />
+                    {isLoading ? "Memproses..." : "Masuk ke Sistem"}
                   </button>
                 </div>
               </form>
