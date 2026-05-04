@@ -1,30 +1,46 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import {
-  FaSearch, FaCheck, FaPrint, FaExchangeAlt, FaSignOutAlt,
-  FaFolderOpen, FaTimes, FaBed
-} from 'react-icons/fa';
-import BottomActionPanel, { ActionButton } from '@/components/BottomActionPanel';
+  FaSearch,
+  FaCheck,
+  FaPrint,
+  FaExchangeAlt,
+  FaSignOutAlt,
+  FaFolderOpen,
+  FaTimes,
+  FaBed,
+  FaSync,
+} from "react-icons/fa";
+import BottomActionPanel, {
+  ActionButton,
+} from "@/components/BottomActionPanel";
+import { getDaftarRanap } from "@/lib/actions/ranap";
 
 export default function RawatInap() {
   const [mounted, setMounted] = useState(false);
+  const [data, setData] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    const result = await getDaftarRanap();
+    if (result.success) {
+      setData(result.data);
+    }
+    setIsLoading(false);
+  };
 
   useEffect(() => {
     setMounted(true);
+    fetchData();
   }, []);
 
   if (!mounted) return null;
-
-  /* Table data mock for UI */
-  const mockData = [
-    { no: "2026/02/25/000005", rm: "000051", nama: "ADI KAZAMA (41 Th)", alamat: ", CAMPURJO, BOJONEGOR...", pj: "-", hub: "DIRI SENDIRI", jenis: "UMUM", kamar: "KL.01 Kamar Kelas I", tarif: "500,000", tgl: "2026-02-25", jam: "20:40:40", wKeluar: "-", jKeluar: "-", lama: "0", dokter: "dr. Sri Rahma" },
-    { no: "2026/03/11/000003", rm: "000003", nama: "HAFIZ HARIYADI (35 Th)", alamat: "-, SAMBONGWANG, TRANGK...", pj: "PAIJO", hub: "AYAH", jenis: "UMUM", kamar: "KL.03 Kamar Kelas III", tarif: "100,000", tgl: "2026-03-11", jam: "13:07:04", wKeluar: "-", jKeluar: "-", lama: "0", dokter: "dr. Hilyatul Nadia" }
-  ];
 
   return (
     <motion.div
@@ -41,72 +57,241 @@ export default function RawatInap() {
           <FaBed className="text-brand-600" />
           Daftar Pasien Rawat Inap
         </h2>
+        <button
+          onClick={fetchData}
+          className="p-1.5 hover:bg-brand-200 rounded-full transition-colors text-brand-700"
+          title="Refresh Data"
+        >
+          <FaSync className={isLoading ? "animate-spin" : ""} />
+        </button>
       </div>
 
-      {/* Table Area - Modernized */}
-      <div className="flex-1 overflow-auto bg-slate-50/50 border-t border-slate-300 relative">
+      {/* Table Area - Modernized with Horizontal Scroll */}
+      <div className="flex-1 overflow-auto bg-slate-50/50 border-t border-slate-300 relative custom-scrollbar">
         <table className="w-full text-left border-collapse text-xs whitespace-nowrap">
           <thead className="sticky top-0 z-10 text-slate-600 shadow-sm backdrop-blur-md bg-white/95 border-b-2 border-brand-500">
             <tr className="border-b-2 border-brand-500">
-              <th className="py-2.5 px-3 font-bold hover:bg-slate-100 cursor-pointer transition-colors">No.Rawat</th>
-              <th className="py-2.5 px-3 font-bold hover:bg-slate-100 cursor-pointer transition-colors">Nomor RM</th>
-              <th className="py-2.5 px-3 font-bold hover:bg-slate-100 cursor-pointer transition-colors">Nama Pasien</th>
-              <th className="py-2.5 px-3 font-bold hover:bg-slate-100 cursor-pointer transition-colors">Alamat Pasien</th>
-              <th className="py-2.5 px-3 font-bold hover:bg-slate-100 cursor-pointer transition-colors">Penanggung Jawab</th>
-              <th className="py-2.5 px-3 font-bold hover:bg-slate-100 cursor-pointer transition-colors">Hubungan P.J.</th>
-              <th className="py-2.5 px-3 font-bold hover:bg-slate-100 cursor-pointer transition-colors text-center">Jenis Bayar</th>
-              <th className="py-2.5 px-3 font-bold hover:bg-slate-100 cursor-pointer transition-colors">Kamar</th>
-              <th className="py-2.5 px-3 font-bold hover:bg-slate-100 cursor-pointer transition-colors text-right">Tarif Kamar</th>
-              <th className="py-2.5 px-3 font-bold hover:bg-slate-100 cursor-pointer transition-colors text-center">Tgl.Masuk</th>
-              <th className="py-2.5 px-3 font-bold hover:bg-slate-100 cursor-pointer transition-colors text-center">Jam Masuk</th>
-              <th className="py-2.5 px-3 font-bold hover:bg-slate-100 cursor-pointer transition-colors text-center">Lama</th>
-              <th className="py-2.5 px-3 font-bold hover:bg-slate-100 cursor-pointer transition-colors">Dokter P.J.</th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200">
+                No.Rawat
+              </th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200">
+                Nomor RM
+              </th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200">
+                Nama Pasien
+              </th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200">
+                Alamat Pasien
+              </th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200">
+                Penanggung Jawab
+              </th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200">
+                Hubungan P.J.
+              </th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200">
+                Jenis Bayar
+              </th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200">
+                Kamar
+              </th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200 text-right">
+                Tarif Kamar
+              </th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200">
+                Diagnosa Awal
+              </th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200">
+                Diagnosa Akhir
+              </th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200 text-center">
+                Tgl.Masuk
+              </th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200 text-center">
+                Jam Masuk
+              </th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200 text-center">
+                Tgl.Keluar
+              </th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200 text-center">
+                Jam Keluar
+              </th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200 text-right">
+                Ttl.Biaya
+              </th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200 text-center">
+                Stts.Pulang
+              </th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200 text-center">
+                Lama
+              </th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200">
+                Dokter P.J.
+              </th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200">
+                Kd Kamar
+              </th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200">
+                Status Bayar
+              </th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200">
+                Agama
+              </th>
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200">
+                No. HP
+              </th>
             </tr>
           </thead>
           <tbody>
-            {mockData.map((row, i) => (
-              <tr
-                key={i}
-                className={`border-b border-slate-100 cursor-pointer transition-all duration-200
-                  ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/80'} 
-                  hover:bg-brand-50 hover:shadow-[inset_4px_0_0_0_var(--color-brand-500)]`}
-              >
-                <td className="py-2 px-3 text-slate-700 font-medium">
-                  <Link 
-                    href={`/rawat-inap/pemeriksaan?noRawat=${encodeURIComponent(row.no)}`}
-                    className="text-brand-600 hover:text-brand-800 hover:underline font-bold"
-                  >
-                    {row.no}
-                  </Link>
+            {isLoading ? (
+              <tr>
+                <td
+                  colSpan={23}
+                  className="py-20 text-center text-slate-400 italic"
+                >
+                  <div className="flex flex-col items-center gap-3">
+                    <FaSync className="animate-spin text-3xl text-brand-500" />
+                    <span>Mengambil data dari server...</span>
+                  </div>
                 </td>
-                <td className="py-2 px-3 text-brand-600 font-semibold">{row.rm}</td>
-                <td className="py-2 px-3 text-slate-800 font-bold">{row.nama}</td>
-                <td className="py-2 px-3 text-slate-600 truncate max-w-[150px]" title={row.alamat}>{row.alamat}</td>
-                <td className="py-2 px-3 text-slate-600">{row.pj}</td>
-                <td className="py-2 px-3 text-slate-600">{row.hub}</td>
-                <td className="py-2 px-3 text-center"><span className="bg-sky-100 text-sky-700 px-2 py-0.5 rounded-full text-[9px] font-bold">{row.jenis}</span></td>
-                <td className="py-2 px-3 text-slate-700 font-medium">{row.kamar}</td>
-                <td className="py-2 px-3 text-right text-slate-700">{row.tarif}</td>
-                <td className="py-2 px-3 text-center text-slate-600">{row.tgl}</td>
-                <td className="py-2 px-3 text-center text-slate-600">{row.jam}</td>
-                <td className="py-2 px-3 text-center text-slate-600">{row.lama}</td>
-                <td className="py-2 px-3 text-slate-700">{row.dokter}</td>
               </tr>
-            ))}
+            ) : data.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={23}
+                  className="py-20 text-center text-slate-400 italic"
+                >
+                  Tidak ada data pasien rawat inap yang ditemukan.
+                </td>
+              </tr>
+            ) : (
+              data.map((row, i) => (
+                <tr
+                  key={i}
+                  className={`border-b border-slate-100 cursor-pointer transition-all duration-200
+                    ${i % 2 === 0 ? "bg-white" : "bg-slate-50/80"} 
+                    hover:bg-brand-50 hover:shadow-[inset_4px_0_0_0_var(--color-brand-500)]`}
+                >
+                  <td className="py-2 px-3 text-slate-700 font-medium border-r border-slate-100">
+                    <Link
+                      href={`/rawat-inap/pemeriksaan?noRawat=${encodeURIComponent(row.no_rawat)}`}
+                      className="text-brand-600 hover:text-brand-800 hover:underline font-bold"
+                    >
+                      {row.no_rawat}
+                    </Link>
+                  </td>
+                  <td className="py-2 px-3 text-brand-600 font-semibold border-r border-slate-100">
+                    {row.no_rkm_medis}
+                  </td>
+                  <td className="py-2 px-3 text-slate-800 font-bold border-r border-slate-100">
+                    {row.nm_pasien} ({row.umur})
+                  </td>
+                  <td
+                    className="py-2 px-3 text-slate-600 truncate max-w-[200px] border-r border-slate-100"
+                    title={row.alamat}
+                  >
+                    {row.alamat}
+                  </td>
+                  <td className="py-2 px-3 text-slate-600 border-r border-slate-100">
+                    {row.p_jawab}
+                  </td>
+                  <td className="py-2 px-3 text-slate-600 border-r border-slate-100">
+                    {row.hubunganpj}
+                  </td>
+                  <td className="py-2 px-3 text-center border-r border-slate-100">
+                    <span className="bg-sky-100 text-sky-700 px-2 py-0.5 rounded-full text-[9px] font-bold">
+                      {row.png_jawab}
+                    </span>
+                  </td>
+                  <td className="py-2 px-3 text-slate-700 font-medium border-r border-slate-100">
+                    {row.kamar}
+                  </td>
+                  <td className="py-2 px-3 text-right text-slate-700 border-r border-slate-100">
+                    {new Intl.NumberFormat("id-ID").format(row.trf_kamar)}
+                  </td>
+                  <td
+                    className="py-2 px-3 text-slate-600 border-r border-slate-100 truncate max-w-[150px]"
+                    title={row.diagnosa_awal}
+                  >
+                    {row.diagnosa_awal}
+                  </td>
+                  <td
+                    className="py-2 px-3 text-slate-600 border-r border-slate-100 truncate max-w-[150px]"
+                    title={row.diagnosa_akhir}
+                  >
+                    {row.diagnosa_akhir}
+                  </td>
+                  <td className="py-2 px-3 text-center text-slate-600 border-r border-slate-100">
+                    {row.tgl_masuk}
+                  </td>
+                  <td className="py-2 px-3 text-center text-slate-600 border-r border-slate-100">
+                    {row.jam_masuk}
+                  </td>
+                  <td className="py-2 px-3 text-center text-slate-600 border-r border-slate-100">
+                    {row.tgl_keluar || "-"}
+                  </td>
+                  <td className="py-2 px-3 text-center text-slate-600 border-r border-slate-100">
+                    {row.jam_keluar || "-"}
+                  </td>
+                  <td className="py-2 px-3 text-right text-brand-700 font-bold border-r border-slate-100">
+                    {new Intl.NumberFormat("id-ID").format(row.ttl_biaya)}
+                  </td>
+                  <td className="py-2 px-3 text-center text-slate-600 border-r border-slate-100">
+                    <span
+                      className={`px-2 py-0.5 rounded-full text-[9px] font-bold ${row.stts_pulang === "-" ? "bg-emerald-100 text-emerald-700" : "bg-slate-100 text-slate-700"}`}
+                    >
+                      {row.stts_pulang}
+                    </span>
+                  </td>
+                  <td className="py-2 px-3 text-center text-slate-600 border-r border-slate-100">
+                    {row.lama}
+                  </td>
+                  <td className="py-2 px-3 text-slate-700 border-r border-slate-100">
+                    {row.nm_dokter}
+                  </td>
+                  <td className="py-2 px-3 text-slate-500 border-r border-slate-100">
+                    {row.kd_kamar}
+                  </td>
+                  <td className="py-2 px-3 text-center border-r border-slate-100">
+                    <span
+                      className={`px-2 py-0.5 rounded-full text-[9px] font-bold ${row.status_bayar === "Sudah Bayar" ? "bg-green-100 text-green-700" : "bg-orange-100 text-orange-700"}`}
+                    >
+                      {row.status_bayar}
+                    </span>
+                  </td>
+                  <td className="py-2 px-3 text-slate-600 border-r border-slate-100">
+                    {row.agama}
+                  </td>
+                  <td className="py-2 px-3 text-slate-600">{row.no_tlp}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
 
       {/* Actions and Filters Panel */}
       <BottomActionPanel
-        recordCount={2}
+        recordCount={data.length}
         hideStandardButtons
         customButtons={
           <>
-            <ActionButton icon={<FaFolderOpen className="text-brand-600 drop-shadow-sm" />} label="Masuk" />
-            <ActionButton icon={<FaSignOutAlt className="text-amber-600 drop-shadow-sm" />} label="Pulang" />
-            <ActionButton icon={<FaExchangeAlt className="text-blue-600 drop-shadow-sm" />} label="Pindah" />
-            <ActionButton icon={<FaPrint className="text-indigo-600 drop-shadow-sm" />} label="Cetak" />
+            <ActionButton
+              icon={<FaFolderOpen className="text-brand-600 drop-shadow-sm" />}
+              label="Masuk"
+            />
+            <ActionButton
+              icon={<FaSignOutAlt className="text-amber-600 drop-shadow-sm" />}
+              label="Pulang"
+            />
+            <ActionButton
+              icon={<FaExchangeAlt className="text-blue-600 drop-shadow-sm" />}
+              label="Pindah"
+            />
+            <ActionButton
+              icon={<FaPrint className="text-indigo-600 drop-shadow-sm" />}
+              label="Cetak"
+            />
           </>
         }
       />

@@ -1,0 +1,69 @@
+"use server";
+
+import { db } from "@/lib/db";
+
+export async function getDaftarRanap() {
+  try {
+    const query = `
+      SELECT 
+        kamar_inap.no_rawat,
+        reg_periksa.no_rkm_medis,
+        pasien.nm_pasien,
+        concat(pasien.alamat,', ',kelurahan.nm_kel,', ',kecamatan.nm_kec,', ',kabupaten.nm_kab) as alamat,
+        reg_periksa.p_jawab,
+        reg_periksa.hubunganpj,
+        penjab.png_jawab,
+        concat(kamar_inap.kd_kamar,' ',bangsal.nm_bangsal) as kamar,
+        kamar_inap.trf_kamar,
+        kamar_inap.diagnosa_awal,
+        kamar_inap.diagnosa_akhir,
+        kamar_inap.tgl_masuk,
+        kamar_inap.jam_masuk,
+        if(kamar_inap.tgl_keluar='0000-00-00','',kamar_inap.tgl_keluar) as tgl_keluar,
+        if(kamar_inap.jam_keluar='00:00:00','',kamar_inap.jam_keluar) as jam_keluar,
+        kamar_inap.ttl_biaya,
+        kamar_inap.stts_pulang,
+        kamar_inap.lama,
+        COALESCE(dpjp.nm_dokter, dokter.nm_dokter) as nm_dokter,
+        kamar_inap.kd_kamar,
+        reg_periksa.kd_pj,
+        concat(reg_periksa.umurdaftar,' ',reg_periksa.sttsumur) as umur,
+        reg_periksa.status_bayar,
+        pasien.agama,
+        pasien.no_tlp
+      FROM kamar_inap 
+      INNER JOIN reg_periksa ON kamar_inap.no_rawat=reg_periksa.no_rawat 
+      INNER JOIN pasien ON reg_periksa.no_rkm_medis=pasien.no_rkm_medis
+      INNER JOIN kamar ON kamar_inap.kd_kamar=kamar.kd_kamar 
+      INNER JOIN bangsal ON kamar.kd_bangsal=bangsal.kd_bangsal
+      INNER JOIN kelurahan ON pasien.kd_kel=kelurahan.kd_kel 
+      INNER JOIN kecamatan ON pasien.kd_kec=kecamatan.kd_kec
+      INNER JOIN kabupaten ON pasien.kd_kab=kabupaten.kd_kab 
+      INNER JOIN dokter ON reg_periksa.kd_dokter=dokter.kd_dokter
+      LEFT JOIN (
+        SELECT dpjp_ranap.no_rawat, dokter.nm_dokter 
+        FROM dpjp_ranap 
+        INNER JOIN dokter ON dpjp_ranap.kd_dokter=dokter.kd_dokter 
+        GROUP BY dpjp_ranap.no_rawat
+      ) dpjp ON kamar_inap.no_rawat=dpjp.no_rawat
+      INNER JOIN penjab ON reg_periksa.kd_pj=penjab.kd_pj
+      WHERE kamar_inap.stts_pulang = '-'
+      ORDER BY bangsal.nm_bangsal, kamar_inap.tgl_masuk, kamar_inap.jam_masuk
+      LIMIT 100
+    `;
+
+    const [rows]: any = await db.execute(query);
+    
+    // Format dates to string to avoid React rendering errors
+    const formattedRows = rows.map((row: any) => ({
+      ...row,
+      tgl_masuk: row.tgl_masuk instanceof Date ? row.tgl_masuk.toISOString().split('T')[0] : row.tgl_masuk,
+      tgl_keluar: row.tgl_keluar instanceof Date ? row.tgl_keluar.toISOString().split('T')[0] : row.tgl_keluar,
+    }));
+
+    return { success: true, data: formattedRows };
+  } catch (error: any) {
+    console.error("Error fetching Ranap list:", error);
+    return { success: false, message: "Gagal mengambil data rawat inap", error: error.message };
+  }
+}

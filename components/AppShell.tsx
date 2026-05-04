@@ -347,7 +347,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                     LOGIN
                   </h3>
                   <p className="text-white/70 text-[10px] font-medium tracking-wider">
-                    MASUK MENGGUNAKAN AKUN ANDA
+                    SILAHKAN MASUK UNTUK MELANJUTKAN
                   </p>
                 </div>
               </div>
