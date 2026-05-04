@@ -71,6 +71,7 @@ export default function RawatInap() {
         <table className="w-full text-left border-collapse text-xs whitespace-nowrap">
           <thead className="sticky top-0 z-10 text-slate-600 shadow-sm backdrop-blur-md bg-white/95 border-b-2 border-brand-500">
             <tr className="border-b-2 border-brand-500">
+              <th className="py-2.5 px-3 font-bold border-r border-slate-200">No.</th>
               <th className="py-2.5 px-3 font-bold border-r border-slate-200">
                 No.Rawat
               </th>
@@ -172,6 +173,9 @@ export default function RawatInap() {
                     ${i % 2 === 0 ? "bg-white" : "bg-slate-50/80"} 
                     hover:bg-brand-50 hover:shadow-[inset_4px_0_0_0_var(--color-brand-500)]`}
                 >
+                  <td className="py-2 px-3 text-slate-500 text-center border-r border-slate-100 font-medium">
+                    {i + 1}
+                  </td>
                   <td className="py-2 px-3 text-slate-700 font-medium border-r border-slate-100">
                     <Link
                       href={`/rawat-inap/pemeriksaan?noRawat=${encodeURIComponent(row.no_rawat)}`}

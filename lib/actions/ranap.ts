@@ -52,17 +52,27 @@ export async function getDaftarRanap() {
     `;
 
     const [rows]: any = await db.execute(query);
-    
+
     // Format dates to string to avoid React rendering errors
     const formattedRows = rows.map((row: any) => ({
       ...row,
-      tgl_masuk: row.tgl_masuk instanceof Date ? row.tgl_masuk.toISOString().split('T')[0] : row.tgl_masuk,
-      tgl_keluar: row.tgl_keluar instanceof Date ? row.tgl_keluar.toISOString().split('T')[0] : row.tgl_keluar,
+      tgl_masuk:
+        row.tgl_masuk instanceof Date
+          ? row.tgl_masuk.toISOString().split("T")[0]
+          : row.tgl_masuk,
+      tgl_keluar:
+        row.tgl_keluar instanceof Date
+          ? row.tgl_keluar.toISOString().split("T")[0]
+          : row.tgl_keluar,
     }));
 
     return { success: true, data: formattedRows };
   } catch (error: any) {
     console.error("Error fetching Ranap list:", error);
-    return { success: false, message: "Gagal mengambil data rawat inap", error: error.message };
+    return {
+      success: false,
+      message: "Gagal mengambil data rawat inap",
+      error: error.message,
+    };
   }
 }
