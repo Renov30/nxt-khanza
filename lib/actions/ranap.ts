@@ -49,7 +49,6 @@ export async function getDaftarRanap() {
       INNER JOIN penjab ON reg_periksa.kd_pj=penjab.kd_pj
       WHERE kamar_inap.stts_pulang = '-'
       ORDER BY bangsal.nm_bangsal, kamar_inap.tgl_masuk, kamar_inap.jam_masuk
-      LIMIT 100
     `;
 
     const [rows]: any = await db.execute(query);
