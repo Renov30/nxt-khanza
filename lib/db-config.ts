@@ -14,7 +14,7 @@ export interface DbConfig {
  * Reads and parses SIMRS-Bunda/setting/database.xml
  */
 export function getDatabaseConfig(): DbConfig {
-  const xmlPath = path.join(process.cwd(), 'SIMRS-Bunda', 'setting', 'database.xml');
+  const xmlPath = path.join(process.cwd(), 'setting', 'database.xml');
   
   if (!fs.existsSync(xmlPath)) {
     throw new Error(`Database configuration file not found at: ${xmlPath}`);

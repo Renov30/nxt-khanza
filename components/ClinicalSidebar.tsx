@@ -1,58 +1,85 @@
 "use client";
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import {
-  FaBed, FaStethoscope, FaHistory, FaUtensils, FaSyringe,
-  FaClipboardList, FaBars, FaSearch
-} from 'react-icons/fa';
+  FaBed,
+  FaStethoscope,
+  FaHistory,
+  FaUtensils,
+  FaSyringe,
+  FaClipboardList,
+  FaBars,
+  FaSearch,
+} from "react-icons/fa";
 
 const menuItems = [
-  { icon: <FaBed />, label: 'Pemeriksaan / CPPT', path: '/rawat-inap/pemeriksaan' },
-  { icon: <FaStethoscope />, label: 'Resume Pasien', path: '' },
-  { icon: <FaHistory />, label: 'Riwayat Pasien', path: '/rawat-inap/riwayat-pasien' },
-  { icon: <FaUtensils />, label: 'Asuhan Gizi', path: '/rawat-inap/asuhan-gizi' },
-  { icon: <FaSyringe />, label: 'Bundle PPI', path: '' },
-  { icon: <FaClipboardList />, label: 'Rekapan HAIs', path: '' },
+  {
+    icon: <FaBed />,
+    label: "Pemeriksaan / CPPT",
+    path: "/rawat-inap/pemeriksaan",
+  },
+  { icon: <FaStethoscope />, label: "Resume Pasien", path: "" },
+  {
+    icon: <FaHistory />,
+    label: "Riwayat Pasien",
+    path: "/rawat-inap/riwayat-pasien",
+  },
+  {
+    icon: <FaUtensils />,
+    label: "Asuhan Gizi",
+    path: "/rawat-inap/asuhan-gizi",
+  },
+  { icon: <FaSyringe />, label: "Bundle PPI", path: "" },
+  { icon: <FaClipboardList />, label: "Rekapan HAIs", path: "" },
 ];
 
-export default function ClinicalSidebar({ children }: { children: React.ReactNode }) {
+export default function ClinicalSidebar({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  
-  const noRawat = searchParams.get('noRawat') || '';
-  const noRM = searchParams.get('noRM') || '617211';
-  const namaPasien = searchParams.get('nama') || 'Tn. Sukarji';
+
+  const noRawat = searchParams.get("noRawat") || "";
+  const noRM = searchParams.get("noRM") || "617211";
+  const namaPasien = searchParams.get("nama") || "Tn. Sukarji";
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('khanza_clinical_sidebar_open');
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("khanza_clinical_sidebar_open");
       if (saved !== null) return JSON.parse(saved);
     }
-    return false;
+    return true;
   });
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   const toggleSidebar = () => {
     const newState = !isSidebarOpen;
     setIsSidebarOpen(newState);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('khanza_clinical_sidebar_open', JSON.stringify(newState));
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        "khanza_clinical_sidebar_open",
+        JSON.stringify(newState),
+      );
     }
   };
 
   const filteredMenu = searchTerm
-    ? menuItems.filter(item => item.label.toLowerCase().includes(searchTerm.toLowerCase()))
+    ? menuItems.filter((item) =>
+        item.label.toLowerCase().includes(searchTerm.toLowerCase()),
+      )
     : menuItems;
 
-  const handleNavigate = (item: typeof menuItems[0]) => {
+  const handleNavigate = (item: (typeof menuItems)[0]) => {
     if (!item.path) return; // No path = not implemented yet
     const params = new URLSearchParams();
-    if (noRawat) params.set('noRawat', noRawat);
-    if (item.path.includes('riwayat-pasien')) {
-      params.set('noRM', noRM);
-      params.set('nama', namaPasien);
+    if (noRawat) params.set("noRawat", noRawat);
+    if (item.path.includes("riwayat-pasien")) {
+      params.set("noRM", noRM);
+      params.set("nama", namaPasien);
     }
     router.push(`${item.path}?${params.toString()}`);
   };
@@ -82,7 +109,7 @@ export default function ClinicalSidebar({ children }: { children: React.ReactNod
               <input
                 type="text"
                 value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-md text-xs focus:outline-none focus:ring-1 focus:ring-brand-500"
                 placeholder="Cari menu..."
               />
@@ -99,14 +126,16 @@ export default function ClinicalSidebar({ children }: { children: React.ReactNod
               onClick={() => handleNavigate(item)}
               className={`flex items-center gap-3 px-3 py-3 cursor-pointer text-xs border-b border-slate-50 transition-colors whitespace-nowrap ${
                 isActive(item.path)
-                  ? 'bg-brand-50 text-brand-700 font-bold border-l-[3px] border-l-brand-500'
+                  ? "bg-brand-50 text-brand-700 font-bold border-l-[3px] border-l-brand-500"
                   : item.path
-                    ? 'text-slate-700 hover:bg-brand-50'
-                    : 'text-slate-400 cursor-default'
+                    ? "text-slate-700 hover:bg-brand-50"
+                    : "text-slate-400 cursor-default"
               }`}
               title={!isSidebarOpen ? item.label : undefined}
             >
-              <span className={`text-sm shrink-0 ${isActive(item.path) ? 'text-brand-600' : item.path ? 'text-brand-500' : 'text-slate-300'}`}>
+              <span
+                className={`text-sm shrink-0 ${isActive(item.path) ? "text-brand-600" : item.path ? "text-brand-500" : "text-slate-300"}`}
+              >
                 {item.icon}
               </span>
               {isSidebarOpen && <span>{item.label}</span>}
