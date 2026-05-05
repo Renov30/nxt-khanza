@@ -17,9 +17,6 @@
 /.next/
 /out/
 
-# simbunda
-/SIMRS-Bunda
-
 # production
 /build
 
